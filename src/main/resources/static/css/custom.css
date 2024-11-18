@@ -1,0 +1,39 @@
+body {
+    background-color: #2d3250;
+    color: #ffffff;
+    font-family: 'Raleway', sans-serif;
+}
+
+.card {
+    background-color: #424769;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+}
+
+.card-header {
+    background-color: transparent;
+    border-bottom: none;
+}
+
+.btn-custom {
+    background-color: #f9b17a;
+    color: #ffffff;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.btn-custom:hover {
+    background-color: #e08e58;
+}
+
+input.form-control {
+    background-color: #67679d;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+}
+
+input::placeholder {
+    color: #d1d1e0;
+}

@@ -1,13 +1,16 @@
-package model;
+package com.example.formicarium.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthenticationRequest {
+public class UserDto {
+    private Long id;
     private String username;
-    private String password;
+    private String email;
 }
