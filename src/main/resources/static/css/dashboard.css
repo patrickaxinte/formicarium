@@ -1,0 +1,125 @@
+/* Dashboard Page Styles */
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Sidebar */
+.dashboard-sidebar {
+    background-color: #424769;
+    width: 250px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 2px solid #f9b17a;
+}
+
+.sidebar-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #f9b17a;
+    margin-bottom: 20px;
+}
+
+.sidebar-nav {
+    width: 100%;
+}
+
+.sidebar-link {
+    display: block;
+    padding: 15px 20px;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease, border-left 0.3s ease;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+    background-color: #67679d;
+    border-left: 4px solid #f9b17a;
+}
+
+/* Header */
+.dashboard-header {
+    background-color: #424769;
+    color: #ffffff;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #f9b17a;
+}
+
+.header-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #f9b17a;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #67679d;
+}
+
+.user-name {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* Content */
+.dashboard-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #2d3250;
+    overflow-y: auto;
+}
+
+.dashboard-content {
+    flex: 1;
+    padding: 20px;
+}
+
+.dashboard-content h2 {
+    font-size: 1.75rem;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+/* Widgets */
+.widget-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.widget {
+    background-color: #424769;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.widget:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.widget h3 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    color: #f9b17a;
+}

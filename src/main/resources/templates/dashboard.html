@@ -1,92 +1,67 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dashboard - Formicarium</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/custom.css">
-  <style>
-    body {
-      font-family: 'Raleway', sans-serif;
-    }
-
-    .sidebar {
-      height: 100vh;
-      background-color: #2d3250;
-      color: #fff;
-      padding-top: 20px;
-    }
-
-    .sidebar a {
-      color: #fff;
-      text-decoration: none;
-      padding: 10px 15px;
-      display: block;
-      border-radius: 5px;
-    }
-
-    .sidebar a:hover {
-      background-color: #424769;
-      text-decoration: none;
-    }
-
-    .header {
-      background-color: #2d3250;
-      color: #fff;
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .header .logout-btn {
-      background-color: #f9b17a;
-      border: none;
-      color: #fff;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .header .logout-btn:hover {
-      background-color: #d8935d;
-    }
-
-    .content {
-      margin-left: 250px;
-      padding: 20px;
-    }
-  </style>
+  <link rel="stylesheet" th:href="@{/css/base.css}">
+  <link rel="stylesheet" th:href="@{/css/dashboard.css}">
 </head>
 <body>
-<div class="header">
-  <h1 class="m-0">Formicarium</h1>
-  <form th:action="@{/logout}" method="post">
-    <button type="submit" class="logout-btn">Logout</button>
-  </form>
-</div>
-
-<div class="d-flex">
+<div class="dashboard-container">
   <!-- Sidebar -->
-  <div class="sidebar">
-    <a href="/dashboard" th:href="@{/dashboard}">Home</a>
-    <a href="/profile" th:href="@{/profile}">Profile</a>
-    <a href="/projects" th:href="@{/projects}">Projects</a>
-    <a href="/tasks" th:href="@{/tasks}">Tasks</a>
-    <a href="/logs" th:href="@{/logs}">Logs</a>
-    <a href="/settings" th:href="@{/settings}">Settings</a>
-    <a href="/chat" th:href="@{/chat}">Chat</a>
+  <div class="dashboard-sidebar">
+    <h2 class="sidebar-title">Formicarium</h2>
+    <nav class="sidebar-nav">
+      <a th:href="@{/dashboard}" class="sidebar-link active">Dashboard</a>
+      <a th:href="@{/profile}" class="sidebar-link">Profile</a>
+      <a th:href="@{/settings}" class="sidebar-link">Settings</a>
+      <a th:href="@{/projects}" class="sidebar-link">Projects</a>
+      <a th:href="@{/tasks}" class="sidebar-link">Tasks</a>
+      <a th:href="@{/logs}" class="sidebar-link">Logs</a>
+      <a th:href="@{/chat}" class="sidebar-link">Group Chats</a>
+      <a th:href="@{/reports}" class="sidebar-link">Reports</a>
+    </nav>
   </div>
 
   <!-- Main Content -->
-  <div class="content">
-    <h2>Welcome to your dashboard, <span th:text="${#authentication.name}">User</span>!</h2>
-    <p>This is your personal space where you can manage your tasks, projects, and more.</p>
+  <div class="dashboard-main">
+    <!-- Header -->
+    <div class="dashboard-header">
+      <div class="header-title">Formicarium</div>
+      <div class="user-info">
+        <img src="../images/user_avatar.png" alt="User Avatar" class="user-avatar">
+        <span sec:authentication="name" class="user-name">newuser</span>
+        <form th:action="@{/logout}" method="post" class="logout-form">
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+          <button type="submit" class="btn btn-sm btn-warning">Logout</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="dashboard-content">
+      <h2>Welcome to your Dashboard, <span sec:authentication="name">newuser</span>!</h2>
+      <div class="widget-container">
+        <div class="widget">
+          <h3>Widget 1</h3>
+          <p>Details about Widget 1...</p>
+        </div>
+        <div class="widget">
+          <h3>Widget 2</h3>
+          <p>Details about Widget 2...</p>
+        </div>
+        <div class="widget">
+          <h3>Widget 3</h3>
+          <p>Details about Widget 3...</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

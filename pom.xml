@@ -80,11 +80,18 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>com.auth0</groupId>-->
-<!--			<artifactId>java-jwt</artifactId>-->
-<!--			<version>3.19.4</version>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>3.19.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
+			<version>3.1.2.RELEASE</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
