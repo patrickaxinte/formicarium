@@ -1,0 +1,12 @@
+com\example\formicarium\FormicariumApplication.class
+com\example\formicarium\repository\RoleRepository.class
+com\example\formicarium\repository\UserRepository.class
+com\example\formicarium\dto\UserDto.class
+com\example\formicarium\entity\User$UserBuilder.class
+com\example\formicarium\service\UserDetailsServiceImpl.class
+com\example\formicarium\entity\Role.class
+com\example\formicarium\controller\AuthController.class
+com\example\formicarium\entity\User.class
+com\example\formicarium\config\SecurityConfig.class
+com\example\formicarium\controller\UserController.class
+com\example\formicarium\entity\Role$RoleBuilder.class

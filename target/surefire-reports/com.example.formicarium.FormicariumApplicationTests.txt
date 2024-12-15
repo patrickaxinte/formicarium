@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.example.formicarium.FormicariumApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.673 s -- in com.example.formicarium.FormicariumApplicationTests
