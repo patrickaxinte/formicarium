@@ -1,0 +1,74 @@
+<div class="card">
+    <h3>Projects Page</h3>
+    <p>Welcome to the projects page. Here you can manage your projects.</p>
+</div>
+
+<div class="card mt-4 text-center">
+    <div class="mb-3">
+        <i class="bi bi-folder-plus" style="font-size: 4rem;"></i>
+    </div>
+    <h3 class="mb-3">Create New Project</h3>
+    <p class="mb-4">Start building your ideas with a single click.</p>
+    <div class="d-flex justify-content-center">
+        <a th:href="@{/projects/form}" class="btn btn-custom btn-lg">+ Add New Project</a>
+    </div>
+</div>
+
+<!-- Secțiunea proiectelor active -->
+<div class="card mt-4">
+    <h4>Your Projects</h4>
+    <div class="project-list">
+        <div th:each="project : ${activeProjects}" class="project-card mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <!-- Informațiile despre proiect -->
+                        <div>
+                            <h5 th:text="${project.name}">Project Name</h5>
+                            <p th:text="${project.description}">Description...</p>
+                            <p>Deadline: <span th:text="${project.deadline}">YYYY-MM-DD</span></p>
+                        </div>
+
+                        <!-- Meniu contextual -->
+                        <div class="dropdown text-end">
+                            <button class="btn btn-sm btn-light" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-three-dots-vertical"></i> <!-- Cele 3 puncte verticale -->
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li>
+                                    <a th:href="@{/projects/form(id=${project.id})}" class="dropdown-item">Edit</a>
+                                </li>
+                                <li>
+                                    <form th:action="@{/projects/deactivate/{id}(id=${project.id})}" method="post" style="display: inline;">
+                                        <button type="submit" class="dropdown-item">Deactivate</button>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form th:action="@{/projects/delete/{id}(id=${project.id})}" method="post" style="display: inline;">
+                                        <button type="submit" class="dropdown-item text-danger">Delete</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Secțiunea proiectelor inactive -->
+<div class="card mt-4">
+    <h4>Inactive Projects</h4>
+    <div th:each="project : ${inactiveProjects}" class="project-card mb-3">
+        <div class="card">
+            <h5 th:text="${project.name}">Project Name</h5>
+            <p th:text="${project.description}">Description...</p>
+            <p>Deadline: <span th:text="${project.deadline}">YYYY-MM-DD</span></p>
+            <form th:action="@{/projects/activate/{id}(id=${project.id})}" method="post">
+                <button type="submit" class="btn btn-sm btn-success">Reactivate</button>
+            </form>
+        </div>
+    </div>
+</div>
