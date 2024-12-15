@@ -41,12 +41,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                        .ignoringRequestMatchers("/logout")
-                )
+//                .csrf(csrf -> csrf
+//                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//                        .ignoringRequestMatchers("/logout")
+//                        .ignoringRequestMatchers("/projects/add")
+//                        .ignoringRequestMatchers("/projects/edit/{id}")
+//                        .ignoringRequestMatchers("/projects/delete/{id}")
+//                )
+                .csrf(csrf -> csrf.disable())
+
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/register", "/logout", "/css/**", "/images/**", "/js/**").permitAll()
+                        .requestMatchers("/login", "/register", "/logout", "/css/**", "/images/**", "/js/**", "/error").permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout
