@@ -1,0 +1,65 @@
+<!--<div th:fragment="project-details(project)">-->
+<!--    <div class="card project-details mt-4">-->
+<!--        <h4 class="text-center">Project Details</h4>-->
+<!--        <ul class="list-group">-->
+<!--            <li class="list-group-item">-->
+<!--                <strong>Deadline:</strong> <span th:text="|${project.deadline}|">YYYY-MM-DD</span>-->
+<!--            </li>-->
+<!--            <li class="list-group-item">-->
+<!--                <strong>Status:</strong> <span th:text="|${project.isActive ? 'Active' : 'Inactive'}|">Active/Inactive</span>-->
+<!--            </li>-->
+<!--            <li class="list-group-item">-->
+<!--                <strong>Objectives:</strong>-->
+<!--                <p th:text="|${project.objectives}|">Project Objectives</p>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<body>-->
+<!--<div th:fragment="project-details(project)">-->
+<!--    <div class="card project-details mt-4">-->
+<!--        <h4 class="text-center text-warning">Project Details</h4>-->
+<!--        <ul class="list-group list-group-flush">-->
+<!--            <li class="list-group-item bg-dark text-light">-->
+<!--                <strong>Deadline:</strong> <span th:text="|${project.deadline}|">YYYY-MM-DD</span>-->
+<!--            </li>-->
+<!--            <li class="list-group-item bg-dark text-light">-->
+<!--                <strong>Status:</strong> <span th:text="|${project.isActive ? 'Active' : 'Inactive'}|">Active/Inactive</span>-->
+<!--            </li>-->
+<!--            <li class="list-group-item bg-dark text-light">-->
+<!--                <strong>Objectives:</strong>-->
+<!--                <p th:text="|${project.objectives}|">Project Objectives</p>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
+<!-- fragments/DetailsFragment.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="project-details(project)">
+    <div class="card project-details mt-4">
+        <h4 class="text-center text-warning">Project Details</h4>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item bg-dark text-light">
+                <strong>Deadline:</strong> <span th:text="${project.deadline}">YYYY-MM-DD</span>
+            </li>
+            <li class="list-group-item bg-dark text-light">
+                <strong>Status:</strong> <span th:text="${project.isActive} ? 'Active' : 'Inactive'">Active/Inactive</span>
+            </li>
+            <li class="list-group-item bg-dark text-light">
+                <strong>Objectives:</strong>
+                <p th:text="${project.objectives}">Project Objectives</p>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
+

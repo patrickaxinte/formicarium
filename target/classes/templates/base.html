@@ -1,16 +1,564 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    <title th:text="${headerTitle}">Formicarium</title>-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">-->
+
+<!--    <link rel="stylesheet" th:href="@{/css/base.css}">-->
+<!--    <link rel="stylesheet" th:href="@{/css/dashboard.css}">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="dashboard-container">-->
+<!--    &lt;!&ndash; Sidebar &ndash;&gt;-->
+<!--    <div class="dashboard-sidebar">-->
+<!--        <h2 class="sidebar-title">Formicarium</h2>-->
+<!--        <nav class="sidebar-nav">-->
+<!--            <a th:href="@{/dashboard}" th:classappend="${headerTitle == 'Dashboard' ? 'active' : ''}" class="sidebar-link">Dashboard</a>-->
+<!--            <a th:href="@{/profile}" th:classappend="${headerTitle == 'Profile' ? 'active' : ''}" class="sidebar-link">Profile</a>-->
+<!--            <a th:href="@{/settings}" th:classappend="${headerTitle == 'Settings' ? 'active' : ''}" class="sidebar-link">Settings</a>-->
+<!--            <a th:href="@{/projects}" th:classappend="${headerTitle == 'Projects' ? 'active' : ''}" class="sidebar-link">Projects</a>-->
+<!--            <a th:href="@{/tasks}" th:classappend="${headerTitle == 'Tasks' ? 'active' : ''}" class="sidebar-link">Tasks</a>-->
+<!--            <a th:href="@{/logs}" th:classappend="${headerTitle == 'Logs' ? 'active' : ''}" class="sidebar-link">Logs</a>-->
+<!--            <a th:href="@{/chat}" th:classappend="${headerTitle == 'Group Chats' ? 'active' : ''}" class="sidebar-link">Group Chats</a>-->
+<!--            <a th:href="@{/reports}" th:classappend="${headerTitle == 'Reports' ? 'active' : ''}" class="sidebar-link">Reports</a>-->
+<!--        </nav>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Main Content &ndash;&gt;-->
+<!--    <div class="dashboard-main">-->
+<!--        &lt;!&ndash; Header &ndash;&gt;-->
+<!--        <div class="dashboard-header">-->
+<!--            <div class="header-title" th:text="${headerTitle}">Header</div>-->
+<!--            <div class="user-info">-->
+<!--                <img src="../images/user_avatar.png" alt="User Avatar" class="user-avatar">-->
+<!--                <span sec:authentication="name" class="user-name">User</span>-->
+<!--                <form th:action="@{/logout}" method="post" class="logout-form">-->
+<!--&lt;!&ndash;                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />&ndash;&gt;-->
+<!--                    <button type="submit" class="btn btn-sm btn-warning">Logout</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Dynamic Content &ndash;&gt;-->
+<!--        <div class="dashboard-content">-->
+<!--            <div th:replace="${pageContent}"></div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    <title th:text="${headerTitle}">Formicarium</title>-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">-->
+
+<!--    <link rel="stylesheet" th:href="@{/css/base.css}">-->
+<!--    <link rel="stylesheet" th:href="@{/css/dashboard.css}">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="dashboard-container">-->
+<!--    &lt;!&ndash; Sidebar &ndash;&gt;-->
+<!--    <div class="dashboard-sidebar">-->
+<!--        <h2 class="sidebar-title">Formicarium</h2>-->
+<!--        <nav class="sidebar-nav">-->
+<!--            <a th:href="@{/dashboard}" th:classappend="${headerTitle == 'Dashboard' ? 'active' : ''}" class="sidebar-link">Dashboard</a>-->
+<!--            <a th:href="@{/profile}" th:classappend="${headerTitle == 'Profile' ? 'active' : ''}" class="sidebar-link">Profile</a>-->
+<!--            <a th:href="@{/settings}" th:classappend="${headerTitle == 'Settings' ? 'active' : ''}" class="sidebar-link">Settings</a>-->
+<!--            <a th:href="@{/projects}" th:classappend="${headerTitle == 'Projects' ? 'active' : ''}" class="sidebar-link">Projects</a>-->
+<!--            <a th:href="@{/tasks}" th:classappend="${headerTitle == 'Tasks' ? 'active' : ''}" class="sidebar-link">Tasks</a>-->
+<!--            <a th:href="@{/logs}" th:classappend="${headerTitle == 'Logs' ? 'active' : ''}" class="sidebar-link">Logs</a>-->
+<!--            <a th:href="@{/chat}" th:classappend="${headerTitle == 'Group Chats' ? 'active' : ''}" class="sidebar-link">Group Chats</a>-->
+<!--            <a th:href="@{/reports}" th:classappend="${headerTitle == 'Reports' ? 'active' : ''}" class="sidebar-link">Reports</a>-->
+<!--        </nav>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Main Content &ndash;&gt;-->
+<!--    <div class="dashboard-main">-->
+<!--        &lt;!&ndash; Header &ndash;&gt;-->
+<!--        <div class="dashboard-header">-->
+<!--            <div class="header-title" th:text="${headerTitle}">Header</div>-->
+<!--            <div class="user-info">-->
+<!--                <img src="../images/user_avatar.png" alt="User Avatar" class="user-avatar">-->
+<!--                <span sec:authentication="name" class="user-name">User</span>-->
+<!--                <form th:action="@{/logout}" method="post" class="logout-form">-->
+<!--                    <button type="submit" class="btn btn-sm btn-warning">Logout</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Dynamic Content &ndash;&gt;-->
+<!--        <div class="dashboard-content">-->
+<!--            <div th:replace="~{${pageContent} :: content(-->
+
+<!--    project=${project},-->
+<!--    recentMessages=${recentMessages},-->
+<!--    recentTasks=${recentTasks},-->
+<!--    isOwner=${isOwner}-->
+<!--)}" th:if="${pageContent != null}"></div>-->
+
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!-- base.html -->
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    <title th:text="${headerTitle}">Formicarium</title>-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">-->
+
+<!--    <link rel="stylesheet" th:href="@{/css/base.css}">-->
+<!--    <link rel="stylesheet" th:href="@{/css/dashboard.css}">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="dashboard-container">-->
+<!--    &lt;!&ndash; Sidebar &ndash;&gt;-->
+<!--    <div class="dashboard-sidebar">-->
+<!--        <h2 class="sidebar-title">Formicarium</h2>-->
+<!--        <nav class="sidebar-nav">-->
+<!--            <a th:href="@{/dashboard}" th:classappend="${headerTitle == 'Dashboard' ? 'active' : ''}" class="sidebar-link">Dashboard</a>-->
+<!--            <a th:href="@{/profile}" th:classappend="${headerTitle == 'Profile' ? 'active' : ''}" class="sidebar-link">Profile</a>-->
+<!--            <a th:href="@{/settings}" th:classappend="${headerTitle == 'Settings' ? 'active' : ''}" class="sidebar-link">Settings</a>-->
+<!--            <a th:href="@{/projects}" th:classappend="${headerTitle == 'Projects' ? 'active' : ''}" class="sidebar-link">Projects</a>-->
+<!--            <a th:href="@{/tasks}" th:classappend="${headerTitle == 'Tasks' ? 'active' : ''}" class="sidebar-link">Tasks</a>-->
+<!--            <a th:href="@{/logs}" th:classappend="${headerTitle == 'Logs' ? 'active' : ''}" class="sidebar-link">Logs</a>-->
+<!--            <a th:href="@{/chat}" th:classappend="${headerTitle == 'Group Chats' ? 'active' : ''}" class="sidebar-link">Group Chats</a>-->
+<!--            <a th:href="@{/reports}" th:classappend="${headerTitle == 'Reports' ? 'active' : ''}" class="sidebar-link">Reports</a>-->
+<!--        </nav>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Main Content &ndash;&gt;-->
+<!--    <div class="dashboard-main">-->
+<!--        &lt;!&ndash; Header &ndash;&gt;-->
+<!--        <div class="dashboard-header">-->
+<!--            <div class="header-title" th:text="${headerTitle}">Header</div>-->
+<!--            <div class="user-info">-->
+<!--                <img src="../images/user_avatar.png" alt="User Avatar" class="user-avatar">-->
+<!--                <span sec:authentication="name" class="user-name">User</span>-->
+<!--                <form th:action="@{/logout}" method="post" class="logout-form">-->
+<!--                    <button type="submit" class="btn btn-sm btn-warning">Logout</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Dynamic Content &ndash;&gt;-->
+<!--        <div class="dashboard-content">-->
+<!--            <div th:if="${pageContent == 'projects'}"-->
+<!--                 th:replace="~{${pageContent} :: content()}"></div>-->
+
+<!--            <div th:if="${pageContent == 'project-details'}"-->
+<!--                 th:replace="~{${pageContent} :: content(project=${project}, recentMessages=${recentMessages}, recentTasks=${recentTasks}, isOwner=${isOwner})}"></div>-->
+
+<!--            <div th:if="${pageContent == 'project-form'}"-->
+<!--                 th:replace="~{${pageContent} :: content(project=${project})}"></div>-->
+<!--        </div>-->
+
+<!--    </div>-->
+<!--</div>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!--&lt;!&ndash; base.html &ndash;&gt;-->
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    <title th:text="${headerTitle}">Formicarium</title>-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">-->
+
+<!--    <link rel="stylesheet" th:href="@{/css/base.css}">-->
+<!--    <link rel="stylesheet" th:href="@{/css/dashboard.css}">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="dashboard-container">-->
+<!--    &lt;!&ndash; Sidebar &ndash;&gt;-->
+<!--    <div class="dashboard-sidebar">-->
+<!--        <h2 class="sidebar-title">Formicarium</h2>-->
+<!--        <nav class="sidebar-nav">-->
+<!--            <a th:href="@{/dashboard}" th:classappend="${headerTitle == 'Dashboard' ? 'active' : ''}" class="sidebar-link">Dashboard</a>-->
+<!--            <a th:href="@{/profile}" th:classappend="${headerTitle == 'Profile' ? 'active' : ''}" class="sidebar-link">Profile</a>-->
+<!--            <a th:href="@{/settings}" th:classappend="${headerTitle == 'Settings' ? 'active' : ''}" class="sidebar-link">Settings</a>-->
+<!--            <a th:href="@{/projects}" th:classappend="${headerTitle == 'Projects' ? 'active' : ''}" class="sidebar-link">Projects</a>-->
+<!--            <a th:href="@{/tasks}" th:classappend="${headerTitle == 'Tasks' ? 'active' : ''}" class="sidebar-link">Tasks</a>-->
+<!--            <a th:href="@{/logs}" th:classappend="${headerTitle == 'Logs' ? 'active' : ''}" class="sidebar-link">Logs</a>-->
+<!--            <a th:href="@{/chat}" th:classappend="${headerTitle == 'Group Chats' ? 'active' : ''}" class="sidebar-link">Group Chats</a>-->
+<!--            <a th:href="@{/reports}" th:classappend="${headerTitle == 'Reports' ? 'active' : ''}" class="sidebar-link">Reports</a>-->
+<!--        </nav>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Main Content &ndash;&gt;-->
+<!--    <div class="dashboard-main">-->
+<!--        &lt;!&ndash; Header &ndash;&gt;-->
+<!--        <div class="dashboard-header">-->
+<!--            <div class="header-title" th:text="${headerTitle}">Header</div>-->
+<!--            <div class="user-info">-->
+<!--                <img src="../images/user_avatar.png" alt="User Avatar" class="user-avatar">-->
+<!--                <span sec:authentication="name" class="user-name">User</span>-->
+<!--                <form th:action="@{/logout}" method="post" class="logout-form">-->
+<!--                    <button type="submit" class="btn btn-sm btn-warning">Logout</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Dynamic Content &ndash;&gt;-->
+<!--        <div class="dashboard-content">-->
+<!--            <div th:if="${pageContent == 'projects'}"-->
+<!--                 th:replace="~{${pageContent} :: content()}"></div>-->
+
+<!--            <div th:if="${pageContent == 'project-details'}"-->
+<!--                 th:replace="~{${pageContent} :: content(project=${project}, recentMessages=${recentMessages}, recentTasks=${recentTasks}, isOwner=${isOwner})}"></div>-->
+
+<!--            <div th:if="${pageContent == 'project-form'}"-->
+<!--                 th:replace="~{${pageContent} :: content(project=${project})}"></div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!-- src/main/resources/templates/base.html -->
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    <title th:text="${headerTitle}">Formicarium</title>-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
+
+<!--    <link rel="stylesheet" th:href="@{/css/base.css}">-->
+<!--    <link rel="stylesheet" th:href="@{/css/dashboard.css}">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="dashboard-container">-->
+<!--    &lt;!&ndash; Sidebar &ndash;&gt;-->
+<!--    <div class="dashboard-sidebar">-->
+<!--        <h2 class="sidebar-title">Formicarium</h2>-->
+<!--        <nav class="sidebar-nav">-->
+<!--            <a th:href="@{/dashboard}" th:classappend="${headerTitle == 'Dashboard' ? 'active' : ''}" class="sidebar-link">Dashboard</a>-->
+<!--            <a th:href="@{/profile}" th:classappend="${headerTitle == 'Profile' ? 'active' : ''}" class="sidebar-link">Profile</a>-->
+<!--            <a th:href="@{/settings}" th:classappend="${headerTitle == 'Settings' ? 'active' : ''}" class="sidebar-link">Settings</a>-->
+<!--            <a th:href="@{/projects}" th:classappend="${headerTitle == 'Projects' ? 'active' : ''}" class="sidebar-link">Projects</a>-->
+<!--            <a th:href="@{/tasks}" th:classappend="${headerTitle == 'Tasks' ? 'active' : ''}" class="sidebar-link">Tasks</a>-->
+<!--            <a th:href="@{/logs}" th:classappend="${headerTitle == 'Logs' ? 'active' : ''}" class="sidebar-link">Logs</a>-->
+<!--            <a th:href="@{/chat}" th:classappend="${headerTitle == 'Group Chats' ? 'active' : ''}" class="sidebar-link">Group Chats</a>-->
+<!--            <a th:href="@{/reports}" th:classappend="${headerTitle == 'Reports' ? 'active' : ''}" class="sidebar-link">Reports</a>-->
+<!--        </nav>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Main Content &ndash;&gt;-->
+<!--    <div class="dashboard-main">-->
+<!--        &lt;!&ndash; Header &ndash;&gt;-->
+<!--        <div class="dashboard-header">-->
+<!--            <div class="header-title" th:text="${headerTitle}">Header</div>-->
+<!--            <div class="user-info">-->
+<!--                <img src="../images/user_avatar.png" alt="User Avatar" class="user-avatar">-->
+<!--                <span sec:authentication="name" class="user-name">User</span>-->
+<!--                <form th:action="@{/logout}" method="post" class="logout-form">-->
+<!--                    <button type="submit" class="btn btn-sm btn-warning">Logout</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Dynamic Content &ndash;&gt;-->
+<!--        <div class="dashboard-content">-->
+<!--            <div th:if="${pageContent == 'projects'}"-->
+<!--                 th:replace="~{projects :: content()}"></div>-->
+
+<!--            <div th:if="${pageContent == 'project-details'}"-->
+<!--                 th:replace="~{project-details :: content(project=${project}, recentMessages=${recentMessages}, recentTasks=${recentTasks}, isOwner=${isOwner})}"></div>-->
+
+<!--            <div th:if="${pageContent == 'project-form'}"-->
+<!--                 th:replace="~{project-form :: content(project=${project})}"></div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    <title th:text="${headerTitle}">Formicarium</title>-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">-->
+<!--    <link rel="stylesheet" th:href="@{/css/base.css}">-->
+<!--    <link rel="stylesheet" th:href="@{/css/dashboard.css}">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="dashboard-container">-->
+<!--    &lt;!&ndash; Sidebar &ndash;&gt;-->
+<!--    <div class="dashboard-sidebar">-->
+<!--        <h2 class="sidebar-title">Formicarium</h2>-->
+<!--        <nav class="sidebar-nav">-->
+<!--            <a th:href="@{/dashboard}" th:classappend="${headerTitle == 'Dashboard' ? 'active' : ''}" class="sidebar-link">Dashboard</a>-->
+<!--            <a th:href="@{/profile}" th:classappend="${headerTitle == 'Profile' ? 'active' : ''}" class="sidebar-link">Profile</a>-->
+<!--            <a th:href="@{/settings}" th:classappend="${headerTitle == 'Settings' ? 'active' : ''}" class="sidebar-link">Settings</a>-->
+<!--            <a th:href="@{/projects}" th:classappend="${headerTitle == 'Projects' ? 'active' : ''}" class="sidebar-link">Projects</a>-->
+<!--            <a th:href="@{/tasks}" th:classappend="${headerTitle == 'Tasks' ? 'active' : ''}" class="sidebar-link">Tasks</a>-->
+<!--            <a th:href="@{/logs}" th:classappend="${headerTitle == 'Logs' ? 'active' : ''}" class="sidebar-link">Logs</a>-->
+<!--            <a th:href="@{/chat}" th:classappend="${headerTitle == 'Group Chats' ? 'active' : ''}" class="sidebar-link">Group Chats</a>-->
+<!--            <a th:href="@{/reports}" th:classappend="${headerTitle == 'Reports' ? 'active' : ''}" class="sidebar-link">Reports</a>-->
+<!--        </nav>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Main Content &ndash;&gt;-->
+<!--    <div class="dashboard-main">-->
+<!--        &lt;!&ndash; Header &ndash;&gt;-->
+<!--        <div class="dashboard-header">-->
+<!--            <div class="header-title" th:text="${headerTitle}">Header</div>-->
+<!--            <div class="user-info">-->
+<!--                <img src="../images/user_avatar.png" alt="User Avatar" class="user-avatar">-->
+<!--                <span sec:authentication="name" class="user-name">User</span>-->
+<!--                <form th:action="@{/logout}" method="post" class="logout-form">-->
+<!--                    <button type="submit" class="btn btn-sm btn-warning">Logout</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Dynamic Content &ndash;&gt;-->
+<!--        <div class="dashboard-content">-->
+<!--            &lt;!&ndash; Projects Overview &ndash;&gt;-->
+<!--            <div th:if="${pageContent == 'projects'}"-->
+<!--                 th:replace="~{projects :: content()}"></div>-->
+
+
+<!--            &lt;!&ndash; Project Details &ndash;&gt;-->
+<!--            <div th:if="${pageContent == 'project-details'}">-->
+<!--                <div th:replace="~{project-details :: content(project=${project}, recentMessages=${recentMessages}, recentTasks=${recentTasks}, isOwner=${isOwner})}"></div>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; Project Form &ndash;&gt;-->
+<!--            <div th:if="${pageContent == 'project-form'}">-->
+<!--                <div th:replace="~{project-form :: content(project=${project})}"></div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">-->
+
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    <title th:text="${headerTitle}">Formicarium</title>-->
+<!--    <link rel="stylesheet" th:href="@{/css/base.css}">-->
+<!--    <link rel="stylesheet" th:href="@{/css/dashboard.css}">-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="dashboard-container">-->
+<!--    &lt;!&ndash; Sidebar &ndash;&gt;-->
+<!--    <div class="dashboard-sidebar">-->
+<!--        <h2 class="sidebar-title">Formicarium</h2>-->
+<!--        <nav class="sidebar-nav">-->
+<!--            <a th:href="@{/dashboard}" class="sidebar-link" th:classappend="${headerTitle == 'Dashboard' ? 'active' : ''}">Dashboard</a>-->
+<!--            <a th:href="@{/profile}" class="sidebar-link" th:classappend="${headerTitle == 'Profile' ? 'active' : ''}">Profile</a>-->
+<!--            <a th:href="@{/settings}" class="sidebar-link" th:classappend="${headerTitle == 'Settings' ? 'active' : ''}">Settings</a>-->
+<!--            <a th:href="@{/projects}" class="sidebar-link" th:classappend="${headerTitle == 'Projects' ? 'active' : ''}">Projects</a>-->
+<!--            <a th:href="@{/tasks}" class="sidebar-link" th:classappend="${headerTitle == 'Tasks' ? 'active' : ''}">Tasks</a>-->
+<!--            <a th:href="@{/logs}" class="sidebar-link" th:classappend="${headerTitle == 'Logs' ? 'active' : ''}">Logs</a>-->
+<!--            <a th:href="@{/chat}" class="sidebar-link" th:classappend="${headerTitle == 'Group Chats' ? 'active' : ''}">Group Chats</a>-->
+<!--            <a th:href="@{/reports}" class="sidebar-link" th:classappend="${headerTitle == 'Reports' ? 'active' : ''}">Reports</a>-->
+<!--        </nav>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Main Content &ndash;&gt;-->
+<!--    <div class="dashboard-main">-->
+<!--        &lt;!&ndash; Header &ndash;&gt;-->
+<!--        <div class="dashboard-header">-->
+<!--            <div class="header-title" th:text="${headerTitle}">Header</div>-->
+<!--            <div class="user-info">-->
+<!--                <img src="../images/user_avatar.png" alt="User Avatar" class="user-avatar">-->
+<!--                <span sec:authentication="name" class="user-name">User</span>-->
+<!--                <form th:action="@{/logout}" method="post" class="logout-form">-->
+<!--                    <button type="submit" class="btn btn-sm btn-warning">Logout</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Content Placeholder &ndash;&gt;-->
+<!--        <div class="dashboard-content" layout:fragment="content"></div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
+<!--</body>-->
+<!--</html>-->
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    <title th:text="${headerTitle}">Formicarium</title>-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">-->
+<!--    <link rel="stylesheet" th:href="@{/css/base.css}">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="dashboard-container">-->
+<!--    &lt;!&ndash; Sidebar &ndash;&gt;-->
+<!--    <div class="dashboard-sidebar">-->
+<!--        <h2 class="sidebar-title">Formicarium</h2>-->
+<!--        <nav class="sidebar-nav">-->
+<!--            <a th:href="@{/dashboard}" class="sidebar-link" th:classappend="${headerTitle == 'Dashboard' ? 'active' : ''}">Dashboard</a>-->
+<!--            <a th:href="@{/profile}" class="sidebar-link" th:classappend="${headerTitle == 'Profile' ? 'active' : ''}">Profile</a>-->
+<!--            <a th:href="@{/settings}" class="sidebar-link" th:classappend="${headerTitle == 'Settings' ? 'active' : ''}">Settings</a>-->
+<!--            <a th:href="@{/projects}" class="sidebar-link" th:classappend="${headerTitle == 'Projects' ? 'active' : ''}">Projects</a>-->
+<!--            <a th:href="@{/tasks}" class="sidebar-link" th:classappend="${headerTitle == 'Tasks' ? 'active' : ''}">Tasks</a>-->
+<!--            <a th:href="@{/logs}" class="sidebar-link" th:classappend="${headerTitle == 'Logs' ? 'active' : ''}">Logs</a>-->
+<!--            <a th:href="@{/chat}" class="sidebar-link" th:classappend="${headerTitle == 'Group Chats' ? 'active' : ''}">Group Chats</a>-->
+<!--            <a th:href="@{/reports}" class="sidebar-link" th:classappend="${headerTitle == 'Reports' ? 'active' : ''}">Reports</a>-->
+<!--        </nav>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Main Content &ndash;&gt;-->
+<!--    <div class="dashboard-main">-->
+<!--        &lt;!&ndash; Header &ndash;&gt;-->
+<!--        <div class="dashboard-header">-->
+<!--            <div class="header-title" th:text="${headerTitle}">Header</div>-->
+<!--            <div class="user-info">-->
+<!--                <img src="https://via.placeholder.com/40" alt="User Avatar" class="user-avatar">-->
+<!--                <span sec:authentication="name" class="user-name">User</span>-->
+<!--                <form th:action="@{/logout}" method="post" class="logout-form">-->
+<!--                    <button type="submit" class="btn btn-sm btn-warning">Logout</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Content Placeholder &ndash;&gt;-->
+<!--        <div class="dashboard-content" layout:fragment="content">-->
+<!--            &lt;!&ndash; Unique content will be injected here &ndash;&gt;-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    <title th:text="${headerTitle}">Formicarium</title>-->
+<!--    &lt;!&ndash; Bootstrap CSS &ndash;&gt;-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">-->
+<!--    &lt;!&ndash; Google Fonts &ndash;&gt;-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">-->
+<!--    &lt;!&ndash; Bootstrap Icons &ndash;&gt;-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">-->
+<!--    &lt;!&ndash; Custom CSS &ndash;&gt;-->
+<!--    <link rel="stylesheet" th:href="@{/css/base.css}">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="dashboard-container">-->
+<!--    &lt;!&ndash; Sidebar &ndash;&gt;-->
+<!--    <div class="dashboard-sidebar">-->
+<!--        <h2 class="sidebar-title">Formicarium</h2>-->
+<!--        <nav class="sidebar-nav">-->
+<!--            <a th:href="@{/dashboard}" class="sidebar-link" th:classappend="${headerTitle == 'Dashboard' ? 'active' : ''}">Dashboard</a>-->
+<!--            <a th:href="@{/profile}" class="sidebar-link" th:classappend="${headerTitle == 'Profile' ? 'active' : ''}">Profile</a>-->
+<!--            <a th:href="@{/settings}" class="sidebar-link" th:classappend="${headerTitle == 'Settings' ? 'active' : ''}">Settings</a>-->
+<!--            <a th:href="@{/projects}" class="sidebar-link" th:classappend="${headerTitle == 'Projects' ? 'active' : ''}">Projects</a>-->
+<!--            <a th:href="@{/tasks}" class="sidebar-link" th:classappend="${headerTitle == 'Tasks' ? 'active' : ''}">Tasks</a>-->
+<!--            <a th:href="@{/logs}" class="sidebar-link" th:classappend="${headerTitle == 'Logs' ? 'active' : ''}">Logs</a>-->
+<!--            <a th:href="@{/chat}" class="sidebar-link" th:classappend="${headerTitle == 'Group Chats' ? 'active' : ''}">Group Chats</a>-->
+<!--            <a th:href="@{/reports}" class="sidebar-link" th:classappend="${headerTitle == 'Reports' ? 'active' : ''}">Reports</a>-->
+<!--        </nav>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Main Content &ndash;&gt;-->
+<!--    <div class="dashboard-main">-->
+<!--        &lt;!&ndash; Header &ndash;&gt;-->
+<!--        <div class="dashboard-header">-->
+<!--            <div class="header-title" th:text="${headerTitle}">Header</div>-->
+<!--            <div class="user-info">-->
+<!--                <img th:src="@{/images/user_avatar.png}" alt="User Avatar" class="user-avatar">-->
+<!--                <span sec:authentication="name" class="user-name">User</span>-->
+<!--                <form th:action="@{/logout}" method="post" class="logout-form">-->
+<!--                    <button type="submit" class="btn btn-sm btn-warning">Logout</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Content Placeholder &ndash;&gt;-->
+<!--        <div class="dashboard-content" layout:fragment="content">-->
+<!--            &lt;!&ndash; Unique content will be injected here &ndash;&gt;-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--&lt;!&ndash; Bootstrap JS Bundle &ndash;&gt;-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title th:text="${headerTitle}">Formicarium</title>
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
+    <!-- Custom CSS -->
     <link rel="stylesheet" th:href="@{/css/base.css}">
-    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
 </head>
 <body>
 <div class="dashboard-container">
@@ -18,14 +566,14 @@
     <div class="dashboard-sidebar">
         <h2 class="sidebar-title">Formicarium</h2>
         <nav class="sidebar-nav">
-            <a th:href="@{/dashboard}" th:classappend="${headerTitle == 'Dashboard' ? 'active' : ''}" class="sidebar-link">Dashboard</a>
-            <a th:href="@{/profile}" th:classappend="${headerTitle == 'Profile' ? 'active' : ''}" class="sidebar-link">Profile</a>
-            <a th:href="@{/settings}" th:classappend="${headerTitle == 'Settings' ? 'active' : ''}" class="sidebar-link">Settings</a>
-            <a th:href="@{/projects}" th:classappend="${headerTitle == 'Projects' ? 'active' : ''}" class="sidebar-link">Projects</a>
-            <a th:href="@{/tasks}" th:classappend="${headerTitle == 'Tasks' ? 'active' : ''}" class="sidebar-link">Tasks</a>
-            <a th:href="@{/logs}" th:classappend="${headerTitle == 'Logs' ? 'active' : ''}" class="sidebar-link">Logs</a>
-            <a th:href="@{/chat}" th:classappend="${headerTitle == 'Group Chats' ? 'active' : ''}" class="sidebar-link">Group Chats</a>
-            <a th:href="@{/reports}" th:classappend="${headerTitle == 'Reports' ? 'active' : ''}" class="sidebar-link">Reports</a>
+            <a th:href="@{/dashboard}" class="sidebar-link" th:classappend="${headerTitle == 'Dashboard' ? 'active' : ''}">Dashboard</a>
+            <a th:href="@{/profile}" class="sidebar-link" th:classappend="${headerTitle == 'Profile' ? 'active' : ''}">Profile</a>
+            <a th:href="@{/settings}" class="sidebar-link" th:classappend="${headerTitle == 'Settings' ? 'active' : ''}">Settings</a>
+            <a th:href="@{/projects}" class="sidebar-link" th:classappend="${headerTitle == 'Projects' ? 'active' : ''}">Projects</a>
+            <a th:href="@{/taskspage}" class="sidebar-link" th:classappend="${headerTitle == 'Tasks' ? 'active' : ''}">Tasks</a>
+            <a th:href="@{/logs}" class="sidebar-link" th:classappend="${headerTitle == 'Logs' ? 'active' : ''}">Logs</a>
+            <a th:href="@{/chat}" class="sidebar-link" th:classappend="${headerTitle == 'Group Chats' ? 'active' : ''}">Group Chats</a>
+            <a th:href="@{/reports}" class="sidebar-link" th:classappend="${headerTitle == 'Reports' ? 'active' : ''}">Reports</a>
         </nav>
     </div>
 
@@ -35,21 +583,22 @@
         <div class="dashboard-header">
             <div class="header-title" th:text="${headerTitle}">Header</div>
             <div class="user-info">
-                <img src="../images/user_avatar.png" alt="User Avatar" class="user-avatar">
+                <img th:src="@{/images/user_avatar.png}" alt="User Avatar" class="user-avatar">
                 <span sec:authentication="name" class="user-name">User</span>
                 <form th:action="@{/logout}" method="post" class="logout-form">
-<!--                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
                     <button type="submit" class="btn btn-sm btn-warning">Logout</button>
                 </form>
             </div>
         </div>
 
-        <!-- Dynamic Content -->
-        <div class="dashboard-content">
-            <div th:replace="${pageContent}"></div>
+        <!-- Content Placeholder -->
+        <div class="dashboard-content" layout:fragment="content">
+            <!-- Unique content will be injected here -->
         </div>
     </div>
 </div>
+<!-- Bootstrap JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

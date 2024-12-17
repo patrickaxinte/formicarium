@@ -1,35 +1,47 @@
 package com.example.formicarium.entity;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "project_memberships")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class ProjectMembership {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private ProjectMembershipId id;
 
-    // legatura catre proiect
-    @ManyToOne
-    @JoinColumn(name = "project_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @MapsId("projectId")
+    @JoinColumn(name = "project_id")
     private Project project;
 
-    // legatura catre User
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @MapsId("userId")
+    @JoinColumn(name = "user_id")
     private User user;
 
-    // rolul utilizatorului in proiect
-    @Column(nullable = false)
-    private String role;
+    private String role; // Project-specific role: OWNER, COLLABORATOR, MEMBER
 
     private LocalDateTime dateJoined;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ProjectMembership that = (ProjectMembership) o;
+
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }

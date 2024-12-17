@@ -1,11 +1,470 @@
+//package com.example.formicarium.controller;
+//
+//import com.example.formicarium.entity.Message;
+//import com.example.formicarium.entity.Project;
+//import com.example.formicarium.entity.Task;
+//import com.example.formicarium.service.ProjectService;
+//import org.springframework.security.core.Authentication;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.ui.Model;
+//import org.springframework.web.bind.annotation.*;
+//
+//import java.util.List;
+//
+//@Controller
+//@RequestMapping("/projects")
+//public class ProjectsController {
+//
+//    private final ProjectService projectService;
+//
+//    public ProjectsController(ProjectService projectService) {
+//        this.projectService = projectService;
+//    }
+//
+//    // Afișarea tuturor proiectelor active și inactive
+////    @GetMapping
+////    public String showProjects(Authentication authentication, Model model) {
+////        List<Project> activeProjects = projectService.getActiveProjectsForUser(authentication);
+////        List<Project> inactiveProjects = projectService.getInactiveProjectsForUser(authentication);
+////
+////        model.addAttribute("activeProjects", activeProjects);
+////        model.addAttribute("inactiveProjects", inactiveProjects);
+////        model.addAttribute("pageContent", "projects");
+////        model.addAttribute("headerTitle", "Projects");
+////        return "base";
+////    }
+//
+//    @GetMapping
+//    public String showProjects(Authentication authentication, Model model) {
+//        List<Project> activeProjects = projectService.getActiveProjectsForUser(authentication);
+//        List<Project> inactiveProjects = projectService.getInactiveProjectsForUser(authentication);
+//
+//        model.addAttribute("activeProjects", activeProjects);
+//        model.addAttribute("inactiveProjects", inactiveProjects);
+//        model.addAttribute("headerTitle", "Projects");
+//        return "projects"; // Returns projects.html
+//    }
+//
+//    // Afișarea detaliilor unui proiect
+////    @GetMapping("/{id}")
+////    public String showProjectDetails(@PathVariable Long id, Authentication authentication, Model model) {
+////        Project project = projectService.getProjectDetails(id, authentication);
+////        List<Message> recentMessages = projectService.getRecentMessagesForProject(id);
+////        List<Task> recentTasks = projectService.getRecentTasksForProject(id);
+////
+////        model.addAttribute("project", project);
+////        model.addAttribute("recentMessages", recentMessages);
+////        model.addAttribute("recentTasks", recentTasks);
+////        model.addAttribute("pageContent", "project-details");
+////        model.addAttribute("headerTitle", project.getName());
+////        model.addAttribute("isOwner", projectService.isOwner(project, authentication));
+////
+////        return "base";
+////    }
+//
+//    @GetMapping("/{id}")
+//    public String showProjectDetails(@PathVariable Long id, Authentication authentication, Model model) {
+//        Project project = projectService.getProjectDetails(id, authentication);
+//        List<Message> recentMessages = projectService.getRecentMessagesForProject(id);
+//        List<Task> recentTasks = projectService.getRecentTasksForProject(id);
+//
+//        model.addAttribute("project", project);
+//        model.addAttribute("recentMessages", recentMessages);
+//        model.addAttribute("recentTasks", recentTasks);
+//        model.addAttribute("headerTitle", project.getName());
+//        model.addAttribute("isOwner", projectService.isOwner(project, authentication));
+//
+//        return "project-details"; // Returns project-details.html
+//    }
+//    // Reactivarea unui proiect
+//    @PostMapping("/activate/{id}")
+//    public String activateProject(@PathVariable Long id, Authentication authentication) {
+//        projectService.activateProject(id, authentication);
+//        return "redirect:/projects";
+//    }
+//
+//    // Dezactivarea unui proiect
+//    @PostMapping("/deactivate/{id}")
+//    public String deactivateProject(@PathVariable Long id, Authentication authentication) {
+//        projectService.deactivateProject(id, authentication);
+//        return "redirect:/projects";
+//    }
+//
+//    // Formular universal pentru creare/editare proiect
+////    @GetMapping("/form")
+////    public String showProjectForm(@RequestParam(required = false) Long id, Model model, Authentication authentication) {
+////        Project project = (id != null)
+////                ? projectService.getProjectForEdit(id, authentication)
+////                : new Project(); // Proiect nou dacă `id` este null
+////
+////        model.addAttribute("project", project);
+////        model.addAttribute("pageContent", "project-form");
+////        model.addAttribute("headerTitle", id != null ? "Edit Project" : "Add Project");
+////        return "base";
+////    }
+//
+//    @GetMapping("/form")
+//    public String showProjectForm(@RequestParam(required = false) Long id, Model model, Authentication authentication) {
+//        Project project = (id != null) ?
+//                projectService.getProjectForEdit(id, authentication) :
+//                new Project(); // New project if `id` is null
+//
+//        model.addAttribute("project", project);
+//        model.addAttribute("headerTitle", id != null ? "Edit Project" : "Add Project");
+//        return "project-form"; // Returns project-form.html
+//    }
+//
+//    // Salvarea unui proiect (nou sau editat)
+//    @PostMapping("/form")
+//    public String saveProject(@RequestParam(required = false) Long id, @ModelAttribute Project project, Authentication authentication) {
+//        if (id == null) {
+//            projectService.createProject(project, authentication); // Creare
+//        } else {
+//            projectService.updateProject(id, project, authentication); // Editare
+//        }
+//        return "redirect:/projects";
+//    }
+//
+//    // Ștergerea unui proiect
+//    @PostMapping("/delete/{id}")
+//    public String deleteProject(@PathVariable Long id, Authentication authentication) {
+//        projectService.deleteProject(id, authentication);
+//        return "redirect:/projects";
+//    }
+//}
+
+
+//package com.example.formicarium.controller;
+//
+//import com.example.formicarium.entity.Message;
+//import com.example.formicarium.entity.Project;
+//import com.example.formicarium.entity.Task;
+//import com.example.formicarium.service.ProjectService;
+//import com.example.formicarium.service.UserService;
+//import org.springframework.security.core.Authentication;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.ui.Model;
+//import org.springframework.web.bind.annotation.*;
+//
+//import java.util.List;
+//
+//@Controller
+//@RequestMapping("/projects")
+//public class ProjectsController {
+//
+//    private final ProjectService projectService;
+//    private final UserService userService;
+//
+//    public ProjectsController(ProjectService projectService, UserService userService) {
+//        this.projectService = projectService;
+//        this.userService = userService;
+//    }
+//
+//    // Display all active and inactive projects
+//    @GetMapping
+//    public String showProjects(Authentication authentication, Model model) {
+//        List<Project> activeProjects = projectService.getActiveProjectsForUser(authentication);
+//        List<Project> inactiveProjects = projectService.getInactiveProjectsForUser(authentication);
+//
+//        model.addAttribute("activeProjects", activeProjects);
+//        model.addAttribute("inactiveProjects", inactiveProjects);
+//        model.addAttribute("headerTitle", "Projects");
+//        return "projects"; // Returns projects.html
+//    }
+//
+//    // Display project details
+//    @GetMapping("/{id}")
+//    public String showProjectDetails(@PathVariable Long id, Authentication authentication, Model model) {
+//        Project project = projectService.getProjectDetails(id, authentication);
+//        List<Message> recentMessages = projectService.getRecentMessagesForProject(id);
+//        List<Task> recentTasks = projectService.getRecentTasksForProject(id);
+//
+//        model.addAttribute("project", project);
+//        model.addAttribute("recentMessages", recentMessages);
+//        model.addAttribute("recentTasks", recentTasks);
+//        model.addAttribute("headerTitle", project.getName());
+//        model.addAttribute("isOwner", projectService.isOwner(project, authentication));
+//
+//        return "project-details"; // Returns project-details.html
+//    }
+//
+//    // Reactivate a project
+//    @PostMapping("/activate/{id}")
+//    public String activateProject(@PathVariable Long id, Authentication authentication) {
+//        projectService.activateProject(id, authentication);
+//        return "redirect:/projects";
+//    }
+//
+//    // Deactivate a project
+//    @PostMapping("/deactivate/{id}")
+//    public String deactivateProject(@PathVariable Long id, Authentication authentication) {
+//        projectService.deactivateProject(id, authentication);
+//        return "redirect:/projects";
+//    }
+//
+//    // Universal form for creating/editing a project
+//    @GetMapping("/form")
+//    public String showProjectForm(@RequestParam(required = false) Long id, Model model, Authentication authentication) {
+//        Project project = (id != null)
+//                ? projectService.getProjectForEdit(id, authentication)
+//                : new Project(); // New project if `id` is null
+//
+//        model.addAttribute("project", project);
+//        model.addAttribute("headerTitle", id != null ? "Edit Project" : "Add Project");
+//        return "project-form"; // Returns project-form.html
+//    }
+//
+//    // Save a project (new or edited)
+//    @PostMapping("/form")
+//    public String saveProject(@RequestParam(required = false) Long id, @ModelAttribute Project project, Authentication authentication) {
+//        if (id == null) {
+//            projectService.createProject(project, authentication); // Create
+//        } else {
+//            projectService.updateProject(id, project, authentication); // Edit
+//        }
+//        return "redirect:/projects";
+//    }
+//
+//    // Delete a project
+//    @PostMapping("/delete/{id}")
+//    public String deleteProject(@PathVariable Long id, Authentication authentication) {
+//        projectService.deleteProject(id, authentication);
+//        return "redirect:/projects";
+//    }
+//
+////    // Show form for adding a new member
+////    @GetMapping("/{projectId}/members/add")
+////    public String showAddMemberForm(@PathVariable Long projectId, Authentication authentication, Model model) {
+////        // Check permission (OWNER or COLLABORATOR)
+////        projectService.verifyCanAddMembers(projectId, authentication);
+////
+////        // Add attributes for the form (usernameOrEmail, role)
+////        model.addAttribute("usernameOrEmail", "");
+////        model.addAttribute("selectedRole", "MEMBER"); // Default to MEMBER
+////        model.addAttribute("projectId", projectId);
+////        model.addAttribute("headerTitle", "Add New Member");
+////
+////        return "project-add-member"; // New template for form
+////    }
+////
+////    // Handle form submission for adding a new member
+////    @PostMapping("/{projectId}/members/add")
+////    public String addNewMember(@PathVariable Long projectId,
+////                               @RequestParam("usernameOrEmail") String usernameOrEmail,
+////                               @RequestParam("role") String role,
+////                               Authentication authentication) {
+////        projectService.addMemberToProject(projectId, usernameOrEmail, role, authentication);
+////        return "redirect:/projects/" + projectId;
+////    }
+//
+//    // Show form for adding a new member
+//    @GetMapping("/{projectId}/members/add")
+//    public String showAddMemberForm(@PathVariable Long projectId, Authentication authentication, Model model) {
+//        // Check permission (OWNER or COLLABORATOR)
+//        projectService.verifyCanAddMembers(projectId, authentication);
+//
+//        // Add attributes for the form (usernameOrEmail, role)
+//        model.addAttribute("usernameOrEmail", "");
+//        model.addAttribute("selectedRole", "MEMBER"); // Default to MEMBER
+//        model.addAttribute("projectId", projectId);
+//        model.addAttribute("headerTitle", "Add New Member");
+//
+//        return "project-add-member"; // New template for form
+//    }
+//
+//    // Handle form submission for adding a new member
+//    @PostMapping("/{projectId}/members/add")
+//    public String addNewMember(@PathVariable Long projectId,
+//                               @RequestParam("usernameOrEmail") String usernameOrEmail,
+//                               @RequestParam("role") String role,
+//                               Authentication authentication,
+//                               Model model) {
+//        try {
+//            projectService.addMemberToProject(projectId, usernameOrEmail, role, authentication);
+//            return "redirect:/projects/" + projectId;
+//        } catch (IllegalArgumentException | SecurityException e) {
+//            model.addAttribute("errorMessage", e.getMessage());
+//            model.addAttribute("usernameOrEmail", usernameOrEmail);
+//            model.addAttribute("selectedRole", role);
+//            model.addAttribute("projectId", projectId);
+//            model.addAttribute("headerTitle", "Add New Member");
+//            return "project-add-member"; // Return to form with error
+//        }
+//    }
+//
+//}
+
+// ProjectsController.java
+
+//package com.example.formicarium.controller;
+//
+//import com.example.formicarium.entity.Message;
+//import com.example.formicarium.entity.Project;
+//import com.example.formicarium.entity.Task;
+//import com.example.formicarium.service.ProjectService;
+//import com.example.formicarium.service.UserService;
+//import org.springframework.security.core.Authentication;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.ui.Model;
+//import org.springframework.web.bind.annotation.*;
+//
+//import java.util.List;
+//
+//@Controller
+//@RequestMapping("/projects")
+//public class ProjectsController {
+//
+//    private final ProjectService projectService;
+//    private final UserService userService;
+//
+//    public ProjectsController(ProjectService projectService, UserService userService) {
+//        this.projectService = projectService;
+//        this.userService = userService;
+//    }
+//
+//    // Display all active and inactive projects
+//    @GetMapping
+//    public String showProjects(Authentication authentication, Model model) {
+//        List<Project> activeProjects = projectService.getActiveProjectsForUser(authentication);
+//        List<Project> inactiveProjects = projectService.getInactiveProjectsForUser(authentication);
+//
+//        model.addAttribute("activeProjects", activeProjects);
+//        model.addAttribute("inactiveProjects", inactiveProjects);
+//        model.addAttribute("headerTitle", "Projects");
+//        return "projects"; // Returns projects.html
+//    }
+//
+//    // Display project details
+////    @GetMapping("/{id}")
+////    public String showProjectDetails(@PathVariable Long id, Authentication authentication, Model model) {
+////        Project project = projectService.getProjectDetails(id, authentication);
+////        List<Message> recentMessages = projectService.getRecentMessagesForProject(id);
+////        List<Task> recentTasks = projectService.getRecentTasksForProject(id);
+////
+////        model.addAttribute("project", project);
+////        model.addAttribute("recentMessages", recentMessages);
+////        model.addAttribute("recentTasks", recentTasks);
+////        model.addAttribute("headerTitle", project.getName());
+////        model.addAttribute("isOwner", projectService.isOwner(project, authentication));
+////        model.addAttribute("isCollaborator", projectService.isCollaborator(project, authentication)); // Added
+////
+////        return "project-details"; // Returns project-details.html
+////    }
+//
+//    // ProjectsController.java
+//
+//    @GetMapping("/{id}")
+//    public String showProjectDetails(@PathVariable Long id, Authentication authentication, Model model) {
+//        Project project = projectService.getProjectDetails(id, authentication);
+//        List<Message> recentMessages = projectService.getRecentMessagesForProject(id);
+//        List<Task> recentTasks = projectService.getRecentTasksForProject(id);
+//
+//        model.addAttribute("project", project);
+//        model.addAttribute("recentMessages", recentMessages);
+//        model.addAttribute("recentTasks", recentTasks);
+//        model.addAttribute("headerTitle", project.getName());
+//        model.addAttribute("isOwner", projectService.isOwner(project, authentication));
+//        model.addAttribute("isCollaborator", projectService.isCollaborator(project, authentication)); // Added
+//
+//        return "project-details"; // Returns project-details.html
+//    }
+//
+//
+//    // Show form for adding a new member
+//    @GetMapping("/{projectId}/members/add")
+//    public String showAddMemberForm(@PathVariable Long projectId, Authentication authentication, Model model) {
+//        // Check permission (OWNER or COLLABORATOR)
+//        projectService.verifyCanAddMembers(projectId, authentication);
+//
+//        // Add attributes for the form (usernameOrEmail, role)
+//        model.addAttribute("usernameOrEmail", "");
+//        model.addAttribute("selectedRole", "MEMBER"); // Default to MEMBER
+//        model.addAttribute("projectId", projectId);
+//        model.addAttribute("headerTitle", "Add New Member");
+//
+//        return "project-add-member"; // New template for form
+//    }
+//
+//    // Handle form submission for adding a new member
+//    @PostMapping("/{projectId}/members/add")
+//    public String addNewMember(@PathVariable Long projectId,
+//                               @RequestParam("usernameOrEmail") String usernameOrEmail,
+//                               @RequestParam("role") String role,
+//                               Authentication authentication,
+//                               Model model) {
+//        try {
+//            projectService.addMemberToProject(projectId, usernameOrEmail, role, authentication);
+//            return "redirect:/projects/" + projectId;
+//        } catch (IllegalArgumentException | SecurityException e) {
+//            model.addAttribute("errorMessage", e.getMessage());
+//            model.addAttribute("usernameOrEmail", usernameOrEmail);
+//            model.addAttribute("selectedRole", role);
+//            model.addAttribute("projectId", projectId);
+//            model.addAttribute("headerTitle", "Add New Member");
+//            return "project-add-member"; // Return to form with error
+//        }
+//    }
+//
+//    // Reactivate a project
+//    @PostMapping("/activate/{id}")
+//    public String activateProject(@PathVariable Long id, Authentication authentication) {
+//        projectService.activateProject(id, authentication);
+//        return "redirect:/projects";
+//    }
+//
+//    // Deactivate a project
+//    @PostMapping("/deactivate/{id}")
+//    public String deactivateProject(@PathVariable Long id, Authentication authentication) {
+//        projectService.deactivateProject(id, authentication);
+//        return "redirect:/projects";
+//    }
+//
+//    // Universal form for creating/editing a project
+//    @GetMapping("/form")
+//    public String showProjectForm(@RequestParam(required = false) Long id, Model model, Authentication authentication) {
+//        Project project = (id != null)
+//                ? projectService.getProjectForEdit(id, authentication)
+//                : new Project(); // New project if `id` is null
+//
+//        model.addAttribute("project", project);
+//        model.addAttribute("headerTitle", id != null ? "Edit Project" : "Add Project");
+//        return "project-form"; // Returns project-form.html
+//    }
+//
+//    // Save a project (new or edited)
+//    @PostMapping("/form")
+//    public String saveProject(@RequestParam(required = false) Long id, @ModelAttribute Project project, Authentication authentication) {
+//        if (id == null) {
+//            projectService.createProject(project, authentication); // Create
+//        } else {
+//            projectService.updateProject(id, project, authentication); // Edit
+//        }
+//        return "redirect:/projects";
+//    }
+//
+//    // Delete a project
+//    @PostMapping("/delete/{id}")
+//    public String deleteProject(@PathVariable Long id, Authentication authentication) {
+//        projectService.deleteProject(id, authentication);
+//        return "redirect:/projects";
+//    }
+//}
+
+// ProjectsController.java
+
 package com.example.formicarium.controller;
 
+import com.example.formicarium.entity.Message;
 import com.example.formicarium.entity.Project;
+import com.example.formicarium.entity.Task;
 import com.example.formicarium.service.ProjectService;
+import com.example.formicarium.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 
@@ -19,7 +478,7 @@ public class ProjectsController {
         this.projectService = projectService;
     }
 
-    // Afișarea tuturor proiectelor active și inactive
+    // se afiseaza toate proiectele active si inactive
     @GetMapping
     public String showProjects(Authentication authentication, Model model) {
         List<Project> activeProjects = projectService.getActiveProjectsForUser(authentication);
@@ -27,60 +486,119 @@ public class ProjectsController {
 
         model.addAttribute("activeProjects", activeProjects);
         model.addAttribute("inactiveProjects", inactiveProjects);
-        model.addAttribute("pageContent", "projects");
         model.addAttribute("headerTitle", "Projects");
-        return "base";
+        return "projects";
     }
 
-    // Reactivarea unui proiect
+    // se afiseaza detaliile unui proiect
+    @GetMapping("/{id}")
+    public String showProjectDetails(@PathVariable Long id, Authentication authentication, Model model) {
+        Project project = projectService.getProjectDetails(id, authentication);
+        List<Message> recentMessages = projectService.getRecentMessagesForProject(id);
+        List<Task> recentTasks = projectService.getRecentTasksForProject(id);
+
+        model.addAttribute("project", project);
+        model.addAttribute("recentMessages", recentMessages);
+        model.addAttribute("recentTasks", recentTasks);
+        model.addAttribute("headerTitle", project.getName());
+        model.addAttribute("isOwner", projectService.isOwner(project, authentication));
+        model.addAttribute("isCollaborator", projectService.isCollaborator(project, authentication)); // Added
+
+        return "project-details";
+    }
+
+    // formular pentru adaugarea unui membru nou intr-un proiect
+    @GetMapping("/{projectId}/members/add")
+    public String showAddMemberForm(@PathVariable Long projectId, Authentication authentication, Model model) {
+        // verifica permisiunile (OWNER sau COLLABORATOR)
+        projectService.verifyCanAddMembers(projectId, authentication);
+
+        // adaugam atributele formularului (usernameOrEmail, role)
+        model.addAttribute("usernameOrEmail", "");
+        model.addAttribute("selectedRole", "MEMBER"); // Default to MEMBER
+        model.addAttribute("projectId", projectId);
+        model.addAttribute("headerTitle", "Add New Member");
+
+        return "project-add-member";
+    }
+
+    // adaugarea unui membru nou printr-un formular
+    @PostMapping("/{projectId}/members/add")
+    public String addNewMember(@PathVariable Long projectId,
+                               @RequestParam("usernameOrEmail") String usernameOrEmail,
+                               @RequestParam("role") String role,
+                               Authentication authentication,
+                               Model model) {
+        try {
+            projectService.addMemberToProject(projectId, usernameOrEmail, role, authentication);
+            return "redirect:/projects/" + projectId;
+        } catch (IllegalArgumentException | SecurityException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            model.addAttribute("usernameOrEmail", usernameOrEmail);
+            model.addAttribute("selectedRole", role);
+            model.addAttribute("projectId", projectId);
+            model.addAttribute("headerTitle", "Add New Member");
+            return "project-add-member";
+        }
+    }
+
+    // reactivarea unui proiect
     @PostMapping("/activate/{id}")
-    public String activateProject(@PathVariable Long id, Authentication authentication, Model model) {
+    public String activateProject(@PathVariable Long id, Authentication authentication) {
         projectService.activateProject(id, authentication);
-
-        // Reîncarcă listele după activare
-        List<Project> activeProjects = projectService.getActiveProjectsForUser(authentication);
-        List<Project> inactiveProjects = projectService.getInactiveProjectsForUser(authentication);
-        model.addAttribute("activeProjects", activeProjects);
-        model.addAttribute("inactiveProjects", inactiveProjects);
-
         return "redirect:/projects";
     }
 
-    // Dezactivarea unui proiect
+    //  dezactivarea unui proiect
     @PostMapping("/deactivate/{id}")
     public String deactivateProject(@PathVariable Long id, Authentication authentication) {
         projectService.deactivateProject(id, authentication);
         return "redirect:/projects";
     }
 
-    // Formular universal pentru creare/editare proiect
+    // formular universal pentru crearea/editarea unui proiect
     @GetMapping("/form")
     public String showProjectForm(@RequestParam(required = false) Long id, Model model, Authentication authentication) {
         Project project = (id != null)
                 ? projectService.getProjectForEdit(id, authentication)
-                : new Project(); // Proiect nou dacă `id` este null
+                : new Project(); // New project if `id` is null
 
         model.addAttribute("project", project);
-        model.addAttribute("pageContent", "project-form");
         model.addAttribute("headerTitle", id != null ? "Edit Project" : "Add Project");
-        return "base";
+        return "project-form"; // Returns project-form.html
     }
 
-    // Salvarea unui proiect (nou sau editat)
     @PostMapping("/form")
-    public String saveProject(@RequestParam(required = false) Long id, @ModelAttribute Project project, Authentication authentication) {
-        if (id == null) {
-            projectService.createProject(project, authentication); // Creare
-        } else {
-            projectService.updateProject(id, project, authentication); // Editare
+    public String saveProject(@Valid @ModelAttribute("project") Project project,
+                              BindingResult bindingResult,
+                              Authentication authentication,
+                              Model model) {
+        if (bindingResult.hasErrors()) {
+            return "project-form";
         }
-        return "redirect:/projects";
+
+        try {
+            projectService.createProject(project, authentication);
+            return "redirect:/projects"; // Redirect to projects list or detail page
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "project-form";
+        }
     }
 
-    // Ștergerea unui proiect
+    // stergerea unui proiect
     @PostMapping("/delete/{id}")
     public String deleteProject(@PathVariable Long id, Authentication authentication) {
         projectService.deleteProject(id, authentication);
         return "redirect:/projects";
     }
+
+    @GetMapping("/remove-member")
+    public String removeMember(@RequestParam("projectId") Long projectId,
+                               @RequestParam("userId") Long userId,
+                               Authentication authentication) {
+        projectService.removeMemberFromProject(projectId, userId, authentication);
+        return "redirect:/projects/" + projectId;
+    }
+
 }

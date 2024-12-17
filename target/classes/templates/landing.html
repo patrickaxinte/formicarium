@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Formicarium</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/base.css}">
+   <link rel="icon" href="/images/favicon.png" type="image/png" />
+</head>
+<body>
+<!-- Custom Header -->
+<nav class="navbar navbar-expand-lg" style="background-color: var(--sidebar-bg);">
+  <div class="container-fluid">
+    <a class="navbar-brand text-white" href="/">Formicarium</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#landingNavbar"
+            aria-controls="landingNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="landingNavbar">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link btn btn-custom me-2" href="/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-outline-warning" href="/register">Register</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<div class="hero-section text-center py-5" style="background-color: var(--bg-color);">
+  <h1 class="project-title">Welcome to Formicarium</h1>
+  <p class="lead">Manage your projects, tasks, and team in one seamless platform.</p>
+  <div class="d-flex justify-content-center mt-4 gap-3">
+    <a href="/login" class="btn btn-custom btn-lg">Login</a>
+    <a href="/register" class="btn btn-outline-warning btn-lg">Register</a>
+  </div>
+</div>
+
+<!-- Features Section -->
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Why Choose Formicarium?</h2>
+  <div class="widget-container">
+    <div class="widget text-center">
+      <i class="bi bi-kanban" style="font-size: 3rem; color: var(--primary-color);"></i>
+      <h3>Project Management</h3>
+      <p>Easily manage projects and tasks with structured tools.</p>
+    </div>
+    <div class="widget text-center">
+      <i class="bi bi-people-fill" style="font-size: 3rem; color: var(--primary-color);"></i>
+      <h3>Collaboration</h3>
+      <p>Collaborate with team members seamlessly.</p>
+    </div>
+    <div class="widget text-center">
+      <i class="bi bi-clock-history" style="font-size: 3rem; color: var(--primary-color);"></i>
+      <h3>Real-time Updates</h3>
+      <p>Track progress and updates in real-time.</p>
+    </div>
+    <div class="widget text-center">
+      <i class="bi bi-ui-checks" style="font-size: 3rem; color: var(--primary-color);"></i>
+      <h3>Customizable Modules</h3>
+      <p>Create to-do lists, Kanban boards, and more.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Testimonials Section -->
+<div class="container mt-5">
+  <h2 class="text-center mb-4">What Our Users Say</h2>
+  <div class="d-flex justify-content-center flex-wrap gap-4">
+    <div class="card text-center" style="max-width: 300px;">
+      <img src="/images/user1.png" alt="John Doe, Project Manager" class="user-avatar mx-auto mb-3" onerror="this.onerror=null; this.src='/images/default-avatar.png'">
+      <p>"Formicarium transformed the way we manage projects. Simple and powerful!"</p>
+      <h5>- John Doe, Project Manager</h5>
+    </div>
+    <div class="card text-center" style="max-width: 300px;">
+      <img src="/images/user2.png" alt="Jane Smith, Team Lead" class="user-avatar mx-auto mb-3" onerror="this.onerror=null; this.src='/images/default-avatar.png'">
+      <p>"The customizable modules are a game-changer for productivity."</p>
+      <h5>- Jane Smith, Team Lead</h5>
+    </div>
+  </div>
+</div>
+
+<!-- CTA Footer -->
+<div class="text-center py-5" style="background-color: var(--sidebar-bg);">
+  <h3 class="text-white">Start Managing Your Projects Today!</h3>
+  <div class="mt-4">
+    <a href="/register" class="btn btn-custom btn-lg me-3">Get Started</a>
+    <a href="/login" class="btn btn-outline-warning btn-lg">Login</a>
+  </div>
+</div>
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="project-header(project, isOwner)">
+    <div class="card mt-4">
+        <h2 th:text="${project.name}" class="text-warning">Project Name</h2>
+        <p th:text="${project.description}" class="text-light">Project Description</p>
+        <p class="text-light">Owner: <span th:text="${isOwner} ? 'Yes' : 'No'">Yes</span></p>
+    </div>
+</div>
+</body>
+</html>

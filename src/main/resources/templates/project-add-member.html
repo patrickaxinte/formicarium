@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="base">
+<head>
+    <title th:text="${headerTitle}">Add New Member</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="card">
+        <h3 th:text="${headerTitle}">Add New Member</h3>
+        <form th:action="@{/projects/{projectId}/members/add(projectId=${projectId})}" method="post">
+            <!-- Username or Email Field -->
+            <div class="mb-3">
+                <label for="usernameOrEmail" class="form-label">Username or Email</label>
+                <input type="text" id="usernameOrEmail" name="usernameOrEmail" class="form-control"
+                       placeholder="Enter username or email" required th:value="${usernameOrEmail}">
+            </div>
+
+            <!-- Role Selection Field -->
+            <div class="mb-3">
+                <label for="role" class="form-label">Role</label>
+                <select id="role" name="role" class="form-select" required>
+                    <option value="MEMBER" th:selected="${selectedRole == 'MEMBER'}">MEMBER</option>
+                    <option value="COLLABORATOR" th:selected="${selectedRole == 'COLLABORATOR'}">COLLABORATOR</option>
+                </select>
+            </div>
+
+            <!-- Submit and Cancel Buttons -->
+            <button type="submit" class="btn btn-custom">Add Member</button>
+            <a th:href="@{/projects/{projectId}(projectId=${projectId})}" class="btn btn-secondary">Cancel</a>
+        </form>
+
+        <!-- Display Error Message if Any -->
+        <div th:if="${errorMessage}" class="alert alert-danger mt-3" role="alert">
+            <span th:text="${errorMessage}">Error message</span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

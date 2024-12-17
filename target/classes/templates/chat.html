@@ -1,4 +1,22 @@
+<!-- templates/chat.html -->
 <div class="card">
-    <h3>Group Chats Page</h3>
-    <p>Collaborate with your team using group chats.</p>
+    <h3 th:text="${headerTitle}">Chat</h3>
+    <div class="chat-messages mb-3">
+        <ul class="list-group">
+            <li class="list-group-item" th:each="message : ${messages}">
+                <strong th:text="${message.sender.username}">Sender</strong>: <span th:text="${message.content}">Message content</span>
+                <span class="text-muted float-end" th:text="${#dates.format(message.sentAt, 'dd MMM yyyy HH:mm')}">Timestamp</span>
+                <!-- Optional: Buton de ștergere pentru mesajele proprii -->
+                <form th:if="${message.sender.username == #authentication.name}" th:action="@{/chat/delete/{id}(id=${message.id})}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+    <form th:action="@{/chat/{projectId}(projectId=${projectId})}" method="post">
+        <div class="input-group">
+            <input type="text" name="content" class="form-control" placeholder="Type your message..." required>
+            <button type="submit" class="btn btn-custom">Send</button>
+        </div>
+    </form>
 </div>

@@ -51,12 +51,12 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/register", "/logout", "/css/**", "/images/**", "/js/**", "/error").permitAll()
+                        .requestMatchers("/", "/login", "/register", "/logout", "/css/**", "/images/**", "/js/**", "/error").permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout")
+                        .logoutSuccessUrl("/")
                         .deleteCookies("jwtToken")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)

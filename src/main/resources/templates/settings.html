@@ -1,4 +1,20 @@
-<div>
-    <h1>Settings</h1>
-    <p>Manage application and user-specific configurations here.</p>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="base">
+<head>
+    <title th:text="${headerTitle}">Settings - Formicarium</title>
+    <link rel="icon" href="/images/settings.png" type="image/png" />
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="card">
+        <h3>Settings</h3>
+        <p>Manage application and user-specific configurations here.</p>
+    </div>
 </div>
+</body>
+
+</html>

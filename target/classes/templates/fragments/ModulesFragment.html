@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="project-modules(project, isOwner)">
+    <div class="card project-modules mt-4">
+        <h4 class="text-center text-warning">Modules</h4>
+        <div class="d-flex flex-wrap justify-content-center">
+            <div class="module-card m-2 p-3 bg-dark rounded" th:each="module : ${project.modules}">
+                <h5 th:text="${module.name}">Module Name</h5>
+                <p th:text="${module.description}">Module Description</p>
+                <div class="d-flex justify-content-end">
+                    <a th:if="${isOwner}" th:href="@{/modules/form(projectId=${project.id}, moduleId=${module.id})}" class="btn btn-sm btn-warning me-2">Edit</a>
+                    <form th:if="${isOwner}" th:action="@{/modules/delete/{id}(id=${module.id}, projectId=${project.id})}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-3" th:if="${isOwner}">
+            <a th:href="@{/modules/form(projectId=${project.id})}" class="btn btn-sm btn-success">+ Add Module</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

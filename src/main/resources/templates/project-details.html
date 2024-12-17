@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="base">
+<head>
+    <title th:text="${headerTitle}">Project Details - Formicarium</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="project-page">
+        <!-- Header with Project Name -->
+        <div th:replace="~{fragments/HeaderFragment :: project-header(project=${project}, isOwner=${isOwner})}"></div>
+
+        <!-- Members Section -->
+        <div th:replace="~{fragments/MembersFragment :: project-members(project=${project}, isOwner=${isOwner}, isCollaborator=${isCollaborator})}"></div>
+
+        <!-- Recent Messages Section -->
+        <div th:replace="~{fragments/MessagesFragment :: project-messages(recentMessages=${recentMessages})}"></div>
+
+        <!-- General Details Section -->
+        <div th:replace="~{fragments/DetailsFragment :: project-details(project=${project})}"></div>
+
+        <!-- Recent Tasks Section -->
+        <div th:replace="~{fragments/TasksFragment :: project-tasks(recentTasks=${recentTasks}, projectId=${project.id})}"></div>
+
+        <!-- Custom Modules Section -->
+        <div th:replace="~{fragments/ModulesFragment :: project-modules(project=${project}, isOwner=${isOwner})}"></div>
+    </div>
+</div>
+</body>
+</html>

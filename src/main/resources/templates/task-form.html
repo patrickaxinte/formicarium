@@ -1,0 +1,37 @@
+<!-- templates/task-form.html -->
+<div class="card">
+    <h3 th:text="${headerTitle}">Task Form</h3>
+    <form th:action="@{/tasks/form}" th:object="${task}" method="post">
+        <input type="hidden" th:if="${task.id}" th:name="taskId" th:value="${task.id}" />
+        <input type="hidden" th:name="projectId" th:value="${projectId}" />
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Task Name</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Enter task name" th:value="${task.name}" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" name="description" class="form-control" placeholder="Enter task description" th:text="${task.description}"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select id="status" name="status" class="form-select">
+                <option th:selected="${task.status == 'To Do'}" value="To Do">To Do</option>
+                <option th:selected="${task.status == 'In Progress'}" value="In Progress">In Progress</option>
+                <option th:selected="${task.status == 'Completed'}" value="Completed">Completed</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="assignedTo" class="form-label">Assign To</label>
+            <select id="assignedTo" name="assignedTo.id" class="form-select">
+                <option value="" disabled selected>Select a user</option>
+                <option th:each="member : ${project.memberships}"
+                        th:value="${member.user.id}"
+                        th:text="${member.user.username}"
+                        th:selected="${member.user.id == task.assignedTo.id}">
+                </option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-custom">Save Task</button>
+    </form>
+</div>
