@@ -29,6 +29,16 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @Column(name = "avatar_seed", nullable = false, unique = true)
+    private String avatarSeed;
+
+    @PrePersist
+    protected void generateAvatarSeed() {
+        if (this.avatarSeed == null || this.avatarSeed.isEmpty()) {
+            this.avatarSeed = UUID.randomUUID().toString();
+        }
+    }
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",

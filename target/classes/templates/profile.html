@@ -1,4 +1,19 @@
-<div>
-  <h1>Welcome to your profile!</h1>
-  <p>Here you can manage personal details.</p>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="base">
+<head>
+  <title th:text="${headerTitle}">Profile - Formicarium</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+  <div class="card">
+    <h3>Profile Page</h3>
+    <h1>Welcome to your profile!</h1>
+    <p>Here you can manage personal details.</p>
+  </div>
 </div>
+</body>
+</html>

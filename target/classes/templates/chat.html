@@ -1,4 +1,3 @@
-<!-- templates/chat.html -->
 <div class="card">
     <h3 th:text="${headerTitle}">Chat</h3>
     <div class="chat-messages mb-3">
@@ -6,7 +5,7 @@
             <li class="list-group-item" th:each="message : ${messages}">
                 <strong th:text="${message.sender.username}">Sender</strong>: <span th:text="${message.content}">Message content</span>
                 <span class="text-muted float-end" th:text="${#dates.format(message.sentAt, 'dd MMM yyyy HH:mm')}">Timestamp</span>
-                <!-- Optional: Buton de ștergere pentru mesajele proprii -->
+                <!-- Optional: Buton de stergere pentru mesajele proprii -->
                 <form th:if="${message.sender.username == #authentication.name}" th:action="@{/chat/delete/{id}(id=${message.id})}" method="post" class="d-inline">
                     <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                 </form>

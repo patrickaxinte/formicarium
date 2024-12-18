@@ -3,6 +3,7 @@ package com.example.formicarium.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "tasks")
@@ -21,7 +22,10 @@ public class Task {
     @Column(length = 1000)
     private String description;
 
-    private String status; // e.g., "To Do", "In Progress", "Completed"
+    @Enumerated(EnumType.STRING)
+    private TaskStatus status; // Enum: TO_DO, IN_PROGRESS, COMPLETED
+
+    private LocalDate dueDate;
 
     private LocalDateTime createdAt;
 
@@ -33,12 +37,19 @@ public class Task {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "assigned_to")
-    private User assignedTo; // utilizatorul caruia i-a fost atribuit sarcina
+    private User assignedTo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by_id")
+    private User createdBy;
 
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = this.createdAt;
+        if (this.status == null) {
+            this.status = TaskStatus.TO_DO;
+        }
     }
 
     @PreUpdate

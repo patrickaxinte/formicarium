@@ -12,5 +12,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     // obtine toate sarcinile pentru un proiect
     List<Task> findByProjectId(Long projectId);
-}
 
+    // obtine toate sarcinile atribuite unui utilizator
+    List<Task> findByAssignedToId(Long userId);
+}

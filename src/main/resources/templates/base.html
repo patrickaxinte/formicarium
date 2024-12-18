@@ -21,7 +21,9 @@
             <a th:href="@{/profile}" class="sidebar-link" th:classappend="${headerTitle == 'Profile' ? 'active' : ''}">Profile</a>
             <a th:href="@{/settings}" class="sidebar-link" th:classappend="${headerTitle == 'Settings' ? 'active' : ''}">Settings</a>
             <a th:href="@{/projects}" class="sidebar-link" th:classappend="${headerTitle == 'Projects' ? 'active' : ''}">Projects</a>
-            <a th:href="@{/taskspage}" class="sidebar-link" th:classappend="${headerTitle == 'Tasks' ? 'active' : ''}">Tasks</a>
+            <a th:href="@{/tasks/page}" class="sidebar-link"
+               th:classappend="${headerTitle == 'Tasks' ? 'active' : ''}">Tasks</a>
+
             <a th:href="@{/logs}" class="sidebar-link" th:classappend="${headerTitle == 'Logs' ? 'active' : ''}">Logs</a>
             <a th:href="@{/chat}" class="sidebar-link" th:classappend="${headerTitle == 'Group Chats' ? 'active' : ''}">Group Chats</a>
             <a th:href="@{/reports}" class="sidebar-link" th:classappend="${headerTitle == 'Reports' ? 'active' : ''}">Reports</a>
@@ -32,8 +34,9 @@
         <!-- Header -->
         <div class="dashboard-header">
             <div class="header-title" th:text="${headerTitle}">Header</div>
-            <div class="user-info">
-                <img th:src="@{/images/user_avatar.png}" alt="User Avatar" class="user-avatar">
+            <div class="user-info">>
+                <img th:src="@{'https://api.dicebear.com/9.x/dylan/svg?seed=' + ${#authentication.principal.avatarSeed}}"
+                     alt="User Avatar" class="user-avatar" />
                 <span sec:authentication="name" class="user-name">User</span>
                 <form th:action="@{/logout}" method="post" class="logout-form">
                     <button type="submit" class="btn btn-sm btn-warning">Logout</button>
@@ -42,11 +45,10 @@
         </div>
 
         <div class="dashboard-content" layout:fragment="content">
-            <!-- for unique content and additional pages -->
+
         </div>
     </div>
 </div>
-<!-- Bootstrap JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

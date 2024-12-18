@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.util.UUID;
+
 @Controller
 public class AuthController {
 
@@ -102,6 +104,8 @@ public class AuthController {
                 .orElseGet(() -> roleRepository.save(new Role(null, "USER")));
 
         user.getRoles().add(userRole);
+        user.setAvatarSeed(UUID.randomUUID().toString());
+
         userRepository.save(user);
 
         // redirectionam catre pagina de login cu un parametru de confirmare

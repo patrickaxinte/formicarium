@@ -1,19 +1,136 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="base">
 <head>
-
     <title th:text="${headerTitle}">Tasks - Formicarium</title>
 </head>
 <body>
 <div layout:fragment="content">
+    <div class="container mt-4">
+        <!-- Mesaje de succces sau eroare -->
+        <div th:if="${param.success}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${param.success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span th:text="${param.error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
 
-<div class="card">
-    <h3>Tasks Page</h3>
-    <p>Manage your tasks effectively. This is your personal task dashboard.</p>
-</div>
+        <!-- Sectiunea Task Creation -->
+        <div th:if="${!#lists.isEmpty(creatableProjects)}" class="card mb-4">
+            <div class="card-header bg-warning text-white">
+                <h4>Create New Task</h4>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/tasks/create}" method="post">
+                    <div class="mb-3">
+                        <label for="projectId" class="form-label">Select Project</label>
+                        <select id="projectId" name="projectId" class="form-select" required>
+                            <option value="" disabled selected>Select a project</option>
+                            <option th:each="project : ${creatableProjects}"
+                                    th:value="${project.id}"
+                                    th:text="${project.name}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Task Name</label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Enter task name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea id="description" name="description" class="form-control" placeholder="Enter task description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dueDate" class="form-label">Due Date</label>
+                        <input type="date" id="dueDate" name="dueDate" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="assigneeId" class="form-label">Assign To</label>
+                        <select id="assigneeId" name="assigneeId" class="form-select" required>
+                            <option value="" disabled selected>Select a user</option>
+                            <optgroup th:each="project : ${creatableProjects}" th:label="${project.name}">
+                                <option th:each="membership : ${project.memberships}"
+                                        th:value="${membership.user.id}"
+                                        th:text="${membership.user.username}">
+                                </option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-custom">Create Task</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Sectiunea Task List  -->
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4>My Tasks</h4>
+            </div>
+            <div class="card-body">
+                <div th:if="${#lists.isEmpty(assignedTasks)}" class="alert alert-info">
+                    You have no tasks assigned.
+                </div>
+                <div th:unless="${#lists.isEmpty(assignedTasks)}">
+                    <!-- Filtrare dupa Status -->
+                    <div class="mb-3">
+                        <label for="filterStatus" class="form-label">Filter by Status</label>
+                        <select id="filterStatus" class="form-select" onchange="filterTasks()">
+                            <option value="ALL" selected>All</option>
+                            <option value="TO_DO">To Do</option>
+                            <option value="IN_PROGRESS">In Progress</option>
+                            <option value="COMPLETED">Completed</option>
+                        </select>
+                    </div>
+                    <!-- Task Card -->
+                    <div id="tasksContainer">
+                        <div th:each="task : ${assignedTasks}" class="card mb-3 task-card" th:data-status="${task.status}">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${task.name}">Task Name</h5>
+                                <p class="card-text" th:text="${task.description}">Task Description</p>
+                                <p class="card-text">
+                                    <small class="text-muted">Project: <span th:text="${task.project.name}">Project Name</span></small>
+                                </p>
+                                <p class="card-text">
+                                    <small class="text-muted">Due Date: <span th:text="${task.dueDate}">YYYY-MM-DD</span></small>
+                                </p>
+                                <p class="card-text">
+                                    Status:
+                                    <span class="badge"
+                                          th:classappend="${task.status eq 'COMPLETED'} ? 'bg-success' : 'bg-secondary'"
+                                          th:text="${task.status}">Status</span>
+                                </p>
+                                <form th:if="${task.status ne 'COMPLETED'}"
+                                      th:action="@{/tasks/update/{taskId}(taskId=${task.id})}" method="post">
+                                    <input type="hidden" name="status" value="COMPLETED"/>
+                                    <button type="submit" class="btn btn-sm btn-success">Mark as Completed</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JavaScript pentru filtrarea sarcinilor -->
+    <script>
+        function filterTasks() {
+            const status = document.getElementById('filterStatus').value;
+            const taskCards = document.querySelectorAll('.task-card');
+            taskCards.forEach(card => {
+                const cardStatus = card.getAttribute('data-status');
+                if (status === 'ALL' || cardStatus === status) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
 </div>
 </body>
 </html>

@@ -15,7 +15,11 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("SELECT p FROM Project p JOIN p.memberships pm WHERE pm.user = :user AND p.isActive = :isActive")
     List<Project> findProjectsByUserAndIsActive(@Param("user") User user, @Param("isActive") boolean isActive);
 
-    @EntityGraph(attributePaths = {"memberships", "memberships.user", "messages"})
+    @EntityGraph(attributePaths = {"memberships", "memberships.user", "messages", "modules"})
     @Query("SELECT p FROM Project p WHERE p.id = :id")
-    Optional<Project> findByIdWithMembershipsAndMessages(@Param("id") Long id);
+    Optional<Project> findByIdWithMembershipsMessagesAndModules(@Param("id") Long id);
+
+    @EntityGraph(attributePaths = {"memberships", "memberships.user"})
+    @Query("SELECT DISTINCT p FROM Project p JOIN p.memberships m WHERE m.user = :user AND m.role IN :roles")
+    List<Project> findProjectsByUserAndRoles(@Param("user") User user, @Param("roles") List<String> roles);
 }
