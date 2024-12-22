@@ -7,6 +7,7 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-light" th:each="task : ${recentTasks}">
                 <span th:text="${task.name}">Task Name</span>
+                <span th:text="${task.description}">Description</span>
                 <span th:text="${task.status}"
                       th:classappend="${task.status == T(com.example.formicarium.entity.TaskStatus).COMPLETED ? 'badge bg-success' : 'badge bg-secondary'}"></span>
             </li>
@@ -18,3 +19,6 @@
 </div>
 </body>
 </html>
+
+
+

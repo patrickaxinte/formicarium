@@ -1,10 +1,13 @@
 /* General Styles */
 :root {
-    --bg-color: #2d3250;
+    /*--bg-color: #2d3250;*/
+    --bg-color: #060644;
     --sidebar-bg: #424769;
+    --secondary-color: #eb7f67;
     --primary-color: #f9b17a;
     --header-title: #ffc107;
     --primary-hover: #e08e58;
+    --secondary-hover: #e16b54;
     --text-color: #ffffff;
     --secondary-text: #d1d1e0;
     --card-bg: #424769;
@@ -90,6 +93,10 @@ input.form-control:focus {
 
 input::placeholder {
     color: var(--secondary-text);
+}
+
+select.form-select option:disabled {
+    color: var(--secondary-text);  /* Use your preferred color here */
 }
 
 /* Sidebar Styles */
@@ -242,13 +249,298 @@ input::placeholder {
     font-weight: bold;           /* Optional: Make it bold */
 }
 
-
 .btn-outline-primary:hover,
 .btn-outline-warning:hover,
 .btn-outline-danger:hover {
     transform: translateY(-2px);
     box-shadow: 0 2px 8px var(--shadow-hover);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hero-section {
+    background-color: var(--bg-color);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-section h1 {
+    color: var(--text-color);
+    font-size: 3rem;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+.hero-section p {
+    color: var(--secondary-text);
+    font-size: 1.25rem;
+}
+
+.hero-section .btn-custom {
+    background-color: #EB7F67;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.hero-section .btn-custom:hover {
+    background-color: #e16b54;
+    transform: translateY(-2px);
+}
+
+.hero-section img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.hero-logo {
+    max-height: 130px; /* Larger size */
+    max-width: 130px;
+    margin-bottom: 12px; /* Adjust spacing */
+    display: inline-block;
+}
+
+#hero {
+    background-color: #060644; /* Dark blue background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh; /* Full viewport height */
+    padding: 0 20px; /* Side padding for smaller screens */
+}
+
+#hero h1 {
+    font-size: 3rem; /* Match the size of "Welcome to Formicarium!" */
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 15px; /* Add clean spacing */
+}
+
+#hero p {
+    font-size: 1.2rem;
+    color: #EB7F67; /* Subtitle text color */
+    margin-bottom: 25px;
+}
+
+#hero .btn-custom {
+    background-color: #EB7F67;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 12px 25px;
+    border-radius: 8px;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+#hero .btn-custom:hover {
+    background-color: #e36b54; /* Slightly darker hover */
+    transform: translateY(-2px);
+}
+
+#hero img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.hero-logo {
+    max-height: 130px; /* Larger size */
+    max-width: 130px;
+    margin-bottom: 12px; /* Adjust spacing */
+    display: inline-block;
+}
+
+#hero {
+    background-color: #060644; /* Dark blue background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh; /* Full viewport height */
+    padding: 0 20px; /* Side padding for smaller screens */
+}
+
+#hero h1 {
+    font-size: 3rem; /* Match the size of "Welcome to Formicarium!" */
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 15px; /* Add clean spacing */
+}
+
+#hero p {
+    font-size: 1.2rem;
+    color: #EB7F67; /* Subtitle text color */
+    margin-bottom: 25px;
+}
+
+.btn-custom {
+    background-color: #EB7F67;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 12px 25px;
+    border-radius: 8px;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.btn-custom:hover {
+    background-color: #e36b54;
+    transform: translateY(-2px);
+}
+
+/* Contact Section Styling */
+#contact {
+    background-color: #EB7F67;
+    color: #ffffff;
+    padding: 60px 20px;
+}
+
+#contact h1 {
+    font-size: 4rem;
+    font-weight: bold;
+    line-height: 1.2;
+    margin: 0;
+}
+
+#contact img {
+    height: 24px;
+    width: 24px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#contact p {
+    margin: 0 0 10px;
+    font-size: 1.1rem;
+}
+
+#contact .small {
+    font-size: 0.9rem; /* Match the footer text size */
+}
+
+#contact a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.9rem; /* Ensures consistent text size */
+}
+
+#contact a:hover {
+    text-decoration: underline;
+}
+
+/* Make the Features Section Larger */
+#features {
+    background-color: #060644; /* Dark blue background */
+    padding: 90px 30px; /* Increased padding for larger section */
+}
+
+#features h2 {
+    font-size: 3.75rem; /* 50% larger font size for the title */
+}
+
+/* Larger Feature Cards */
+.feature-card {
+    background-color: #eb7f67; /* Solid orange background */
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow */
+    height: 400px; /* Set uniform height for all cards */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card h3 {
+    font-size: 2rem; /* Increased title size */
+}
+
+.feature-card p {
+    font-size: 1.2rem; /* Slightly larger text */
+}
+
+.feature-card i {
+    font-size: 4.5rem; /* Larger icons */
+    color: #060644; /* Dark blue icons */
+    margin-bottom: 20px;
+}
+
+/* Hover Effect */
+.feature-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Success Alert */
+.alert-success-custom {
+    background-color: rgba(0, 128, 0, 0.15); /* Subtle green background */
+    color: var(--text-color); /* Text color matching the theme */
+    border: 1px solid var(--primary-color); /* Consistent with other components */
+    border-radius: 10px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    padding: 15px;
+    font-weight: bold;
+}
+
+/* Error Alert */
+.alert-danger-custom {
+    background-color: rgba(128, 0, 0, 0.15); /* Subtle red background */
+    color: var(--text-color); /* Text color matching the theme */
+    border: 1px solid var(--primary-color); /* Consistent with other components */
+    border-radius: 10px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    padding: 15px;
+    font-weight: bold;
+}
+
+/* Close Button */
+.alert-dismissible .btn-close {
+    color: #ffffff; /* Set the color to white */
+    opacity: 0.9; /* Slight transparency for hover effect */
+}
+
+.alert-dismissible .btn-close:hover {
+    opacity: 1; /* Fully opaque on hover */
+}
+
+/* Collapsible Form Transition */
+#createTaskForm {
+    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+/* Responsive Adjustments for Smaller Screens */
+@media (max-width: 768px) {
+    #features {
+        padding: 60px 15px; /* Adjust padding for smaller screens */
+    }
+
+    .feature-card {
+        height: auto; /* Allow flexible height for smaller screens */
+        padding: 20px;
+    }
+
+    .feature-card h3 {
+        font-size: 1.5rem;
+    }
+
+    .feature-card p {
+        font-size: 1rem;
+    }
+
+    .feature-card i {
+        font-size: 3rem;
+    }
 }
 
 /* Responsive Adjustments */
@@ -300,5 +592,160 @@ input::placeholder {
         border-left: none;
         border-bottom: 4px solid var(--primary-color);
         background-color: var(--input-bg);
+    }
+}
+
+/* Overall Auth Page Layout */
+.auth-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: url('../images/background.jpg') no-repeat center center fixed; /* Optional background image */
+    background-size: cover;
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+    position: relative;
+}
+
+.auth-page::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(66, 71, 105, 0.8); /* Subtler blue-gray for a balanced look */
+    z-index: 1;
+}
+
+
+/* Container for the auth card */
+.auth-container {
+    position: relative;
+    z-index: 2; /* Ensure the form is above the overlay */
+    background: rgba(66, 71, 105, 0.3); /* Semi-transparent background for glass effect */
+    backdrop-filter: blur(10px); /* Blur effect */
+    -webkit-backdrop-filter: blur(10px); /* Safari support */
+    border-radius: 15px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 50px 40px;
+    max-width: 600px;
+    width: 90%;
+    box-sizing: border-box;
+    color: var(--text-color);
+    overflow: hidden;
+    align-items: center;
+}
+
+/* Logo within the card */
+.auth-container .hero-logo {
+    display: block;
+    margin: 0 auto 20px;
+    max-height: 80px;
+    max-width: 80px;
+}
+
+.auth-container .card h2 {
+    font-size: 2rem;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Form Labels */
+.auth-container .form-label {
+    display: block;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+/* Form Controls */
+.auth-container input.form-control {
+    background-color: rgba(103, 103, 157, 0.8); /* Slightly transparent input background */
+    color: var(--text-color);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 12px 15px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    transition: background-color var(--transition-speed), border-color 0.3s;
+}
+
+.auth-container input.form-control::placeholder {
+    color: var(--secondary-text);
+    font-weight: 400;
+}
+
+.auth-container input.form-control:focus {
+    border-color: var(--primary-color); /* #f9b17a */
+    background-color: rgba(122, 124, 179, 0.9);
+    outline: none;
+}
+
+/* Primary Button */
+.auth-container .btn.btn-custom {
+    background-color: var(--secondary-color); /* #f9b17a */
+    color: var(--text-color);
+    border-radius: 8px;
+    padding: 12px 0;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 1rem;
+    transition: primary-color var(--transition-speed), transform 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.auth-container .btn.btn-custom:hover {
+    background-color: var(--secondary-hover); /* #e08e58 */
+    transform: translateY(-2px);
+}
+
+/* Link to switch between Login/Register */
+.auth-container .switch-link {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+.auth-container .switch-link:hover {
+    text-decoration: underline;
+    color: var(--secondary-hover);
+}
+
+/* Error Message */
+.auth-container .alert.alert-danger {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgba(255, 0, 0, 0.1);
+    color: var(--primary-hover);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .auth-container {
+        padding: 30px 20px;
+    }
+
+    .auth-container .card-title {
+        font-size: 1.8rem;
+    }
+
+    .auth-container .btn.btn-custom {
+        font-size: 0.95rem;
     }
 }

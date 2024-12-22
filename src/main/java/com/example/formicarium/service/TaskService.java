@@ -29,12 +29,6 @@ public class TaskService {
         return taskRepository.findByAssignedToId(userId);
     }
 
-    // returneaza sarcinile dintr-un proiect
-    @Transactional(readOnly = true)
-    public List<Task> getAllTasksByProject(Long projectId) {
-        return taskRepository.findByProjectId(projectId);
-    }
-
     // returneaza sarcinile recente dintr-un proiect
     @Transactional(readOnly = true)
     public List<Task> getRecentTasksByProject(Long projectId) {
@@ -143,9 +137,7 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    /**
-     * returneaza o sarcina dupa ID cu verificari de autentificare
-     */
+    //returneaza o sarcina dupa ID cu verificari de autentificare
     @Transactional(readOnly = true)
     public Task getTaskById(Long taskId, Authentication authentication) {
         Task task = taskRepository.findById(taskId)
@@ -173,8 +165,17 @@ public class TaskService {
                         java.util.Arrays.stream(roles).anyMatch(role -> role.equalsIgnoreCase(m.getRole())));
     }
 
-    private boolean isUserMemberOfProject(Project project, User user) {
+    @Transactional(readOnly = true)
+    public boolean isUserMemberOfProject(Project project, User user) {
         return project.getMemberships().stream()
                 .anyMatch(m -> m.getUser().getId().equals(user.getId()));
     }
+
+    @Transactional(readOnly = true)
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId).orElse(null);
+    }
+
 }
+
+

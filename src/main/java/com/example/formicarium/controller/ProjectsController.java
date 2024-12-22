@@ -4,7 +4,6 @@ import com.example.formicarium.entity.Message;
 import com.example.formicarium.entity.Project;
 import com.example.formicarium.entity.Task;
 import com.example.formicarium.service.ProjectService;
-import com.example.formicarium.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
