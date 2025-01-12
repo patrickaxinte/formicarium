@@ -19,7 +19,7 @@ public class MessagesController {
         this.messageService = messageService;
     }
 
-    // Afișează chat-ul complet pentru un proiect
+    // afiseaza chat-ul complet pentru un proiect
     @GetMapping("/{projectId}")
     public String showChat(@PathVariable Long projectId, Authentication authentication, Model model) {
         List<Message> messages = messageService.getAllMessagesByProject(projectId);
@@ -30,7 +30,7 @@ public class MessagesController {
         return "base";
     }
 
-    // Crează un nou mesaj
+    // creaza un nou mesaj
     @PostMapping("/{projectId}")
     public String sendMessage(@PathVariable Long projectId, @RequestParam String content, Authentication authentication) {
         Message message = Message.builder()
@@ -40,7 +40,7 @@ public class MessagesController {
         return "redirect:/chat/" + projectId;
     }
 
-    // Șterge un mesaj
+    // sterge un mesaj
     @PostMapping("/delete/{messageId}")
     public String deleteMessage(@PathVariable Long messageId, Authentication authentication) {
         Message message = messageService.getMessageById(messageId, authentication);

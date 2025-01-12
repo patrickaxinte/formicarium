@@ -32,6 +32,7 @@ public class ProjectsController {
         model.addAttribute("activeProjects", activeProjects);
         model.addAttribute("inactiveProjects", inactiveProjects);
         model.addAttribute("headerTitle", "Projects");
+        model.addAttribute("activePage", "projects");
         return "projects";
     }
 
@@ -47,7 +48,8 @@ public class ProjectsController {
         model.addAttribute("recentTasks", recentTasks);
         model.addAttribute("headerTitle", project.getName());
         model.addAttribute("isOwner", projectService.isOwner(project, authentication));
-        model.addAttribute("isCollaborator", projectService.isCollaborator(project, authentication)); // Added
+        model.addAttribute("isCollaborator", projectService.isCollaborator(project, authentication));
+        model.addAttribute("activePage", "projects");
 
         return "project-details";
     }
@@ -106,11 +108,11 @@ public class ProjectsController {
     public String showProjectForm(@RequestParam(required = false) Long id, Model model, Authentication authentication) {
         Project project = (id != null)
                 ? projectService.getProjectForEdit(id, authentication)
-                : new Project(); // New project if `id` is null
+                : new Project();
 
         model.addAttribute("project", project);
         model.addAttribute("headerTitle", id != null ? "Edit Project" : "Add Project");
-        return "project-form"; // Returns project-form.html
+        return "project-form";
     }
 
     @PostMapping("/form")
@@ -124,7 +126,7 @@ public class ProjectsController {
 
         try {
             projectService.createProject(project, authentication);
-            return "redirect:/projects"; // Redirect to projects list or detail page
+            return "redirect:/projects";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "project-form";

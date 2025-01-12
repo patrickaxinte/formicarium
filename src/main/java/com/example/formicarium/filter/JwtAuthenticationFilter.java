@@ -30,13 +30,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain chain)
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain chain)
             throws ServletException, IOException {
 
+
+        String path = request.getRequestURI();
+        // 1) sare peste validare daca este handshake-ul SockJS sau ulterioarele /ws/**
+        if (path.startsWith("/ws")) {
+            chain.doFilter(request, response);
+            return;
+        }
+        // altfel, continua cu validarea normala a JWT
         String jwt = null;
         String username;
 
-        // extrage token-ul JWT din cookie
+        // extragerea token-ului JWT din cookies
         if (request.getCookies() != null) {
             for (Cookie cookie : request.getCookies()) {
                 if ("jwtToken".equals(cookie.getName())) {
@@ -49,21 +59,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (jwt != null) {
             try {
                 username = jwtService.extractUsername(jwt);
-
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
                     if (jwtService.validateToken(jwt, userDetails)) {
                         var authToken = new UsernamePasswordAuthenticationToken(
-                                userDetails, null, userDetails.getAuthorities());
+                                userDetails, null, userDetails.getAuthorities()
+                        );
                         SecurityContextHolder.getContext().setAuthentication(authToken);
                     }
                 }
             } catch (JWTVerificationException e) {
                 // Token invalid sau expirat
+                System.out.println("JWT Verification failed: " + e.getMessage());
             }
         }
 
         chain.doFilter(request, response);
     }
 }
+

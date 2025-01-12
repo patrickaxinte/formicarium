@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -41,17 +40,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-//                .csrf(csrf -> csrf
-//                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-//                        .ignoringRequestMatchers("/logout")
-//                        .ignoringRequestMatchers("/projects/add")
-//                        .ignoringRequestMatchers("/projects/edit/{id}")
-//                        .ignoringRequestMatchers("/projects/delete/{id}")
-//                )
                 .csrf(csrf -> csrf.disable())
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/login", "/register", "/logout", "/css/**", "/images/**", "/js/**", "/error").permitAll()
+
+                        .requestMatchers("/ws/**", "/raw-websocket/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout

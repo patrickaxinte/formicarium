@@ -12,43 +12,345 @@
     <link rel="stylesheet" th:href="@{/css/base.css}">
 </head>
 <body>
-<div class="dashboard-container">
+<div class="app-container">
     <!-- Sidebar -->
-    <div class="dashboard-sidebar">
-        <h2 class="sidebar-title">Formicarium</h2>
+    <div class="app-sidebar">
+        <div class="sidebar-header d-flex align-items-center justify-content-between mb-4">
+            <a href="/" class="sidebar-logo d-flex align-items-center text-decoration-none text-white">
+                <img src="/images/logo.png" alt="Formicarium Logo" style="height: 40px; margin-right: 10px;">
+                <span class="app-name">Formicarium</span>
+            </a>
+        </div>
         <nav class="sidebar-nav">
-            <a th:href="@{/dashboard}" class="sidebar-link" th:classappend="${headerTitle == 'Dashboard' ? 'active' : ''}">Dashboard</a>
-            <a th:href="@{/profile}" class="sidebar-link" th:classappend="${headerTitle == 'Profile' ? 'active' : ''}">Profile</a>
-            <a th:href="@{/settings}" class="sidebar-link" th:classappend="${headerTitle == 'Settings' ? 'active' : ''}">Settings</a>
-            <a th:href="@{/projects}" class="sidebar-link" th:classappend="${headerTitle == 'Projects' ? 'active' : ''}">Projects</a>
-            <a th:href="@{/tasks/page}" class="sidebar-link"
-               th:classappend="${headerTitle == 'Tasks' ? 'active' : ''}">Tasks</a>
-            <a th:href="@{/logs}" class="sidebar-link" th:classappend="${headerTitle == 'Logs' ? 'active' : ''}">Logs</a>
-            <a th:href="@{/chat}" class="sidebar-link" th:classappend="${headerTitle == 'Group Chats' ? 'active' : ''}">Group Chats</a>
-            <a th:href="@{/reports}" class="sidebar-link" th:classappend="${headerTitle == 'Reports' ? 'active' : ''}">Reports</a>
+            <a th:href="@{/dashboard}" class="sidebar-link" th:classappend="${headerTitle == 'Dashboard' ? 'active' : ''}">
+                <i class="bi bi-speedometer2"></i> Dashboard
+            </a>
+            <a th:href="@{/projects}" class="sidebar-link" th:classappend="${activePage == 'projects' ? 'active' : ''}">
+                <i class="bi bi-folder2-open"></i> Projects
+            </a>
+            <a th:href="@{/tasks}" class="sidebar-link" th:classappend="${headerTitle == 'Tasks' || activePage == 'tasks' ? 'active' : ''}">
+                <i class="bi bi-list-task"></i> Tasks
+            </a>
+            <a th:href="@{/chat}" class="sidebar-link" th:classappend="${headerTitle == 'Group Chats' ? 'active' : ''}">
+                <i class="bi bi-chat-dots"></i> Group Chats
+            </a>
+            <a th:href="@{/profile}" class="sidebar-link" th:classappend="${headerTitle == 'Profile' ? 'active' : ''}">
+                <i class="bi bi-person-circle"></i> Profile
+            </a>
+            <a th:href="@{/settings}" class="sidebar-link" th:classappend="${headerTitle == 'Settings' ? 'active' : ''}">
+                <i class="bi bi-gear"></i> Settings
+            </a>
         </nav>
     </div>
 
-    <div class="dashboard-main">
-        <!-- Header -->
-        <div class="dashboard-header">
-            <div class="header-title" th:text="${headerTitle}">Header</div>
-            <div class="user-info">>
-                <img th:src="@{'https://api.dicebear.com/9.x/dylan/svg?seed=' + ${#authentication.principal.avatarSeed}}"
-                     alt="User Avatar" class="user-avatar" />
-                <span sec:authentication="name" class="user-name">User</span>
-                <form th:action="@{/logout}" method="post" class="logout-form">
-                    <button type="submit" class="btn btn-sm btn-warning">Logout</button>
-                </form>
+    <!-- zona principala -->
+    <div class="app-main">
+        <!-- Navbar Header -->
+        <nav class="navbar navbar-expand-lg app-header">
+            <div class="container-fluid">
+                <div class="navbar-center flex-grow-1 d-flex justify-content-center align-items-center">
+                    <h2 class="header-title text-center" th:text="${headerTitle}"
+                        style="color: var(--primary-color); margin: 0;">
+                        Page Title
+                    </h2>
+                </div>
+
+                <ul class="navbar-nav ms-auto d-flex align-items-center">
+                    <li class="nav-item dropdown dropstart me-3">
+                        <a class="nav-link" href="#" id="notificationDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-bell"></i>
+                            <span id="notificationCount" class="badge">0</span>
+                        </a>
+
+                        <ul class="dropdown-menu" aria-labelledby="notificationDropdown">
+                            <!-- Header with title and clear all button -->
+                            <li class="dropdown-item-text">
+                                <span>Notifications</span>
+                                <button id="clearAllBtn" class="btn btn-sm btn-danger">Clear All</button>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+
+                            <!-- Notifications container -->
+                            <div id="notificationsList">
+                                <p id="noNotificationsLabel">No notifications</p>
+                            </div>
+
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-center" href="/notifications">View All</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <!-- informatii utilizator si buton de logout -->
+                    <li class="nav-item d-flex align-items-center me-3">
+                        <img th:src="@{'https://api.dicebear.com/9.x/dylan/svg?seed=' + ${#authentication.principal.avatarSeed}}"
+                             alt="User Avatar" class="user-avatar rounded-circle" style="height: 30px; width: 30px;">
+                        <span class="user-name ms-2 text-white" sec:authentication="name">User</span>
+                    </li>
+                    <li class="nav-item">
+                        <form action="/logout" method="post">
+                            <button type="submit" class="logout-btn">Logout</button>
+                        </form>
+                    </li>
+                </ul>
             </div>
-        </div>
+        </nav>
 
-        <div class="dashboard-content" layout:fragment="content">
 
+        <!-- sectiunea de continut -->
+        <div class="app-content" layout:fragment="content">
+            <!-- continut dinamic aici -->
         </div>
     </div>
 </div>
+
+<!-- id utilizator ascuns pentru javascript -->
+<span id="currentUserId" th:text="${#authentication.principal.id}" hidden></span>
+
+<!-- Bootstrap JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- SockJS + STOMP -->
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+
+<script>
+    let stompClient = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const userId = getUserId();
+        if (!userId) {
+            console.error('User ID not found. Notifications will not function correctly.');
+            return;
+        }
+        connectWebSocket(userId);
+        fetchUnreadCount();
+        fetchNotifications();
+    });
+
+    function getUserId() {
+        const userIdElem = document.getElementById('currentUserId');
+        return userIdElem ? userIdElem.innerText : null;
+    }
+
+    function connectWebSocket(userId) {
+        const socket = new SockJS('/ws');
+        stompClient = StompJs.Stomp.over(socket);
+
+        // optional: dezactiveaza logurile de debug
+        // stompClient.debug = null;
+
+        stompClient.connect({}, function(frame) {
+            console.log('Connected:', frame);
+
+            // abonare la /topic/notifications/{userId}
+            const topic = `/topic/notifications/${userId}`;
+            stompClient.subscribe(topic, (message) => {
+                const notif = JSON.parse(message.body);
+                console.log('Received real-time notification:', notif);
+                appendNotification(notif);
+                updateNotificationCounter();
+            });
+
+        }, function(error) {
+            console.error('STOMP error:', error);
+            setTimeout(() => connectWebSocket(userId), 5000);
+        });
+    }
+
+    async function fetchUnreadCount() {
+        try {
+            const resp = await fetch('/api/notifications/unread?page=0&size=1');
+            if (resp.ok) {
+                const data = await resp.json();
+                document.getElementById('notificationCount').innerText = data.totalElements;
+            } else {
+                console.error('Failed to fetch unread notifications count:', resp.statusText);
+            }
+        } catch (error) {
+            console.error('Error fetching unread count:', error);
+        }
+    }
+
+    async function fetchNotifications() {
+        try {
+            const resp = await fetch('/api/notifications?page=0&size=10');
+            if (resp.ok) {
+                const data = await resp.json();
+                populateNotificationsList(data.content);
+            } else {
+                console.error('Failed to fetch notifications:', resp.statusText);
+            }
+        } catch (error) {
+            console.error('Error fetching notifications:', error);
+        }
+    }
+
+    function updateNotificationCounter() {
+        const countElem = document.getElementById('notificationCount');
+        let count = parseInt(countElem.innerText, 10);
+        count = isNaN(count) ? 1 : count + 1;
+        countElem.innerText = count;
+    }
+
+    function appendNotification(notification) {
+        const list = document.getElementById('notificationsList');
+
+        // elimina "No notifications" daca exista
+        const noNotifPlaceholder = list.querySelector('.text-muted');
+        if (noNotifPlaceholder) {
+            noNotifPlaceholder.remove();
+        }
+
+        // creeaza un element nou
+        const notifItem = document.createElement('div');
+        notifItem.className = 'dropdown-item';
+        notifItem.innerHTML = `
+            <strong>${notification.message}</strong><br/>
+            <small>${new Date(notification.createdAt).toLocaleString()}</small>
+        `;
+        list.prepend(notifItem); // adauga in partea de sus
+    }
+
+    function populateNotificationsList(notifications) {
+        const list = document.getElementById('notificationsList');
+        list.innerHTML = '';
+
+        if (!notifications || notifications.length === 0) {
+            const p = document.createElement('p');
+            p.className = 'text-center text-muted';
+            p.innerText = 'No notifications';
+            list.appendChild(p);
+            return;
+        }
+
+        notifications.forEach((notif) => {
+            appendNotification(notif);
+        });
+    }
+
+    function appendNotification(notification) {
+        const list = document.getElementById('notificationsList');
+        const noNotifLabel = document.getElementById('noNotificationsLabel');
+        if (noNotifLabel) {
+            noNotifLabel.remove(); // remove fallback label if it exists
+        }
+
+        // Create outer container
+        const notifItem = document.createElement('div');
+        notifItem.className = 'dropdown-item d-flex justify-content-between align-items-start mb-2';
+        notifItem.style.color = '#fff'; // ensure white text
+
+        // Left portion: message/time
+        const leftDiv = document.createElement('div');
+        leftDiv.innerHTML = `
+    <strong>${notification.message}</strong><br/>
+    <small>${new Date(notification.createdAt).toLocaleString()}</small>
+  `;
+
+        // Right portion: Mark as read / Delete
+        const rightDiv = document.createElement('div');
+        rightDiv.className = 'd-flex flex-column align-items-end ms-2';
+
+        // Mark as Read button (only if not read)
+        if (!notification.isRead) {
+            const markReadBtn = document.createElement('button');
+            markReadBtn.className = 'btn btn-sm btn-outline-success mb-1';
+            markReadBtn.innerText = 'Mark as read';
+            markReadBtn.onclick = (e) => {
+                e.stopPropagation();
+                markNotificationAsRead(notification.id, notifItem);
+            };
+            rightDiv.appendChild(markReadBtn);
+        }
+
+        // Delete button
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'btn btn-sm btn-outline-danger';
+        deleteBtn.innerText = 'Delete';
+        deleteBtn.onclick = (e) => {
+            e.stopPropagation();
+            deleteNotification(notification.id, notifItem);
+        };
+        rightDiv.appendChild(deleteBtn);
+
+        notifItem.appendChild(leftDiv);
+        notifItem.appendChild(rightDiv);
+
+        // Insert into the DOM
+        // If unread => prepend to top, if read => append to bottom
+        if (!notification.isRead) {
+            list.prepend(notifItem);
+        } else {
+            list.appendChild(notifItem);
+        }
+    }
+
+
+    async function markNotificationAsRead(notificationId, notifItem) {
+        try {
+            const resp = await fetch(`/api/notifications/${notificationId}/read`, { method: 'POST' });
+            if (resp.ok) {
+                // Optional: re-fetch unread count or do local changes
+                // Move this item to bottom (since it's now read)
+                const list = document.getElementById('notificationsList');
+                notifItem.remove();
+                // Suppose you also set isRead = true on local object,
+                // but for a quick fix we just re-append
+                list.appendChild(notifItem);
+            } else {
+                console.error('Error marking notification as read:', resp.statusText);
+            }
+        } catch (error) {
+            console.error('Error marking notification as read:', error);
+        }
+    }
+
+    async function deleteNotification(notificationId, notifItem) {
+        try {
+            const resp = await fetch(`/api/notifications/${notificationId}`, { method: 'DELETE' });
+            if (resp.ok) {
+                // Remove from the UI
+                notifItem.remove();
+                // Optionally update the count
+                decrementNotificationCounter();
+            } else {
+                console.error('Error deleting notification:', resp.statusText);
+            }
+        } catch (error) {
+            console.error('Error deleting notification:', error);
+        }
+    }
+
+    function decrementNotificationCounter() {
+        const countElem = document.getElementById('notificationCount');
+        let count = parseInt(countElem.innerText, 10);
+        if (!isNaN(count) && count > 0) {
+            countElem.innerText = (count - 1);
+        }
+    }
+
+    // Clear All button
+    document.getElementById('clearAllBtn')?.addEventListener('click', async function() {
+        try {
+            const resp = await fetch('/api/notifications/clearAll', { method: 'DELETE' });
+            if (resp.ok) {
+                const list = document.getElementById('notificationsList');
+                list.innerHTML = '<p class="text-center text-muted" id="noNotificationsLabel">No notifications</p>';
+                // Reset the badge count
+                document.getElementById('notificationCount').innerText = '0';
+            } else {
+                console.error('Error clearing all notifications:', resp.statusText);
+            }
+        } catch (error) {
+            console.error('Error clearing all notifications:', error);
+        }
+    });
+
+
+</script>
+
 </body>
 </html>
 

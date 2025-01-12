@@ -1,6 +1,8 @@
-/* General Styles */
+/* ------------------------- */
+/* Variabile globale */
+/* ------------------------- */
 :root {
-    /*--bg-color: #2d3250;*/
+    /* Paleta de culori */
     --bg-color: #060644;
     --sidebar-bg: #424769;
     --secondary-color: #eb7f67;
@@ -10,20 +12,33 @@
     --secondary-hover: #e16b54;
     --text-color: #ffffff;
     --secondary-text: #d1d1e0;
+    --dark-text: #000000;
     --card-bg: #424769;
     --border-color: #f9b17a;
     --input-bg: #67679d;
+    --light-bg: #ffffff;
+    --btn-danger: #C41E3A;
+    --btn-danger-hover: #A11A32;
+    --muted-color: #6c757d;
     --shadow-color: rgba(0, 0, 0, 0.2);
     --shadow-hover: rgba(0, 0, 0, 0.3);
     --transition-speed: 0.3s;
+
+    /* dimensiuni layout */
+    --sidebar-width: 250px;
+    --header-height: 60px;
 }
 
+/* ------------------------- */
+/* Stiluri Globale */
+/* ------------------------- */
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
     font-family: 'Raleway', sans-serif;
     margin: 0;
     padding: 0;
+    overflow-x: hidden; /* previne scroll-ul orizontal */
 }
 
 h1, h2, h3 {
@@ -40,18 +55,56 @@ a:hover, a:focus {
     color: var(--primary-hover);
 }
 
+.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.header-title {
+    font-weight: bold;
+    font-size: 1.5rem;
+    line-height: var(--header-height);
+}
+
+/* ------------------------- */
+/* Clase utilitare */
+/* ------------------------- */
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shadow-hover {
+    transition: box-shadow var(--transition-speed) ease, transform 0.3s ease;
+}
+
+.shadow-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px var(--shadow-hover);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ------------------------- */
+/* Stiluri pentru butoane */
+/* ------------------------- */
 .btn-custom {
     background-color: var(--primary-color);
     color: var(--text-color);
     border: none;
-    border-radius: 10px;
-    padding: 10px 20px;
-    cursor: pointer;
+    border-radius: 8px;
+    padding: 8px 12px;
     font-weight: bold;
+    cursor: pointer;
     transition: background-color var(--transition-speed) ease, transform 0.2s ease;
 }
 
-.btn-custom:hover, .btn-custom:focus {
+.btn-custom:hover {
     background-color: var(--primary-hover);
     transform: translateY(-2px);
 }
@@ -60,6 +113,547 @@ a:hover, a:focus {
     transform: translateY(0);
 }
 
+.logout-btn {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-weight: bold;
+    transition: background-color var(--transition-speed) ease, transform 0.2s ease;
+}
+
+.logout-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+.logout-btn:active {
+    transform: translateY(0);
+}
+
+/* -----------------------------------*/
+/* Stiluri pentru modulul To-Do List  */
+/* ---------------------------------- */
+
+/* stil card pentru modulul to-do list*/
+.to-do-module-card {
+    max-width: 600px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 8px;
+    background-color: var(--card-bg);
+    box-shadow: 0 4px 8px var(--shadow-color);
+    overflow: auto;
+    margin-bottom: 20px;
+}
+
+/* antet modul: nume si descriere */
+.card-header {
+    padding: 20px;
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-header-title {
+    color: var(--header-title);
+    margin-bottom: 0;
+    font-size: 1.5rem;
+}
+
+.card-header p {
+    color: var(--text-color);
+    margin-top: 5px;
+    font-size: 1rem;
+}
+
+/* antet Checklist  */
+.checklist-header {
+    color: var(--header-title);
+    margin-bottom: 15px;
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+/* mesaje flash */
+.alert {
+    margin-bottom: 15px;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Checklist Container */
+.task-list-container {
+    max-height: 250px; /* asigura scrollabilitate */
+    overflow-y: auto; /* container scrollabil */
+    padding: 10px;
+    background-color: var(--light-bg); //* fundal pentru lista activitati */
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 15px;
+}
+
+/* Task Items */
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--light-bg);
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    padding: 10px;
+    transition: background-color var(--transition-speed) ease;
+}
+
+/* stilizare pentru Task completat */
+.task-completed {
+    background-color: rgba(0, 128, 0, 0.15); /* verde transparent */
+    text-decoration: line-through;
+    color: var(--text-color);
+}
+
+/* buton Delete */
+.btn-delete {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease, transform 0.2s ease;
+}
+
+.btn-delete:hover {
+    background-color: var(--secondary-hover);
+    transform: translateY(-2px);
+}
+
+.btn-delete:active {
+    transform: translateY(0);
+}
+
+/* Task Name */
+.task-name {
+    color: var(--dark-text);
+    font-size: 1rem;
+}
+
+/* formular Add Task  */
+.add-task-form .input-group {
+    display: flex;
+}
+
+.add-task-form .form-control {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px 0 0 4px;
+    background-color: var(--light-bg);
+    color: var(--text-color);
+}
+
+.add-task-form .btn-custom {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.add-task-form .btn-custom:hover {
+    background-color: var(--secondary-hover);
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.action-buttons .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color var(--transition-speed) ease, transform 0.2s ease;
+}
+
+.action-buttons .btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.action-buttons .btn-secondary:hover {
+    background-color: var(--secondary-hover);
+    transform: translateY(-2px);
+}
+
+.action-buttons .btn-danger {
+    background-color: var(--btn-danger);
+    color: var(--text-color);
+}
+
+.action-buttons .btn-danger:hover {
+    background-color: var(--btn-danger-hover);
+    transform: translateY(-2px);
+}
+
+/*!* stil pentru pictograma clopot si badge-ul pentru numarul notificarilor *!*/
+/*#notificationDropdown {*/
+/*    position: relative;*/
+/*    font-size: 1.4rem;*/
+/*    color: var(--header-title); !* ajusteaza culoarea dinamic *!*/
+/*}*/
+
+/*#notificationCount {*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    start: 100%;*/
+/*    transform: translate(-50%, -50%);*/
+/*    font-size: 0.7rem;*/
+/*    padding: 0.2rem 0.4rem;*/
+/*    border-radius: 999px;*/
+/*    background-color: var(--btn-danger); !* culoare de rezerva pentru badge *!*/
+/*    color: #fff;*/
+/*}*/
+
+/*!* meniul dropdown *!*/
+/*.dropdown-menu {*/
+/*    min-width: 350px;*/
+/*    background-color: var(--card-bg, #343a40); !* culoare de rezerva pentru fundalul dropdown-ului *!*/
+/*    border: 1px solid var(--border-color, #495057); !* culoare de rezerva pentru margine *!*/
+/*    color: #fff;*/
+/*    padding: 0.5rem;*/
+/*    border-radius: 0.25rem;*/
+/*}*/
+
+/*!* sectiunea de antet din dropdown *!*/
+/*.dropdown-item-text {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    align-items: center;*/
+/*    font-weight: bold;*/
+/*    margin-bottom: 0.5rem;*/
+/*}*/
+
+/*!* linia de divizare *!*/
+/*.dropdown-divider {*/
+/*    border-color: var(--border-color, #495057); !* culoarea liniei de divizare *!*/
+/*}*/
+
+/*!* container pentru lista de notificari *!*/
+/*#notificationsList {*/
+/*    max-height: 400px;*/
+/*    overflow-y: auto;*/
+/*    margin-bottom: 0.5rem;*/
+/*}*/
+
+/*!* mesaj fallback *!*/
+/*#noNotificationsLabel {*/
+/*    text-align: center;*/
+/*    color: var(--muted-color, #6c757d); !* culoare de rezerva pentru textul muted *!*/
+/*}*/
+
+/*!* elemente individuale de notificare *!*/
+/*.dropdown-item {*/
+/*    transition: color 0.3s ease-in-out; !* tranzitie lina pentru efectul hover *!*/
+/*}*/
+
+/*.dropdown-item:hover {*/
+/*    color: var(--primary-hover, #e08e58); !* culoarea la hover *!*/
+/*}*/
+
+/*!* butoane *!*/
+/*#clearAllBtn {*/
+/*    font-size: 0.8rem;*/
+/*    padding: 0.2rem 0.5rem;*/
+/*}*/
+
+/*.dropdown-item .btn {*/
+/*    font-size: 0.8rem;*/
+/*    margin-left: 0.5rem;*/
+/*}*/
+
+/* stil pentru pictograma clopot si badge-ul pentru numarul notificarilor */
+#notificationDropdown {
+    position: relative;
+    font-size: 1.4rem;
+    color: var(--header-title); /* ajusteaza culoarea dinamic */
+}
+
+#notificationCount {
+    position: absolute;
+    top: 0;
+    start: 100%;
+    transform: translate(-50%, -50%);
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+    border-radius: 999px;
+    background-color: var(--btn-danger); /* culoare de rezerva pentru badge */
+    color: #fff;
+}
+
+/* meniul dropdown */
+.dropdown-menu {
+    min-width: 350px;
+    background-color: var(--card-bg, #343a40); /* culoare de rezerva pentru fundalul dropdown-ului */
+    border: 1px solid var(--border-color, #495057); /* culoare de rezerva pentru margine */
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+/* sectiunea de antet din dropdown */
+.dropdown-item-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+/* linia de divizare */
+.dropdown-divider {
+    border-color: var(--border-color, #495057); /* culoarea liniei de divizare */
+}
+
+/* container pentru lista de notificari */
+#notificationsList {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 0.5rem;
+}
+
+/* mesaj fallback */
+#noNotificationsLabel {
+    text-align: center;
+    color: var(--muted-color, #6c757d); /* culoare de rezerva pentru textul muted */
+}
+
+/* elemente individuale de notificare */
+.dropdown-item {
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out; /* tranzitie lina pentru efectul hover */
+    background-color: transparent; /* asigura ca fundalul implicit este transparent */
+}
+
+/* efect de hover pentru notificari */
+.dropdown-item:hover {
+    color: var(--primary-hover, #e08e58); /* culoare personalizata la hover pentru text */
+    background-color: var(--card-bg, #343a40); /* mentine fundalul dropdown-ului la hover */
+}
+
+/* override specific pentru stilurile Bootstrap */
+.dropdown-menu .dropdown-item:hover {
+    color: var(--primary-hover, #e08e58) !important; /* forta culoarea textului la hover */
+    background-color: var(--card-bg, #343a40) !important; /* forta culoarea fundalului la hover */
+}
+
+/* butoane */
+#clearAllBtn {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.5rem;
+}
+
+.dropdown-item .btn {
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
+}
+
+
+/* ------------------------------------ */
+/*Stiluri modal (fereastra de confirmare */
+/* -------------------------------------- */
+
+.modal-backdrop {
+    background: rgba(0, 0, 0, 0.7); /* fundal intunecat pentru overlay */
+    z-index: 1040; /* asigura ca este sub modal */
+}
+
+
+.modal-content {
+    position: relative;
+    z-index: 1050;  /* asigura ca este deasupra backdrop-ului */
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+}
+
+
+.modal.fade .modal-dialog {
+    transition: transform 0.3s ease-out; /* animatie pentru deschidere modal */
+    transform: translateY(0);
+}
+
+.modal-content .btn:hover {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.modal-dialog-centered {
+    display: flex;
+    align-items: center;
+    min-height: calc(100% - 1rem);
+    justify-content: center;
+}
+
+/* ------------------------- */
+/* Stiluri Layout*/
+/* ------------------------- */
+.app-container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--sidebar-width);
+    background-color: var(--sidebar-bg);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    border-right: 2px solid var(--border-color);
+    z-index: 1200;
+    transition: transform var(--transition-speed) ease;
+    overflow-y: auto;
+}
+
+.app-sidebar.sidebar-hidden {
+    transform: translateX(-250px);
+}
+
+.app-header {
+    position: fixed;
+    top: 0;
+    left: var(--sidebar-width);
+    right: 0;
+    height: var(--header-height);
+    background-color: var(--sidebar-bg);
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 1001;
+    border-bottom: 2px solid var(--border-color);
+    transition: left var(--transition-speed) ease, width var(--transition-speed) ease;
+}
+
+.app-header.header-full {
+    left: 0;
+    width: 100%;
+}
+
+.app-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-color);
+    overflow: hidden;
+}
+
+.app-content {
+    margin-top: var(--header-height);
+    margin-left: var(--sidebar-width);
+    padding: 20px;
+    transition: margin-left var(--transition-speed) ease;
+}
+
+.app-container.sidebar-hidden .app-content {
+    margin-left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.user-avatar {
+    border-radius: 50%;
+}
+
+/* ------------------------- */
+/* Stiluri Sidebar */
+/* ------------------------- */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.sidebar-logo .app-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-hover);
+}
+
+
+.sidebar-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+.sidebar-nav {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: bold;
+    border-left: 4px solid transparent;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    transition: background-color var(--transition-speed) ease, border-left var(--transition-speed) ease;
+}
+
+.sidebar-link i {
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+    background-color: var(--input-bg);
+    border-left: 4px solid var(--primary-color);
+}
+
+/* ------------------------- */
+/* Stiluri Card si Widget */
+/* ------------------------- */
 .card {
     background-color: var(--card-bg);
     border-radius: 15px;
@@ -74,144 +668,6 @@ a:hover, a:focus {
     box-shadow: 0 6px 20px var(--shadow-hover);
 }
 
-input.form-control {
-    background-color: var(--input-bg);
-    color: var(--text-color);
-    border: none;
-    border-radius: 10px;
-    padding: 10px;
-    width: 100%;
-    box-sizing: border-box;
-    transition: background-color var(--transition-speed) ease, border 0.3s ease;
-}
-
-input.form-control:focus {
-    background-color: #7a7cb3;
-    outline: none;
-    border: 1px solid var(--primary-color);
-}
-
-input::placeholder {
-    color: var(--secondary-text);
-}
-
-select.form-select option:disabled {
-    color: var(--secondary-text);  /* Use your preferred color here */
-}
-
-/* Sidebar Styles */
-.dashboard-container {
-    display: flex;
-    height: 100vh;
-    overflow: hidden;
-}
-
-.dashboard-sidebar {
-    background-color: var(--sidebar-bg);
-    width: 250px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch; /* Changed from center to stretch for better alignment */
-    border-right: 2px solid var(--border-color);
-    transition: width var(--transition-speed) ease;
-}
-
-.sidebar-title {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.sidebar-nav {
-    width: 100%;
-}
-
-.sidebar-link {
-    display: flex; /* Changed to flex for better alignment */
-    align-items: center;
-    padding: 15px 20px;
-    color: var(--text-color);
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color var(--transition-speed) ease, border-left var(--transition-speed) ease;
-    border-left: 4px solid transparent; /* Added for smooth border transition */
-    border-radius: 4px;
-    margin-bottom: 5px; /* Added spacing between links */
-}
-
-.sidebar-link:hover,
-.sidebar-link.active {
-    background-color: var(--input-bg);
-    border-left: 4px solid var(--primary-color);
-}
-
-/* Main Content Styles */
-.dashboard-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--bg-color);
-    overflow: hidden; /* Prevent main from scrolling separately */
-}
-
-.dashboard-header {
-    position: fixed;
-    top: 0;
-    left: 250px; /* Width of the sidebar */
-    right: 0;
-    background-color: var(--sidebar-bg);
-    color: var(--text-color);
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid var(--border-color);
-    z-index: 1000;
-    transition: left var(--transition-speed) ease, width var(--transition-speed) ease;
-}
-
-.dashboard-header .header-title {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: var(--primary-color);
-}
-
-.dashboard-header .user-info {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.user-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    background-color: var(--input-bg);
-}
-
-.user-name {
-    font-weight: bold;
-    color: var(--text-color);
-}
-
-/* Content */
-.dashboard-content {
-    flex: 1;
-    padding: 80px 20px 30px; /* Top padding accounts for fixed header */
-    overflow-y: auto;
-}
-
-.dashboard-content h2 {
-    font-size: 1.75rem;
-    margin-bottom: 20px;
-    color: var(--text-color);
-}
-
-/* Widgets */
 .widget-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -238,25 +694,239 @@ select.form-select option:disabled {
 }
 
 .project-title {
-    color: var(--primary-color); /* Use your brand color */
-    font-size: 1.25rem;          /* Adjust size as needed */
-    font-weight: bold;           /* Emphasize the title */
-    margin-bottom: 10px;         /* Optional spacing */
+    color: var(--primary-color); /* utilizarea culorii principale */
+    font-size: 1.25rem;
+    font-weight: bold;           /* titlu cu text ingrosat */
+    margin-bottom: 10px;         /* spatiere*/
 }
 
 .card-header-title {
-    color: var(--header-title); /* Use your warning yellow */
-    font-weight: bold;           /* Optional: Make it bold */
+    color: var(--header-title);
+    font-weight: bold;
 }
 
-.btn-outline-primary:hover,
-.btn-outline-warning:hover,
-.btn-outline-danger:hover {
+/* Continut asupra antetului */
+.app-content {
+    flex: 1;
+    padding: 20px;
+    margin-top: var(--header-height); /* alienere sub antet */
+    overflow-y: auto; /* scroll pentru continut lung */
+    height: calc(100vh - var(--header-height)); /* inaltime maxima minus antet */
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: var(--input-bg);
+}
+
+/* ------------------------- */
+/* Alerte */
+/* ------------------------- */
+.alert-success-custom {
+    background-color: rgba(0, 128, 0, 0.15);
+    color: var(--text-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    padding: 15px;
+    font-weight: bold;
+}
+
+.alert-danger-custom {
+    background-color: rgba(128, 0, 0, 0.15);
+    color: var(--text-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    padding: 15px;
+    font-weight: bold;
+}
+
+/* buton pentru inchiderea alertelor */
+.alert-dismissible .btn-close {
+    color: #ffffff;
+    opacity: 0.9; /* hover effect transparent */
+}
+
+.alert-dismissible .btn-close:hover {
+    opacity: 1;
+}
+
+/* ------------------------- */
+/* Stiluri Formular */
+/* ------------------------- */
+input.form-control {
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color var(--transition-speed) ease, border 0.3s ease;
+}
+
+input.form-control:focus {
+    background-color: #7a7cb3;
+    outline: none;
+    border: 1px solid var(--primary-color);
+}
+
+input::placeholder {
+    color: var(--secondary-text);
+}
+
+select.form-select option:disabled {
+    color: var(--secondary-text);
+}
+
+/* ------------------------- */
+/* Stiluri pentru formular de autentificare */
+/* ------------------------- */
+.auth-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: url('../images/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+    position: relative;
+}
+
+.auth-page::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(66, 71, 105, 0.8);
+    z-index: 1;
+}
+
+/* Container pentru card-ul care contine card-ul formularului de autentificare */
+.auth-container {
+    position: relative;
+    z-index: 2; /* se asigura ca formularul este asupra overlay-ului */
+    background: rgba(66, 71, 105, 0.3); /* fundal semi transparent pentru effectul de glassmorphism */
+    backdrop-filter: blur(10px); /* efect blur */
+    -webkit-backdrop-filter: blur(10px); /* suport pentru Safari pentru compatibilitate */
+    border-radius: 15px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 50px 40px;
+    max-width: 600px;
+    width: 90%;
+    box-sizing: border-box;
+    color: var(--text-color);
+    overflow: hidden;
+    align-items: center;
+}
+
+/* Logo in container-ul de autentificare */
+.auth-container .hero-logo {
+    display: block;
+    margin: 0 auto 20px;
+    max-height: 80px;
+    max-width: 80px;
+}
+
+.auth-container .card h2 {
+    font-size: 2rem;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* etichete formular */
+.auth-container .form-label {
+    display: block;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+/* controale formular */
+.auth-container input.form-control {
+    background-color: rgba(103, 103, 157, 0.8); /* fundal semi transaprent */
+    color: var(--text-color);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 12px 15px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    transition: background-color var(--transition-speed), border-color 0.3s;
+}
+
+.auth-container input.form-control::placeholder {
+    color: var(--secondary-text);
+    font-weight: 400;
+}
+
+.auth-container input.form-control:focus {
+    border-color: var(--primary-color); /* #f9b17a */
+    background-color: rgba(122, 124, 179, 0.9);
+    outline: none;
+}
+
+/* buton principal in containerul de autentificare */
+.auth-container .btn.btn-custom {
+    background-color: var(--secondary-color); /* #eb7f67 */
+    color: var(--text-color);
+    border-radius: 8px;
+    padding: 12px 0;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 1rem;
+    transition: background-color var(--transition-speed), transform 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.auth-container .btn.btn-custom:hover {
+    background-color: var(--secondary-hover); /* #e16b54 */
     transform: translateY(-2px);
-    box-shadow: 0 2px 8px var(--shadow-hover);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* link pentru schimbarea intre login si inregistrare */
+.auth-container .switch-link {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+.auth-container .switch-link:hover {
+    text-decoration: underline;
+    color: var(--secondary-hover);
+}
+
+/* mesaj de eroare */
+.auth-container .alert.alert-danger {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgba(255, 0, 0, 0.1);
+    color: var(--primary-hover);
+}
+
+/* ------------------------- */
+/* Sectiunea Hero (prima sectiune a paginii de landing) */
+/* ------------------------- */
 .hero-section {
     background-color: var(--bg-color);
     height: 100vh;
@@ -302,32 +972,32 @@ select.form-select option:disabled {
 }
 
 .hero-logo {
-    max-height: 130px; /* Larger size */
+    max-height: 130px;
     max-width: 130px;
-    margin-bottom: 12px; /* Adjust spacing */
+    margin-bottom: 12px;
     display: inline-block;
 }
 
 #hero {
-    background-color: #060644; /* Dark blue background */
+    background-color: #060644;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    height: 100vh; /* Full viewport height */
-    padding: 0 20px; /* Side padding for smaller screens */
+    height: 100vh;
+    padding: 0 20px;
 }
 
 #hero h1 {
-    font-size: 3rem; /* Match the size of "Welcome to Formicarium!" */
+    font-size: 3rem;
     font-weight: bold;
     color: #ffffff;
-    margin-bottom: 15px; /* Add clean spacing */
+    margin-bottom: 15px;
 }
 
 #hero p {
     font-size: 1.2rem;
-    color: #EB7F67; /* Subtitle text color */
+    color: #EB7F67;
     margin-bottom: 25px;
 }
 
@@ -341,7 +1011,7 @@ select.form-select option:disabled {
 }
 
 #hero .btn-custom:hover {
-    background-color: #e36b54; /* Slightly darker hover */
+    background-color: #e36b54;
     transform: translateY(-2px);
 }
 
@@ -353,32 +1023,32 @@ select.form-select option:disabled {
 }
 
 .hero-logo {
-    max-height: 130px; /* Larger size */
+    max-height: 130px;
     max-width: 130px;
-    margin-bottom: 12px; /* Adjust spacing */
+    margin-bottom: 12px;
     display: inline-block;
 }
 
 #hero {
-    background-color: #060644; /* Dark blue background */
+    background-color: #060644;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    height: 100vh; /* Full viewport height */
-    padding: 0 20px; /* Side padding for smaller screens */
+    height: 100vh;
+    padding: 0 20px;
 }
 
 #hero h1 {
-    font-size: 3rem; /* Match the size of "Welcome to Formicarium!" */
+    font-size: 3rem;
     font-weight: bold;
     color: #ffffff;
-    margin-bottom: 15px; /* Add clean spacing */
+    margin-bottom: 15px;
 }
 
 #hero p {
     font-size: 1.2rem;
-    color: #EB7F67; /* Subtitle text color */
+    color: #EB7F67;
     margin-bottom: 25px;
 }
 
@@ -396,10 +1066,62 @@ select.form-select option:disabled {
     transform: translateY(-2px);
 }
 
-/* Contact Section Styling */
+
+/* ------------------------- ---------------------*/
+/* Sectiunea functionalitatilor de pagina landing */
+/* ------------------------- ---------------------*/
+#features {
+    background-color: var(--bg-color);
+    padding: 90px 30px;
+}
+
+#features h2 {
+    font-size: 3.75rem;
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.feature-card {
+    background-color: var(--secondary-color);
+    border-radius: 8px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card i {
+    font-size: 4.5rem;
+    color: var(--bg-color);
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    font-size: 2rem;
+    color: var(--bg-color);
+    margin-bottom: 10px;
+}
+
+.feature-card p {
+    font-size: 1.2rem;
+    color: var(--bg-color);
+    text-align: center;
+}
+
+.feature-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* ------------------------- */
+/* Sectiunea de contact */
+/* ------------------------- */
 #contact {
-    background-color: #EB7F67;
-    color: #ffffff;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
     padding: 60px 20px;
 }
 
@@ -407,7 +1129,8 @@ select.form-select option:disabled {
     font-size: 4rem;
     font-weight: bold;
     line-height: 1.2;
-    margin: 0;
+    margin: 0 0 20px 0;
+    text-align: center;
 }
 
 #contact img {
@@ -420,113 +1143,137 @@ select.form-select option:disabled {
 #contact p {
     margin: 0 0 10px;
     font-size: 1.1rem;
+    text-align: center;
 }
 
 #contact .small {
-    font-size: 0.9rem; /* Match the footer text size */
+    font-size: 0.9rem;
 }
 
 #contact a {
-    color: #ffffff;
+    color: var(--text-color);
     text-decoration: none;
-    font-size: 0.9rem; /* Ensures consistent text size */
+    font-size: 0.9rem;
 }
 
 #contact a:hover {
     text-decoration: underline;
 }
 
-/* Make the Features Section Larger */
-#features {
-    background-color: #060644; /* Dark blue background */
-    padding: 90px 30px; /* Increased padding for larger section */
+/* ----------------------------------------------------- */
+/* Sectiunea "About" (despre aplicatie pe pagina landing */
+/* ------------------------- ----------------------------*/
+#about {
+    background-color: var(--bg-color);
+    padding: 90px 30px;
 }
 
-#features h2 {
-    font-size: 3.75rem; /* 50% larger font size for the title */
+#about h2 {
+    font-size: 3.75rem;
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 40px;
 }
 
-/* Larger Feature Cards */
-.feature-card {
-    background-color: #eb7f67; /* Solid orange background */
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow */
-    height: 400px; /* Set uniform height for all cards */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+#about p {
+    font-size: 1.2rem;
+    color: var(--secondary-text);
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 20px auto;
 }
 
-.feature-card h3 {
-    font-size: 2rem; /* Increased title size */
+/* ------------------------- ----*/
+/* Ajustari pentru responsivitate */
+/* ------------------------------ */
+
+/* ecrane cu dimensiune medie */
+@media (max-width: 1024px) {
+    .app-sidebar {
+        width: 200px;
+    }
+
+    .app-header {
+        left: 200px;
+    }
+
+    .hamburger-btn {
+        left: 220px;
+    }
+
+    .app-container.sidebar-hidden .hamburger-btn {
+        left: 20px;
+    }
 }
 
-.feature-card p {
-    font-size: 1.2rem; /* Slightly larger text */
-}
-
-.feature-card i {
-    font-size: 4.5rem; /* Larger icons */
-    color: #060644; /* Dark blue icons */
-    margin-bottom: 20px;
-}
-
-/* Hover Effect */
-.feature-card:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Success Alert */
-.alert-success-custom {
-    background-color: rgba(0, 128, 0, 0.15); /* Subtle green background */
-    color: var(--text-color); /* Text color matching the theme */
-    border: 1px solid var(--primary-color); /* Consistent with other components */
-    border-radius: 10px;
-    box-shadow: 0 2px 8px var(--shadow-color);
-    padding: 15px;
-    font-weight: bold;
-}
-
-/* Error Alert */
-.alert-danger-custom {
-    background-color: rgba(128, 0, 0, 0.15); /* Subtle red background */
-    color: var(--text-color); /* Text color matching the theme */
-    border: 1px solid var(--primary-color); /* Consistent with other components */
-    border-radius: 10px;
-    box-shadow: 0 2px 8px var(--shadow-color);
-    padding: 15px;
-    font-weight: bold;
-}
-
-/* Close Button */
-.alert-dismissible .btn-close {
-    color: #ffffff; /* Set the color to white */
-    opacity: 0.9; /* Slight transparency for hover effect */
-}
-
-.alert-dismissible .btn-close:hover {
-    opacity: 1; /* Fully opaque on hover */
-}
-
-/* Collapsible Form Transition */
-#createTaskForm {
-    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
-    overflow: hidden;
-}
-
-/* Responsive Adjustments for Smaller Screens */
+/* ecrane mici*/
 @media (max-width: 768px) {
+
+    .app-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border-right: none;
+        border-bottom: 2px solid var(--border-color);
+    }
+
+    .app-header {
+        left: 0;
+        width: 100%;
+        position: relative;
+        border-bottom: none;
+        border-top: 2px solid var(--border-color);
+    }
+
+    .app-main {
+        margin-left: 0;
+    }
+
+    .widget-container {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .sidebar-link {
+        padding: 10px;
+        border-left: none;
+        border-bottom: 4px solid transparent;
+    }
+
+    .sidebar-link:hover,
+    .sidebar-link.active {
+        border-left: none;
+        border-bottom: 4px solid var(--primary-color);
+        background-color: var(--input-bg);
+    }
+
+
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-section p {
+        font-size: 1rem;
+    }
+
+    .hero-section .btn-custom {
+        padding: 8px 16px;
+    }
+
+
     #features {
-        padding: 60px 15px; /* Adjust padding for smaller screens */
+        padding: 60px 15px;
     }
 
     .feature-card {
-        height: auto; /* Allow flexible height for smaller screens */
+        height: auto;
         padding: 20px;
     }
 
@@ -541,202 +1288,11 @@ select.form-select option:disabled {
     .feature-card i {
         font-size: 3rem;
     }
-}
 
-/* Responsive Adjustments */
-@media (max-width: 1024px) {
-    .dashboard-sidebar {
-        width: 200px;
+    #contact {
+        padding: 30px 15px;
     }
 
-    .dashboard-header {
-        left: 200px;
-    }
-}
-
-@media (max-width: 768px) {
-    .dashboard-sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        border-right: none;
-        border-bottom: 2px solid var(--border-color);
-    }
-    .dashboard-header {
-        left: 0;
-        width: 100%;
-        position: relative;
-        border-bottom: none;
-        border-top: 2px solid var(--border-color);
-    }
-    .dashboard-main {
-        margin-left: 0;
-    }
-    .widget-container {
-        grid-template-columns: 1fr;
-    }
-    .sidebar-nav {
-        flex-direction: row;
-        justify-content: space-around;
-    }
-    .sidebar-link {
-        padding: 10px;
-        border-left: none;
-        border-bottom: 4px solid transparent;
-    }
-    .sidebar-link:hover,
-    .sidebar-link.active {
-        border-left: none;
-        border-bottom: 4px solid var(--primary-color);
-        background-color: var(--input-bg);
-    }
-}
-
-/* Overall Auth Page Layout */
-.auth-page {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background: url('../images/background.jpg') no-repeat center center fixed; /* Optional background image */
-    background-size: cover;
-    margin: 0;
-    font-family: 'Raleway', sans-serif;
-    position: relative;
-}
-
-.auth-page::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(66, 71, 105, 0.8); /* Subtler blue-gray for a balanced look */
-    z-index: 1;
-}
-
-
-/* Container for the auth card */
-.auth-container {
-    position: relative;
-    z-index: 2; /* Ensure the form is above the overlay */
-    background: rgba(66, 71, 105, 0.3); /* Semi-transparent background for glass effect */
-    backdrop-filter: blur(10px); /* Blur effect */
-    -webkit-backdrop-filter: blur(10px); /* Safari support */
-    border-radius: 15px;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    padding: 50px 40px;
-    max-width: 600px;
-    width: 90%;
-    box-sizing: border-box;
-    color: var(--text-color);
-    overflow: hidden;
-    align-items: center;
-}
-
-/* Logo within the card */
-.auth-container .hero-logo {
-    display: block;
-    margin: 0 auto 20px;
-    max-height: 80px;
-    max-width: 80px;
-}
-
-.auth-container .card h2 {
-    font-size: 2rem;
-    color: var(--text-color);
-    margin-bottom: 20px;
-    text-align: center;
-    font-weight: bold;
-}
-
-/* Form Labels */
-.auth-container .form-label {
-    display: block;
-    font-weight: 600;
-    color: var(--text-color);
-    margin-bottom: 5px;
-}
-
-/* Form Controls */
-.auth-container input.form-control {
-    background-color: rgba(103, 103, 157, 0.8); /* Slightly transparent input background */
-    color: var(--text-color);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 8px;
-    padding: 12px 15px;
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 20px;
-    transition: background-color var(--transition-speed), border-color 0.3s;
-}
-
-.auth-container input.form-control::placeholder {
-    color: var(--secondary-text);
-    font-weight: 400;
-}
-
-.auth-container input.form-control:focus {
-    border-color: var(--primary-color); /* #f9b17a */
-    background-color: rgba(122, 124, 179, 0.9);
-    outline: none;
-}
-
-/* Primary Button */
-.auth-container .btn.btn-custom {
-    background-color: var(--secondary-color); /* #f9b17a */
-    color: var(--text-color);
-    border-radius: 8px;
-    padding: 12px 0;
-    font-weight: bold;
-    width: 100%;
-    margin-top: 10px;
-    font-size: 1rem;
-    transition: primary-color var(--transition-speed), transform 0.2s ease;
-    border: none;
-    cursor: pointer;
-}
-
-.auth-container .btn.btn-custom:hover {
-    background-color: var(--secondary-hover); /* #e08e58 */
-    transform: translateY(-2px);
-}
-
-/* Link to switch between Login/Register */
-.auth-container .switch-link {
-    color: var(--primary-color);
-    font-size: 0.9rem;
-    text-decoration: none;
-    text-align: center;
-    display: block;
-    margin-top: 20px;
-    font-weight: 600;
-}
-
-.auth-container .switch-link:hover {
-    text-decoration: underline;
-    color: var(--secondary-hover);
-}
-
-/* Error Message */
-.auth-container .alert.alert-danger {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 20px;
-    font-weight: bold;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: rgba(255, 0, 0, 0.1);
-    color: var(--primary-hover);
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
     .auth-container {
         padding: 30px 20px;
     }

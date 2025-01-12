@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="base">
+<head>
+    <title th:text="${module.name}">Module Details</title>
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+<div layout:fragment="content" class="app-content flex-center">
+    <div class="card to-do-module-card">
+        <!-- Module Header -->
+        <div class="card-header text-center">
+            <h4 class="card-header-title" th:text="${module.name}">Module Name</h4>
+            <p class="text-center text-white mt-2" th:text="${module.description}">Module Description</p>
+        </div>
+
+        <!-- Module Body -->
+        <div class="card-body d-flex flex-column">
+            <!-- Checklist Header -->
+            <h5 class="checklist-header">Checklist</h5>
+
+            <!-- Flash Messages -->
+            <div th:if="${successMessage}" id="success-alert" class="alert alert-success" role="alert">
+                <span th:text="${successMessage}"></span>
+            </div>
+            <div th:if="${errorMessage}" id="error-alert" class="alert alert-danger" role="alert">
+                <span th:text="${errorMessage}"></span>
+            </div>
+
+            <!-- Checklist Container -->
+            <div class="task-list-container flex-grow-1">
+                <ul class="list-group">
+                    <li class="list-group-item task-item d-flex justify-content-between align-items-center"
+                        th:each="task : ${module.tasks}"
+                        th:data-task-id="${task.id}"
+                        th:classappend="${task.isCompleted ? 'task-completed' : ''}">
+                        <div class="d-flex align-items-center">
+                            <!-- Task Completion Form -->
+                            <form th:action="@{/modules/tasks/{taskId}/complete(taskId=${task.id})}" method="post" class="me-2">
+                                <input type="checkbox" class="form-check-input task-checkbox"
+                                       th:id="'task-' + ${task.id}"
+                                       th:checked="${task.isCompleted}"
+                                       th:disabled="${task.isCompleted}"
+                                       onclick="this.form.submit()">
+                            </form>
+                            <span class="task-name"
+                                  th:text="${task.name}"
+                                  th:classappend="${task.isCompleted ? 'text-decoration-line-through' : ''}">
+                                Task Name
+                            </span>
+                        </div>
+                        <!-- Task Delete Form -->
+                        <form th:action="@{/modules/tasks/{taskId}/delete(taskId=${task.id})}" method="post" class="ms-auto">
+                            <button type="submit" class="btn-delete btn btn-sm">
+                                <i class="bi bi-x"></i>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Add Task Form -->
+            <form th:action="@{/modules/{moduleId}/tasks/add(moduleId=${module.id})}" method="post" class="add-task-form mt-3">
+                <div class="input-group">
+                    <input type="text" name="taskName" class="form-control"
+                           placeholder="Enter new task" required>
+                    <button type="submit" class="btn-custom">Add</button>
+                </div>
+            </form>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <a th:href="@{/projects/{projectId}(projectId=${module.project.id})}" class="btn btn-secondary">Back to Project</a>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModuleModal">
+                    Delete Module
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kanban Board Section -->
+    <div th:if="${module.moduleType == 'KANBAN'}" class="card to-do-module-card mt-4">
+        <div class="card-header text-center">
+            <h4 class="card-header-title">Kanban Board</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <!-- TODO Column -->
+                <div class="col-md-4">
+                    <h6 class="text-center text-warning">TODO</h6>
+                    <ul class="list-group">
+                        <li class="list-group-item" th:each="item : ${module.kanbanItems}"
+                            th:if="${item.kanbanColumn == 'TODO'}"
+                            th:text="${item.title}"></li>
+                    </ul>
+                </div>
+                <!-- IN PROGRESS Column -->
+                <div class="col-md-4">
+                    <h6 class="text-center text-warning">IN PROGRESS</h6>
+                    <ul class="list-group">
+                        <li class="list-group-item" th:each="item : ${module.kanbanItems}"
+                            th:if="${item.kanbanColumn == 'IN_PROGRESS'}"
+                            th:text="${item.title}"></li>
+                    </ul>
+                </div>
+                <!-- DONE Column -->
+                <div class="col-md-4">
+                    <h6 class="text-center text-warning">DONE</h6>
+                    <ul class="list-group">
+                        <li class="list-group-item" th:each="item : ${module.kanbanItems}"
+                            th:if="${item.kanbanColumn == 'DONE'}"
+                            th:text="${item.title}"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pentru confirmarea stergerii modulului -->
+    <div class="modal fade" id="deleteModuleModal" tabindex="-1" aria-labelledby="deleteModuleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!--Antet Modal -->
+                <div class="modal-header" style="background-color: var(--sidebar-bg); border-bottom: 2px solid var(--border-color);">
+                    <h1 class="modal-title fs-5" id="deleteModuleModalLabel" style="color: var(--text-color);">Confirm Module Deletion</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: var(--text-color); opacity: 1;"></button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body" style="color: var(--text-color); background-color: var(--card-bg);">
+                    Are you sure you want to delete this module? This action cannot be undone.
+                </div>
+
+                <!-- Subsol Modal  -->
+                <div class="modal-footer" style="background-color: var(--card-bg); border-top: 2px solid var(--border-color);">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form th:action="@{/modules/delete/{moduleId}(moduleId=${module.id})}" method="post" style="margin: 0;">
+                        <button type="submit" class="btn btn-danger">Delete Module</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- JavaScript pentru Alerts -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Auto-hide alerts after 5 seconds
+        setTimeout(() => {
+            const successAlert = document.getElementById('success-alert');
+            if (successAlert) {
+                successAlert.style.display = 'none';
+            }
+        }, 5000);
+
+        setTimeout(() => {
+            const errorAlert = document.getElementById('error-alert');
+            if (errorAlert) {
+                errorAlert.style.display = 'none';
+            }
+        }, 5000);
+    });
+</script>
+</body>
+</html>

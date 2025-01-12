@@ -109,25 +109,6 @@ public class ProjectService {
         return project;
     }
 
-    // actuelizarea unui proiect (OWNER)
-    public void updateProject(Long id, Project updatedProject, Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
-        Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Project not found with ID: " + id));
-
-        // Check if user is the creator
-        if (!project.getCreatedBy().getId().equals(user.getId())) {
-            throw new SecurityException("You do not have permission to edit this project.");
-        }
-
-        project.setName(updatedProject.getName());
-        project.setDescription(updatedProject.getDescription());
-        project.setDeadline(updatedProject.getDeadline());
-        project.setActive(updatedProject.isActive());
-
-        projectRepository.save(project);
-    }
-
     // stergerea unui proiect (OWNER)
     public void deleteProject(Long id, Authentication authentication) {
         User user = (User) authentication.getPrincipal();

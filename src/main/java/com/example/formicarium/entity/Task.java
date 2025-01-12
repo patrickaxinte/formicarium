@@ -7,10 +7,12 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "tasks")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude = {"project", "assignedTo", "createdBy"})
 public class Task {
 
     @Id
@@ -23,7 +25,7 @@ public class Task {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    private TaskStatus status; // Enum: TO_DO, IN_PROGRESS, COMPLETED
+    private TaskStatus status; // Enum: TO_DO, IN_PROGRESS, COMPLETED, STOPPED
 
     private LocalDate dueDate;
 
@@ -31,7 +33,7 @@ public class Task {
 
     private LocalDateTime updatedAt;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER) // EAGER pentru prevenirea LazyInitializationException
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
@@ -39,7 +41,7 @@ public class Task {
     @JoinColumn(name = "assigned_to")
     private User assignedTo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "created_by_id")
     private User createdBy;
 

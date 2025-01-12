@@ -6,10 +6,10 @@
         <h4 class="text-center text-warning">Team Members</h4>
         <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-light" th:each="membership : ${project.memberships}">
-                <!-- Member Username -->
+                <!-- Username-ul membrului -->
                 <span th:text="${membership.user.username}">User Name</span>
 
-                <!-- Member Role -->
+                <!-- Rolul membrului -->
                 <span th:text="${membership.role}" class="badge bg-primary">Role</span>
 
                 <a th:if="${isOwner}"
@@ -20,7 +20,7 @@
             </li>
         </ul>
 
-        <!-- Add Member Button (Visible to Owners and Collaborators) -->
+        <!-- Buton "Add Member" (Vizibil doar pentru membrii Owner si Collaborator) -->
         <div class="text-center mt-3" th:if="${isOwner or isCollaborator}">
             <a th:href="@{/projects/{projectId}/members/add(projectId=${project.id})}"
                class="btn btn-sm btn-success">+ Add Member</a>

@@ -1,24 +1,63 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<div th:fragment="project-tasks(recentTasks, projectId)">
-    <div class="card project-tasks mt-4">
-        <h4 class="text-center text-warning">Recent Tasks</h4>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-light" th:each="task : ${recentTasks}">
-                <span th:text="${task.name}">Task Name</span>
-                <span th:text="${task.description}">Description</span>
-                <span th:text="${task.status}"
-                      th:classappend="${task.status == T(com.example.formicarium.entity.TaskStatus).COMPLETED ? 'badge bg-success' : 'badge bg-secondary'}"></span>
-            </li>
-        </ul>
-        <div class="text-center mt-3">
-            <a th:href="@{/tasks/page}" class="btn btn-sm btn-primary">View All Tasks</a>
+<div th:fragment="project-tasks(recentTasks)">
+    <!-- Recent Tasks Card -->
+    <div class="card mt-4">
+        <!-- Antet Card -->
+        <div class="card-header d-flex justify-content-between align-items-center"
+             style="background-color: var(--sidebar-bg); border-bottom: 2px solid var(--border-color);">
+            <h4 class="card-header-title" style="color: var(--header-title); margin: 0;">Recent Tasks</h4>
+            <a th:href="@{/tasks}" class="btn btn-custom btn-sm">View All Tasks</a>
+        </div>
+
+        <!-- Card Body -->
+        <div class="card-body">
+            <!-- Recent Tasks Table -->
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle" style="border-radius:10px; overflow:hidden;">
+                    <thead>
+                    <tr>
+                        <th scope="col">Task Name</th>
+                        <th scope="col">Deadline</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Assignee</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="task : ${recentTasks}" th:data-status="${task.status}">
+                        <!-- Task Name cu Link -->
+                        <td>
+                            <a th:href="@{/tasks/{id}(id=${task.id})}"
+                               th:text="${task.name}"
+                               class="text-decoration-none text-primary">
+                            </a>
+                        </td>
+                        <!-- Deadline -->
+                        <td th:text="${task.dueDate}">YYYY-MM-DD</td>
+                        <!-- Status Badge -->
+                        <td>
+                                <span class="badge"
+                                      th:classappend="${task.status == 'COMPLETED'} ? 'bg-success'
+                                                     : (task.status == 'IN_PROGRESS' ? 'bg-info'
+                                                     : (task.status == 'STOPPED' ? 'bg-warning text-dark'
+                                                     : 'bg-secondary'))"
+                                      th:text="${task.status}">
+                                </span>
+                        </td>
+                        <!-- Membru atribuit -->
+                        <td>
+                            <img th:src="@{'https://api.dicebear.com/9.x/dylan/svg?seed=' + ${task.assignedTo.avatarSeed}}"
+                                 alt="Assignee Avatar" class="user-avatar" style="width:40px; height:40px;"/>
+                            <span th:text="${task.assignedTo.username}" style="margin-left:10px; font-size:14px;"></span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 </body>
 </html>
-
-
 

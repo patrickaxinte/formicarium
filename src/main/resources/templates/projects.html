@@ -10,11 +10,10 @@
 <div layout:fragment="content">
     <div class="card">
         <h3 class="card-header-title">Projects Page</h3>
-
         <p>Welcome to the projects page. Here you can manage your projects.</p>
     </div>
 
-    <!-- Create New Project Button -->
+    <!-- Buton "Create New Project" -->
     <div class="card mt-4 text-center">
         <div class="mb-3">
             <i class="bi bi-folder-plus" style="font-size: 4rem;"></i>
@@ -26,7 +25,7 @@
         </div>
     </div>
 
-    <!-- Active Projects Section -->
+    <!-- Sectiunea proiectelor active -->
     <div class="card mt-4">
         <h4>Your Projects</h4>
         <div class="project-list">
@@ -34,14 +33,14 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                            <!-- Project details -->
+                            <!-- Detalii proiect -->
                             <div>
                                 <h5 class="project-title" th:text="${project.name}">Project Name</h5>
                                 <p th:text="${project.description}">Description...</p>
                                 <p>Deadline: <span th:text="${project.deadline}">YYYY-MM-DD</span></p>
                             </div>
                             <div class="d-flex justify-content-end gap-2">
-                                <!-- View Details -->
+                                <!-- Sectiunea "View Details"-->
                                 <a th:href="@{/projects/{id}(id=${project.id})}"
                                    class="btn btn-sm btn-outline-primary"
                                    data-bs-toggle="tooltip"
@@ -59,7 +58,7 @@
                                     <i class="bi bi-pencil"></i>
                                 </a>
 
-                                <!-- Deactivate -->
+                                <!-- Dezactivarea proiect -->
                                 <form th:action="@{/projects/deactivate/{id}(id=${project.id})}" method="post" style="display: inline;">
                                     <button type="submit"
                                             class="btn btn-sm btn-outline-warning"
@@ -70,7 +69,7 @@
                                     </button>
                                 </form>
 
-                                <!-- Delete -->
+                                <!-- Stergere proiect-->
                                 <form th:action="@{/projects/delete/{id}(id=${project.id})}" method="post" style="display: inline;">
                                     <button type="submit"
                                             class="btn btn-sm btn-outline-danger"
@@ -89,7 +88,7 @@
         </div>
     </div>
 
-    <!-- Inactive Projects Section -->
+    <!-- Sectounea proiectelor inactive -->
     <div class="card mt-4">
         <h4>Inactive Projects</h4>
         <div th:each="project : ${inactiveProjects}" class="project-card mb-3">

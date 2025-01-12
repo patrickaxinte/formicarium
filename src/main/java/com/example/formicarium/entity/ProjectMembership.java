@@ -8,25 +8,27 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "project_memberships")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = {"project", "user"})
 public class ProjectMembership {
 
     @EmbeddedId
     private ProjectMembershipId id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("projectId")
     @JoinColumn(name = "project_id")
     private Project project;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userId")
     @JoinColumn(name = "user_id")
     private User user;
 
-    private String role; // Project-specific role: OWNER, COLLABORATOR, MEMBER
+    private String role; // rol specific in proiect: OWNER, COLLABORATOR, MEMBER
 
     private LocalDateTime dateJoined;
 

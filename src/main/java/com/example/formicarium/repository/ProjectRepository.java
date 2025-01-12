@@ -22,5 +22,4 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @EntityGraph(attributePaths = {"memberships", "memberships.user"})
     @Query("SELECT DISTINCT p FROM Project p JOIN FETCH p.memberships m JOIN FETCH m.user WHERE m.user = :user AND m.role IN :roles")
     List<Project> findProjectsByUserAndRoles(@Param("user") User user, @Param("roles") List<String> roles);
-
 }

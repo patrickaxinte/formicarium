@@ -13,10 +13,12 @@ import java.util.Set;
 
 @Entity
 @Table(name = "projects")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude = {"memberships", "messages", "tasks", "modules"})
 public class Project {
 
     @Id
