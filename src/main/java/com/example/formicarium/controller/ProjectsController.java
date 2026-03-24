@@ -23,7 +23,7 @@ public class ProjectsController {
         this.projectService = projectService;
     }
 
-    // se afiseaza toate proiectele active si inactive
+    // display all active and inactive projects
     @GetMapping
     public String showProjects(Authentication authentication, Model model) {
         List<Project> activeProjects = projectService.getActiveProjectsForUser(authentication);
@@ -36,7 +36,7 @@ public class ProjectsController {
         return "projects";
     }
 
-    // se afiseaza detaliile unui proiect
+    // display project details
     @GetMapping("/{id}")
     public String showProjectDetails(@PathVariable Long id, Authentication authentication, Model model) {
         Project project = projectService.getProjectDetails(id, authentication);
@@ -54,13 +54,13 @@ public class ProjectsController {
         return "project-details";
     }
 
-    // formular pentru adaugarea unui membru nou intr-un proiect
+    // form for adding a new member to a project
     @GetMapping("/{projectId}/members/add")
     public String showAddMemberForm(@PathVariable Long projectId, Authentication authentication, Model model) {
-        // verifica permisiunile (OWNER sau COLLABORATOR)
+        // check permissions (OWNER or COLLABORATOR)
         projectService.verifyCanAddMembers(projectId, authentication);
 
-        // adaugam atributele formularului (usernameOrEmail, role)
+        // add form attributes (usernameOrEmail, role)
         model.addAttribute("usernameOrEmail", "");
         model.addAttribute("selectedRole", "MEMBER"); // Default to MEMBER
         model.addAttribute("projectId", projectId);
@@ -69,7 +69,7 @@ public class ProjectsController {
         return "project-add-member";
     }
 
-    // adaugarea unui membru nou printr-un formular
+    // add a new member via a form
     @PostMapping("/{projectId}/members/add")
     public String addNewMember(@PathVariable Long projectId,
                                @RequestParam("usernameOrEmail") String usernameOrEmail,
@@ -89,21 +89,21 @@ public class ProjectsController {
         }
     }
 
-    // reactivarea unui proiect
+    // reactivate a project
     @PostMapping("/activate/{id}")
     public String activateProject(@PathVariable Long id, Authentication authentication) {
         projectService.activateProject(id, authentication);
         return "redirect:/projects";
     }
 
-    //  dezactivarea unui proiect
+    // deactivate a project
     @PostMapping("/deactivate/{id}")
     public String deactivateProject(@PathVariable Long id, Authentication authentication) {
         projectService.deactivateProject(id, authentication);
         return "redirect:/projects";
     }
 
-    // formular universal pentru crearea/editarea unui proiect
+    // universal form for creating/editing a project
     @GetMapping("/form")
     public String showProjectForm(@RequestParam(required = false) Long id, Model model, Authentication authentication) {
         Project project = (id != null)
@@ -133,7 +133,7 @@ public class ProjectsController {
         }
     }
 
-    // stergerea unui proiect
+    // delete a project
     @PostMapping("/delete/{id}")
     public String deleteProject(@PathVariable Long id, Authentication authentication) {
         projectService.deleteProject(id, authentication);

@@ -43,7 +43,7 @@
         </nav>
     </div>
 
-    <!-- zona principala -->
+    <!-- Main Area -->
     <div class="app-main">
         <!-- Navbar Header -->
         <nav class="navbar navbar-expand-lg app-header">
@@ -82,7 +82,7 @@
                     </li>
                 </ul>
 
-                <!-- informatii utilizator si buton de logout -->
+                <!-- User Information and Logout Button -->
                     <li class="nav-item d-flex align-items-center me-3">
                         <img th:src="@{'https://api.dicebear.com/9.x/dylan/svg?seed=' + ${#authentication.principal.avatarSeed}}"
                              alt="User Avatar" class="user-avatar rounded-circle" style="height: 30px; width: 30px;">
@@ -98,14 +98,14 @@
         </nav>
 
 
-        <!-- sectiunea de continut -->
+        <!-- Content Section -->
         <div class="app-content" layout:fragment="content">
-            <!-- continut dinamic aici -->
+            <!-- Dynamic content here -->
         </div>
     </div>
 </div>
 
-<!-- id utilizator ascuns pentru javascript -->
+<!-- Hidden user ID for JavaScript -->
 <span id="currentUserId" th:text="${#authentication.principal.id}" hidden></span>
 
 <!-- Bootstrap JS Bundle -->
@@ -138,13 +138,13 @@
         const socket = new SockJS('/ws');
         stompClient = StompJs.Stomp.over(socket);
 
-        // optional: dezactiveaza logurile de debug
+        // optional: disable debug logs
         // stompClient.debug = null;
 
         stompClient.connect({}, function(frame) {
             console.log('Connected:', frame);
 
-            // abonare la /topic/notifications/{userId}
+            // subscribe to /topic/notifications/{userId}
             const topic = `/topic/notifications/${userId}`;
             stompClient.subscribe(topic, (message) => {
                 const notif = JSON.parse(message.body);
@@ -192,25 +192,6 @@
         let count = parseInt(countElem.innerText, 10);
         count = isNaN(count) ? 1 : count + 1;
         countElem.innerText = count;
-    }
-
-    function appendNotification(notification) {
-        const list = document.getElementById('notificationsList');
-
-        // elimina "No notifications" daca exista
-        const noNotifPlaceholder = list.querySelector('.text-muted');
-        if (noNotifPlaceholder) {
-            noNotifPlaceholder.remove();
-        }
-
-        // creeaza un element nou
-        const notifItem = document.createElement('div');
-        notifItem.className = 'dropdown-item';
-        notifItem.innerHTML = `
-            <strong>${notification.message}</strong><br/>
-            <small>${new Date(notification.createdAt).toLocaleString()}</small>
-        `;
-        list.prepend(notifItem); // adauga in partea de sus
     }
 
     function populateNotificationsList(notifications) {

@@ -22,25 +22,25 @@ public class MessageService {
         this.projectRepository = projectRepository;
     }
 
-    // obtine mesajele recente pentru un proiect
+    // get recent messages for a project
     @Transactional(readOnly = true)
     public List<Message> getRecentMessagesByProject(Long projectId) {
         return messageRepository.findTop5ByProjectIdOrderBySentAtDesc(projectId);
     }
 
-    // obtine toate mesajele pentru un proiect
+    // get all messages for a project
     @Transactional(readOnly = true)
     public List<Message> getAllMessagesByProject(Long projectId) {
         return messageRepository.findByProjectIdOrderBySentAtAsc(projectId);
     }
 
-    // creaza un nou mesaj
+    // create a new message
     @Transactional
     public Message createMessage(Long projectId, Message message, Authentication authentication) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new IllegalArgumentException("Project not found with ID: " + projectId));
 
-        // verifica daca utilizatorul este membru al proiectului
+        // check if the user is a member of the project
         User user = (User) authentication.getPrincipal();
         boolean isMember = project.getMemberships().stream()
                 .anyMatch(m -> m.getUser().getId().equals(user.getId()));
@@ -54,7 +54,7 @@ public class MessageService {
         return messageRepository.save(message);
     }
 
-    // obtine un mesaj dupa ID
+    // get a message by ID
     @Transactional(readOnly = true)
     public Message getMessageById(Long messageId, Authentication authentication) {
         Message message = messageRepository.findById(messageId)
@@ -62,7 +62,7 @@ public class MessageService {
 
         Project project = message.getProject();
 
-        // verifica daca utilizatorul este membru al proiectului
+        // check if the user is a member of the project
         User user = (User) authentication.getPrincipal();
         boolean isMember = project.getMemberships().stream()
                 .anyMatch(m -> m.getUser().getId().equals(user.getId()));
@@ -74,7 +74,7 @@ public class MessageService {
         return message;
     }
 
-    // sterge un mesaj
+    // delete a message
     @Transactional
     public void deleteMessage(Long messageId, Authentication authentication) {
         Message message = messageRepository.findById(messageId)
@@ -82,7 +82,7 @@ public class MessageService {
 
         Project project = message.getProject();
 
-        // verifica daca utilizatorul este membru al proiectului sau expeditorul mesajului
+        // check if the user is a member of the project or the sender of the message
         User user = (User) authentication.getPrincipal();
         boolean isMember = project.getMemberships().stream()
                 .anyMatch(m -> m.getUser().getId().equals(user.getId()));

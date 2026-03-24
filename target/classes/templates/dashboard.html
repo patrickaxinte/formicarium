@@ -9,37 +9,60 @@
 </head>
 <body>
 <div layout:fragment="content">
-  <!-- Titlu -->
-  <h2>Welcome to your Dashboard, <span sec:authentication="name">User</span>!</h2>-
+  
+  <h2 class="mb-4" style="color: var(--text-color);">Hello, <span sec:authentication="name" style="color: var(--primary-color);">User</span>!</h2>
+  
+  <!-- Stats Grid -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <i class="bi bi-folder-check stat-icon"></i>
+      <div class="stat-value" th:text="${activeProjectsCount}">0</div>
+      <div class="stat-label">Active Projects</div>
+    </div>
+    <div class="stat-card">
+      <i class="bi bi-list-task stat-icon"></i>
+      <div class="stat-value" th:text="${pendingTasksCount}">0</div>
+      <div class="stat-label">Pending Tasks</div>
+    </div>
+    <div class="stat-card">
+      <i class="bi bi-check-circle stat-icon" style="color: #4cd137;"></i>
+      <div class="stat-value" th:text="${completedTasksCount}">0</div>
+      <div class="stat-label">Completed Tasks</div>
+    </div>
+  </div>
 
-  <!-- Card cu sarcinile user-ului: -->
-  <div class="card mb-4">
-    <!-- Antet card -->
-    <div class="card-header"
-         style="background-color: var(--sidebar-bg); border-bottom: 2px solid var(--border-color);">
-      <h3 class="card-header-title" style="color: var(--header-title); margin: 0;">My Tasks</h3>
+  <!-- User's Tasks Card -->
+  <div class="card card-static mb-4">
+    <!-- Card Header -->
+    <div class="card-header pb-3" style="border-bottom: 2px solid var(--border-color); background: none; padding: 0;">
+      <h3 class="card-header-title m-0">My Recent Tasks</h3>
     </div>
 
-    <!-- Conținut card -->
-    <div class="card-body">
-      <!-- Dacă user-ul nu are sarcini -->
-      <div th:if="${#lists.isEmpty(myTasks)}" class="alert alert-info">
-        Nu ai nicio sarcină în acest moment.
+    <!-- Card Body -->
+    <div class="card-body pt-3 px-0 pb-0">
+      <!-- If no tasks -->
+      <div th:if="${#lists.isEmpty(myTasks)}" class="alert alert-info" style="background-color: var(--input-bg); border: none; color: var(--text-color);">
+        You have no tasks assigned to you at this moment.
       </div>
 
-      <!-- Dacă user-ul are sarcini -->
+      <!-- If tasks exist -->
       <div th:unless="${#lists.isEmpty(myTasks)}">
-        <ul class="list-group">
+        <ul class="list-group list-group-flush" style="border-radius: 8px; overflow: hidden;">
           <li class="list-group-item d-flex justify-content-between align-items-center"
-              th:each="task : ${myTasks}">
-            <!-- Numele și descrierea task-ului -->
+              th:each="task : ${myTasks}" style="background-color: var(--input-bg); color: var(--text-color); border-bottom: 1px solid rgba(255,255,255,0.1);">
+            
+            <!-- Task details -->
             <div>
-              <strong th:text="${task.name}">Nume Task</strong>
-              <p th:text="${task.description}">Descriere Task</p>
+              <strong th:text="${task.name}" style="color: var(--primary-color);">Task Name</strong>
+              <p class="mb-0 mt-1" th:text="${task.description}" style="font-size: 0.9em; color: var(--secondary-text);">Task Description</p>
             </div>
 
-            <!-- Badge cu status-ul sarcinii -->
-            <span class="badge bg-secondary" th:text="${task.status}">STATUS</span>
+            <!-- Task Status Badge -->
+            <span class="badge" 
+                  th:text="${task.status}"
+                  th:classappend="${task.status == 'COMPLETED' ? 'bg-success' : (task.status == 'IN_PROGRESS' ? 'bg-primary' : 'bg-secondary')}">
+              STATUS
+            </span>
           </li>
         </ul>
       </div>

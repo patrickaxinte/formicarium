@@ -3,16 +3,74 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="base">
 <head>
-  <title th:text="${headerTitle}">Profile - Formicarium</title>
+    <title>Profile - Formicarium</title>
+    <link rel="icon" href="/images/logo.png" type="image/png" />
 </head>
 <body>
 <div layout:fragment="content">
 
-  <div class="card">
-    <h3>Profile Page</h3>
-    <h1>Welcome to your profile!</h1>
-    <p>Here you can manage personal details.</p>
-  </div>
+    <div class="card mb-4">
+        <h3 class="card-header-title">My Profile</h3>
+        <div class="card-body text-center">
+            <!-- User Avatar -->
+            <img th:src="@{'https://api.dicebear.com/9.x/dylan/svg?seed=' + ${user.avatarSeed}}"
+                 alt="User Avatar" class="rounded-circle mb-3"
+                 style="width: 120px; height: 120px; border: 3px solid var(--primary-color);">
+
+            <!-- User Info -->
+            <h4 class="mt-2" th:text="${user.username}">Username</h4>
+            <p class="text-muted" th:text="${user.email}">user@example.com</p>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-6">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="bi bi-folder2-open" style="font-size: 2rem; color: var(--primary-color);"></i>
+                    <h5 class="mt-2" th:text="${projectCount}">0</h5>
+                    <p class="text-muted mb-0">Active Projects</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="bi bi-list-task" style="font-size: 2rem; color: var(--primary-color);"></i>
+                    <h5 class="mt-2" th:text="${taskCount}">0</h5>
+                    <p class="text-muted mb-0">Assigned Tasks</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Account Details -->
+    <div class="card">
+        <h5 class="card-header-title">Account Details</h5>
+        <div class="card-body">
+            <table class="table table-borderless mb-0" style="color: var(--text-color); --bs-table-bg: transparent; background-color: transparent;">
+                <tr>
+                    <td><strong>Username</strong></td>
+                    <td th:text="${user.username}">Username</td>
+                </tr>
+                <tr>
+                    <td><strong>Email</strong></td>
+                    <td th:text="${user.email}">user@example.com</td>
+                </tr>
+                <tr>
+                    <td><strong>Roles</strong></td>
+                    <td>
+                        <span th:each="role, iterStat : ${user.roles}"
+                              th:text="${role.name} + (!${iterStat.last} ? ', ' : '')">
+                            ROLE
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
 </div>
 </body>
 </html>

@@ -1,8 +1,8 @@
-/* ------------------------- */
-/* Variabile globale */
-/* ------------------------- */
+/* ========================= */
+/* Global Variables           */
+/* ========================= */
 :root {
-    /* Paleta de culori */
+    /* Color palette */
     --bg-color: #060644;
     --sidebar-bg: #424769;
     --secondary-color: #eb7f67;
@@ -15,7 +15,8 @@
     --dark-text: #000000;
     --card-bg: #424769;
     --border-color: #f9b17a;
-    --input-bg: #67679d;
+    --input-bg: #555590;
+    --input-focus-bg: #6a6ab0;
     --light-bg: #ffffff;
     --btn-danger: #C41E3A;
     --btn-danger-hover: #A11A32;
@@ -24,21 +25,21 @@
     --shadow-hover: rgba(0, 0, 0, 0.3);
     --transition-speed: 0.3s;
 
-    /* dimensiuni layout */
+    /* Layout dimensions */
     --sidebar-width: 250px;
     --header-height: 60px;
 }
 
-/* ------------------------- */
-/* Stiluri Globale */
-/* ------------------------- */
+/* ========================= */
+/* Global Styles              */
+/* ========================= */
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
     font-family: 'Raleway', sans-serif;
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* previne scroll-ul orizontal */
+    overflow-x: hidden;
 }
 
 h1, h2, h3 {
@@ -55,22 +56,9 @@ a:hover, a:focus {
     color: var(--primary-hover);
 }
 
-.navbar-center {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-}
-
-.header-title {
-    font-weight: bold;
-    font-size: 1.5rem;
-    line-height: var(--header-height);
-}
-
-/* ------------------------- */
-/* Clase utilitare */
-/* ------------------------- */
+/* ========================= */
+/* Utility Classes            */
+/* ========================= */
 .flex-center {
     display: flex;
     align-items: center;
@@ -90,9 +78,9 @@ a:hover, a:focus {
     display: none !important;
 }
 
-/* ------------------------- */
-/* Stiluri pentru butoane */
-/* ------------------------- */
+/* ========================= */
+/* Button Styles              */
+/* ========================= */
 .btn-custom {
     background-color: var(--primary-color);
     color: var(--text-color);
@@ -132,101 +120,7 @@ a:hover, a:focus {
     transform: translateY(0);
 }
 
-/* -----------------------------------*/
-/* Stiluri pentru modulul To-Do List  */
-/* ---------------------------------- */
-
-/* stil card pentru modulul to-do list*/
-.to-do-module-card {
-    max-width: 600px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border-radius: 8px;
-    background-color: var(--card-bg);
-    box-shadow: 0 4px 8px var(--shadow-color);
-    overflow: auto;
-    margin-bottom: 20px;
-}
-
-/* antet modul: nume si descriere */
-.card-header {
-    padding: 20px;
-    background-color: var(--card-bg);
-    border-bottom: 1px solid var(--border-color);
-}
-
-.card-header-title {
-    color: var(--header-title);
-    margin-bottom: 0;
-    font-size: 1.5rem;
-}
-
-.card-header p {
-    color: var(--text-color);
-    margin-top: 5px;
-    font-size: 1rem;
-}
-
-/* antet Checklist  */
-.checklist-header {
-    color: var(--header-title);
-    margin-bottom: 15px;
-    font-size: 1.25rem;
-    text-align: center;
-}
-
-/* mesaje flash */
-.alert {
-    margin-bottom: 15px;
-    border-radius: 6px;
-    padding: 10px 15px;
-    font-size: 0.9rem;
-}
-
-.alert-success {
-    background-color: #d4edda;
-    color: #155724;
-}
-
-.alert-danger {
-    background-color: #f8d7da;
-    color: #721c24;
-}
-
-/* Checklist Container */
-.task-list-container {
-    max-height: 250px; /* asigura scrollabilitate */
-    overflow-y: auto; /* container scrollabil */
-    padding: 10px;
-    background-color: var(--light-bg); //* fundal pentru lista activitati */
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
-    margin-bottom: 15px;
-}
-
-/* Task Items */
-.task-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--light-bg);
-    border: none;
-    border-radius: 4px;
-    margin-bottom: 5px;
-    padding: 10px;
-    transition: background-color var(--transition-speed) ease;
-}
-
-/* stilizare pentru Task completat */
-.task-completed {
-    background-color: rgba(0, 128, 0, 0.15); /* verde transparent */
-    text-decoration: line-through;
-    color: var(--text-color);
-}
-
-/* buton Delete */
+/* Delete button */
 .btn-delete {
     background-color: var(--secondary-color);
     color: var(--text-color);
@@ -247,13 +141,108 @@ a:hover, a:focus {
     transform: translateY(0);
 }
 
-/* Task Name */
+/* ========================= */
+/* To-Do List Module Styles   */
+/* ========================= */
+
+/* Card style for the to-do list module */
+.to-do-module-card {
+    max-width: 600px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 8px;
+    background-color: var(--card-bg);
+    box-shadow: 0 4px 8px var(--shadow-color);
+    overflow: auto;
+    margin-bottom: 20px;
+}
+
+/* Module header: name and description */
+.card-header {
+    padding: 20px;
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-header-title {
+    color: var(--header-title);
+    margin-bottom: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.card-header p {
+    color: var(--text-color);
+    margin-top: 5px;
+    font-size: 1rem;
+}
+
+/* Checklist header */
+.checklist-header {
+    color: var(--header-title);
+    margin-bottom: 15px;
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+/* Flash alerts */
+.alert {
+    margin-bottom: 15px;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Checklist container (scrollable) */
+.task-list-container {
+    max-height: 250px;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: var(--light-bg);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 15px;
+}
+
+/* Task items */
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--light-bg);
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    padding: 10px;
+    transition: background-color var(--transition-speed) ease;
+}
+
+/* Completed task styling */
+.task-completed {
+    background-color: rgba(0, 128, 0, 0.15);
+    text-decoration: line-through;
+    color: var(--text-color);
+}
+
+/* Task name */
 .task-name {
     color: var(--dark-text);
     font-size: 1rem;
 }
 
-/* formular Add Task  */
+/* Add task form */
 .add-task-form .input-group {
     display: flex;
 }
@@ -281,7 +270,7 @@ a:hover, a:focus {
     background-color: var(--secondary-hover);
 }
 
-/* Action Buttons */
+/* Action buttons group */
 .action-buttons {
     display: flex;
     justify-content: center;
@@ -318,87 +307,13 @@ a:hover, a:focus {
     transform: translateY(-2px);
 }
 
-/*!* stil pentru pictograma clopot si badge-ul pentru numarul notificarilor *!*/
-/*#notificationDropdown {*/
-/*    position: relative;*/
-/*    font-size: 1.4rem;*/
-/*    color: var(--header-title); !* ajusteaza culoarea dinamic *!*/
-/*}*/
-
-/*#notificationCount {*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    start: 100%;*/
-/*    transform: translate(-50%, -50%);*/
-/*    font-size: 0.7rem;*/
-/*    padding: 0.2rem 0.4rem;*/
-/*    border-radius: 999px;*/
-/*    background-color: var(--btn-danger); !* culoare de rezerva pentru badge *!*/
-/*    color: #fff;*/
-/*}*/
-
-/*!* meniul dropdown *!*/
-/*.dropdown-menu {*/
-/*    min-width: 350px;*/
-/*    background-color: var(--card-bg, #343a40); !* culoare de rezerva pentru fundalul dropdown-ului *!*/
-/*    border: 1px solid var(--border-color, #495057); !* culoare de rezerva pentru margine *!*/
-/*    color: #fff;*/
-/*    padding: 0.5rem;*/
-/*    border-radius: 0.25rem;*/
-/*}*/
-
-/*!* sectiunea de antet din dropdown *!*/
-/*.dropdown-item-text {*/
-/*    display: flex;*/
-/*    justify-content: space-between;*/
-/*    align-items: center;*/
-/*    font-weight: bold;*/
-/*    margin-bottom: 0.5rem;*/
-/*}*/
-
-/*!* linia de divizare *!*/
-/*.dropdown-divider {*/
-/*    border-color: var(--border-color, #495057); !* culoarea liniei de divizare *!*/
-/*}*/
-
-/*!* container pentru lista de notificari *!*/
-/*#notificationsList {*/
-/*    max-height: 400px;*/
-/*    overflow-y: auto;*/
-/*    margin-bottom: 0.5rem;*/
-/*}*/
-
-/*!* mesaj fallback *!*/
-/*#noNotificationsLabel {*/
-/*    text-align: center;*/
-/*    color: var(--muted-color, #6c757d); !* culoare de rezerva pentru textul muted *!*/
-/*}*/
-
-/*!* elemente individuale de notificare *!*/
-/*.dropdown-item {*/
-/*    transition: color 0.3s ease-in-out; !* tranzitie lina pentru efectul hover *!*/
-/*}*/
-
-/*.dropdown-item:hover {*/
-/*    color: var(--primary-hover, #e08e58); !* culoarea la hover *!*/
-/*}*/
-
-/*!* butoane *!*/
-/*#clearAllBtn {*/
-/*    font-size: 0.8rem;*/
-/*    padding: 0.2rem 0.5rem;*/
-/*}*/
-
-/*.dropdown-item .btn {*/
-/*    font-size: 0.8rem;*/
-/*    margin-left: 0.5rem;*/
-/*}*/
-
-/* stil pentru pictograma clopot si badge-ul pentru numarul notificarilor */
+/* ========================= */
+/* Notification Bell & Badge  */
+/* ========================= */
 #notificationDropdown {
     position: relative;
     font-size: 1.4rem;
-    color: var(--header-title); /* ajusteaza culoarea dinamic */
+    color: var(--header-title);
 }
 
 #notificationCount {
@@ -409,21 +324,21 @@ a:hover, a:focus {
     font-size: 0.7rem;
     padding: 0.2rem 0.4rem;
     border-radius: 999px;
-    background-color: var(--btn-danger); /* culoare de rezerva pentru badge */
+    background-color: var(--btn-danger);
     color: #fff;
 }
 
-/* meniul dropdown */
+/* Notification dropdown menu */
 .dropdown-menu {
     min-width: 350px;
-    background-color: var(--card-bg, #343a40); /* culoare de rezerva pentru fundalul dropdown-ului */
-    border: 1px solid var(--border-color, #495057); /* culoare de rezerva pentru margine */
+    background-color: var(--card-bg, #343a40);
+    border: 1px solid var(--border-color, #495057);
     color: #fff;
     padding: 0.5rem;
     border-radius: 0.25rem;
 }
 
-/* sectiunea de antet din dropdown */
+/* Dropdown header row */
 .dropdown-item-text {
     display: flex;
     justify-content: space-between;
@@ -432,43 +347,42 @@ a:hover, a:focus {
     margin-bottom: 0.5rem;
 }
 
-/* linia de divizare */
+/* Dropdown divider */
 .dropdown-divider {
-    border-color: var(--border-color, #495057); /* culoarea liniei de divizare */
+    border-color: var(--border-color, #495057);
 }
 
-/* container pentru lista de notificari */
+/* Notification list container */
 #notificationsList {
     max-height: 400px;
     overflow-y: auto;
     margin-bottom: 0.5rem;
 }
 
-/* mesaj fallback */
+/* Fallback label when no notifications */
 #noNotificationsLabel {
     text-align: center;
-    color: var(--muted-color, #6c757d); /* culoare de rezerva pentru textul muted */
+    color: var(--muted-color, #6c757d);
 }
 
-/* elemente individuale de notificare */
+/* Individual notification items */
 .dropdown-item {
-    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out; /* tranzitie lina pentru efectul hover */
-    background-color: transparent; /* asigura ca fundalul implicit este transparent */
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    background-color: transparent;
 }
 
-/* efect de hover pentru notificari */
 .dropdown-item:hover {
-    color: var(--primary-hover, #e08e58); /* culoare personalizata la hover pentru text */
-    background-color: var(--card-bg, #343a40); /* mentine fundalul dropdown-ului la hover */
+    color: var(--primary-hover, #e08e58);
+    background-color: var(--card-bg, #343a40);
 }
 
-/* override specific pentru stilurile Bootstrap */
+/* Bootstrap overrides for dropdown hover */
 .dropdown-menu .dropdown-item:hover {
-    color: var(--primary-hover, #e08e58) !important; /* forta culoarea textului la hover */
-    background-color: var(--card-bg, #343a40) !important; /* forta culoarea fundalului la hover */
+    color: var(--primary-hover, #e08e58) !important;
+    background-color: var(--card-bg, #343a40) !important;
 }
 
-/* butoane */
+/* Notification buttons */
 #clearAllBtn {
     font-size: 0.8rem;
     padding: 0.2rem 0.5rem;
@@ -479,29 +393,25 @@ a:hover, a:focus {
     margin-left: 0.5rem;
 }
 
-
-/* ------------------------------------ */
-/*Stiluri modal (fereastra de confirmare */
-/* -------------------------------------- */
-
+/* ========================= */
+/* Modal (Confirmation Dialog)*/
+/* ========================= */
 .modal-backdrop {
-    background: rgba(0, 0, 0, 0.7); /* fundal intunecat pentru overlay */
-    z-index: 1040; /* asigura ca este sub modal */
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1040;
 }
-
 
 .modal-content {
     position: relative;
-    z-index: 1050;  /* asigura ca este deasupra backdrop-ului */
+    z-index: 1050;
     background-color: var(--card-bg);
     color: var(--text-color);
     border: 2px solid var(--border-color);
     border-radius: 8px;
 }
 
-
 .modal.fade .modal-dialog {
-    transition: transform 0.3s ease-out; /* animatie pentru deschidere modal */
+    transition: transform 0.3s ease-out;
     transform: translateY(0);
 }
 
@@ -517,9 +427,9 @@ a:hover, a:focus {
     justify-content: center;
 }
 
-/* ------------------------- */
-/* Stiluri Layout*/
-/* ------------------------- */
+/* ========================= */
+/* Layout                     */
+/* ========================= */
 .app-container {
     display: flex;
     height: 100vh;
@@ -577,11 +487,15 @@ a:hover, a:focus {
     overflow: hidden;
 }
 
+/* Main content area — positioned below header, scrollable */
 .app-content {
+    flex: 1;
     margin-top: var(--header-height);
     margin-left: var(--sidebar-width);
     padding: 20px;
     transition: margin-left var(--transition-speed) ease;
+    overflow-y: auto;
+    height: calc(100vh - var(--header-height));
 }
 
 .app-container.sidebar-hidden .app-content {
@@ -593,13 +507,31 @@ a:hover, a:focus {
     text-align: center;
 }
 
-.user-avatar {
-    border-radius: 50%;
+.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
 }
 
-/* ------------------------- */
-/* Stiluri Sidebar */
-/* ------------------------- */
+.header-title {
+    font-weight: bold;
+    font-size: 1.5rem;
+    line-height: var(--header-height);
+}
+
+/* User avatar */
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: var(--input-bg);
+}
+
+/* ========================= */
+/* Sidebar Styles             */
+/* ========================= */
 .sidebar-header {
     display: flex;
     align-items: center;
@@ -612,7 +544,6 @@ a:hover, a:focus {
     font-weight: bold;
     color: var(--primary-hover);
 }
-
 
 .sidebar-title {
     font-size: 1.8rem;
@@ -651,9 +582,9 @@ a:hover, a:focus {
     border-left: 4px solid var(--primary-color);
 }
 
-/* ------------------------- */
-/* Stiluri Card si Widget */
-/* ------------------------- */
+/* ========================= */
+/* Card & Widget Styles       */
+/* ========================= */
 .card {
     background-color: var(--card-bg);
     border-radius: 15px;
@@ -664,8 +595,14 @@ a:hover, a:focus {
 }
 
 .card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-1px);
     box-shadow: 0 6px 20px var(--shadow-hover);
+}
+
+/* Static cards that shouldn't lift on hover */
+.card-static:hover {
+    transform: none;
+    box-shadow: 0 4px 15px var(--shadow-color);
 }
 
 .widget-container {
@@ -683,7 +620,7 @@ a:hover, a:focus {
 }
 
 .widget:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
     box-shadow: 0 6px 15px var(--shadow-hover);
 }
 
@@ -694,37 +631,15 @@ a:hover, a:focus {
 }
 
 .project-title {
-    color: var(--primary-color); /* utilizarea culorii principale */
+    color: var(--primary-color);
     font-size: 1.25rem;
-    font-weight: bold;           /* titlu cu text ingrosat */
-    margin-bottom: 10px;         /* spatiere*/
-}
-
-.card-header-title {
-    color: var(--header-title);
     font-weight: bold;
+    margin-bottom: 10px;
 }
 
-/* Continut asupra antetului */
-.app-content {
-    flex: 1;
-    padding: 20px;
-    margin-top: var(--header-height); /* alienere sub antet */
-    overflow-y: auto; /* scroll pentru continut lung */
-    height: calc(100vh - var(--header-height)); /* inaltime maxima minus antet */
-}
-
-.user-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    background-color: var(--input-bg);
-}
-
-/* ------------------------- */
-/* Alerte */
-/* ------------------------- */
+/* ========================= */
+/* Alerts                     */
+/* ========================= */
 .alert-success-custom {
     background-color: rgba(0, 128, 0, 0.15);
     color: var(--text-color);
@@ -745,37 +660,43 @@ a:hover, a:focus {
     font-weight: bold;
 }
 
-/* buton pentru inchiderea alertelor */
+/* Alert dismiss button */
 .alert-dismissible .btn-close {
     color: #ffffff;
-    opacity: 0.9; /* hover effect transparent */
+    opacity: 0.9;
 }
 
 .alert-dismissible .btn-close:hover {
     opacity: 1;
 }
 
-/* ------------------------- */
-/* Stiluri Formular */
-/* ------------------------- */
-input.form-control {
+/* ========================= */
+/* Form Styles                */
+/* ========================= */
+input.form-control,
+textarea.form-control,
+select.form-select {
     background-color: var(--input-bg);
     color: var(--text-color);
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 10px;
     padding: 10px;
     width: 100%;
     box-sizing: border-box;
-    transition: background-color var(--transition-speed) ease, border 0.3s ease;
+    transition: background-color var(--transition-speed) ease, border-color 0.3s ease;
 }
 
-input.form-control:focus {
-    background-color: #7a7cb3;
+input.form-control:focus,
+textarea.form-control:focus,
+select.form-select:focus {
+    background-color: var(--input-focus-bg);
     outline: none;
-    border: 1px solid var(--primary-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(249, 177, 122, 0.25);
 }
 
-input::placeholder {
+input::placeholder,
+textarea::placeholder {
     color: var(--secondary-text);
 }
 
@@ -783,9 +704,31 @@ select.form-select option:disabled {
     color: var(--secondary-text);
 }
 
-/* ------------------------- */
-/* Stiluri pentru formular de autentificare */
-/* ------------------------- */
+/* ========================= */
+/* Dark-Themed Tables         */
+/* ========================= */
+.table-dark-theme {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table-dark-theme td,
+.table-dark-theme th {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-color: rgba(255, 255, 255, 0.1);
+    padding: 12px 16px;
+}
+
+.table-dark-theme tr:hover td {
+    background-color: var(--input-bg);
+}
+
+/* ========================= */
+/* Auth Pages (Login/Register)*/
+/* ========================= */
 .auth-page {
     display: flex;
     align-items: center;
@@ -809,13 +752,13 @@ select.form-select option:disabled {
     z-index: 1;
 }
 
-/* Container pentru card-ul care contine card-ul formularului de autentificare */
+/* Glassmorphism auth card */
 .auth-container {
     position: relative;
-    z-index: 2; /* se asigura ca formularul este asupra overlay-ului */
-    background: rgba(66, 71, 105, 0.3); /* fundal semi transparent pentru effectul de glassmorphism */
-    backdrop-filter: blur(10px); /* efect blur */
-    -webkit-backdrop-filter: blur(10px); /* suport pentru Safari pentru compatibilitate */
+    z-index: 2;
+    background: rgba(66, 71, 105, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-radius: 15px;
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     border: 1px solid rgba(255, 255, 255, 0.18);
@@ -828,7 +771,6 @@ select.form-select option:disabled {
     align-items: center;
 }
 
-/* Logo in container-ul de autentificare */
 .auth-container .hero-logo {
     display: block;
     margin: 0 auto 20px;
@@ -844,7 +786,7 @@ select.form-select option:disabled {
     font-weight: bold;
 }
 
-/* etichete formular */
+/* Auth form labels */
 .auth-container .form-label {
     display: block;
     font-weight: 600;
@@ -852,9 +794,9 @@ select.form-select option:disabled {
     margin-bottom: 5px;
 }
 
-/* controale formular */
+/* Auth form inputs */
 .auth-container input.form-control {
-    background-color: rgba(103, 103, 157, 0.8); /* fundal semi transaprent */
+    background-color: rgba(103, 103, 157, 0.8);
     color: var(--text-color);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 8px;
@@ -871,14 +813,14 @@ select.form-select option:disabled {
 }
 
 .auth-container input.form-control:focus {
-    border-color: var(--primary-color); /* #f9b17a */
+    border-color: var(--primary-color);
     background-color: rgba(122, 124, 179, 0.9);
     outline: none;
 }
 
-/* buton principal in containerul de autentificare */
+/* Auth submit button */
 .auth-container .btn.btn-custom {
-    background-color: var(--secondary-color); /* #eb7f67 */
+    background-color: var(--secondary-color);
     color: var(--text-color);
     border-radius: 8px;
     padding: 12px 0;
@@ -892,11 +834,11 @@ select.form-select option:disabled {
 }
 
 .auth-container .btn.btn-custom:hover {
-    background-color: var(--secondary-hover); /* #e16b54 */
+    background-color: var(--secondary-hover);
     transform: translateY(-2px);
 }
 
-/* link pentru schimbarea intre login si inregistrare */
+/* Toggle link between login/register */
 .auth-container .switch-link {
     color: var(--primary-color);
     font-size: 0.9rem;
@@ -912,7 +854,7 @@ select.form-select option:disabled {
     color: var(--secondary-hover);
 }
 
-/* mesaj de eroare */
+/* Auth error message */
 .auth-container .alert.alert-danger {
     width: 100%;
     text-align: center;
@@ -924,60 +866,9 @@ select.form-select option:disabled {
     color: var(--primary-hover);
 }
 
-/* ------------------------- */
-/* Sectiunea Hero (prima sectiune a paginii de landing) */
-/* ------------------------- */
-.hero-section {
-    background-color: var(--bg-color);
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.hero-section h1 {
-    color: var(--text-color);
-    font-size: 3rem;
-    font-weight: bold;
-    line-height: 1.5;
-}
-
-.hero-section p {
-    color: var(--secondary-text);
-    font-size: 1.25rem;
-}
-
-.hero-section .btn-custom {
-    background-color: #EB7F67;
-    color: #ffffff;
-    font-weight: 600;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.hero-section .btn-custom:hover {
-    background-color: #e16b54;
-    transform: translateY(-2px);
-}
-
-.hero-section img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-
-.hero-logo {
-    max-height: 130px;
-    max-width: 130px;
-    margin-bottom: 12px;
-    display: inline-block;
-}
-
+/* ========================= */
+/* Landing Page — Hero        */
+/* ========================= */
 #hero {
     background-color: #060644;
     display: flex;
@@ -1029,47 +920,9 @@ select.form-select option:disabled {
     display: inline-block;
 }
 
-#hero {
-    background-color: #060644;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    height: 100vh;
-    padding: 0 20px;
-}
-
-#hero h1 {
-    font-size: 3rem;
-    font-weight: bold;
-    color: #ffffff;
-    margin-bottom: 15px;
-}
-
-#hero p {
-    font-size: 1.2rem;
-    color: #EB7F67;
-    margin-bottom: 25px;
-}
-
-.btn-custom {
-    background-color: #EB7F67;
-    color: #ffffff;
-    font-weight: 600;
-    padding: 12px 25px;
-    border-radius: 8px;
-    transition: transform 0.2s ease, background-color 0.3s ease;
-}
-
-.btn-custom:hover {
-    background-color: #e36b54;
-    transform: translateY(-2px);
-}
-
-
-/* ------------------------- ---------------------*/
-/* Sectiunea functionalitatilor de pagina landing */
-/* ------------------------- ---------------------*/
+/* ========================= */
+/* Landing Page — Features    */
+/* ========================= */
 #features {
     background-color: var(--bg-color);
     padding: 90px 30px;
@@ -1116,9 +969,9 @@ select.form-select option:disabled {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
-/* ------------------------- */
-/* Sectiunea de contact */
-/* ------------------------- */
+/* ========================= */
+/* Landing Page — Contact     */
+/* ========================= */
 #contact {
     background-color: var(--secondary-color);
     color: var(--text-color);
@@ -1160,9 +1013,9 @@ select.form-select option:disabled {
     text-decoration: underline;
 }
 
-/* ----------------------------------------------------- */
-/* Sectiunea "About" (despre aplicatie pe pagina landing */
-/* ------------------------- ----------------------------*/
+/* ========================= */
+/* Landing Page — About       */
+/* ========================= */
 #about {
     background-color: var(--bg-color);
     padding: 90px 30px;
@@ -1183,11 +1036,166 @@ select.form-select option:disabled {
     margin: 0 auto 20px auto;
 }
 
-/* ------------------------- ----*/
-/* Ajustari pentru responsivitate */
-/* ------------------------------ */
+/* ===================================== */
+/* Chat Page Styles                       */
+/* ===================================== */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - var(--header-height) - 60px);
+    max-height: 700px;
+}
 
-/* ecrane cu dimensiune medie */
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chat-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: background-color 0.2s ease;
+    animation: fadeIn 0.3s ease;
+}
+
+.chat-message:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.chat-message .chat-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.chat-message .chat-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 2px;
+}
+
+.chat-message .chat-username {
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+.chat-message .chat-time {
+    font-size: 0.75rem;
+    color: var(--secondary-text);
+}
+
+.chat-message .chat-text {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: var(--text-color);
+}
+
+.chat-input-area {
+    display: flex;
+    gap: 10px;
+    padding: 12px 15px;
+    background-color: var(--card-bg);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0 0 15px 15px;
+}
+
+.chat-input-area input {
+    flex: 1;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease;
+}
+
+.chat-input-area input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(249, 177, 122, 0.25);
+}
+
+.chat-input-area button {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.chat-input-area button:hover {
+    background-color: var(--secondary-hover);
+}
+
+.chat-input-area button:active {
+    transform: scale(0.97);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================= */
+/* Dashboard Stats Cards      */
+/* ========================= */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px var(--shadow-hover);
+}
+
+.stat-card .stat-icon {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+}
+
+.stat-card .stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.stat-card .stat-label {
+    font-size: 0.85rem;
+    color: var(--secondary-text);
+    margin-top: 4px;
+}
+
+/* ========================= */
+/* Responsive — Medium Screens*/
+/* ========================= */
 @media (max-width: 1024px) {
     .app-sidebar {
         width: 200px;
@@ -1206,9 +1214,10 @@ select.form-select option:disabled {
     }
 }
 
-/* ecrane mici*/
+/* ========================= */
+/* Responsive — Small Screens */
+/* ========================= */
 @media (max-width: 768px) {
-
     .app-sidebar {
         width: 100%;
         height: auto;
@@ -1254,7 +1263,6 @@ select.form-select option:disabled {
         background-color: var(--input-bg);
     }
 
-
     .hero-section h1 {
         font-size: 2.5rem;
     }
@@ -1266,7 +1274,6 @@ select.form-select option:disabled {
     .hero-section .btn-custom {
         padding: 8px 16px;
     }
-
 
     #features {
         padding: 60px 15px;
@@ -1303,5 +1310,9 @@ select.form-select option:disabled {
 
     .auth-container .btn.btn-custom {
         font-size: 0.95rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }

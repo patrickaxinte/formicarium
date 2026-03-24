@@ -10,16 +10,23 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        // activeaza un broker simplu in memorie pentru destinatii prefixate cu /topic
+        // enable a simple in-memory broker for destinations prefixed with /topic
         config.enableSimpleBroker("/topic");
 
-        // pentru metodele @MessageMapping, clientul trimite catre /app
+        // for @MessageMapping methods, the client sends to /app
         config.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        // endpoint-ul principal pentru Stomp + SockJS
-        registry.addEndpoint("/ws").withSockJS();
+    public void registerStompEndpoints(org.springframework.web.socket.config.annotation.StompEndpointRegistry registry) {
+        // main endpoint for Stomp + SockJS
+        registry.addEndpoint("/ws")
+                .setHandshakeHandler(new org.springframework.web.socket.server.support.DefaultHandshakeHandler() {
+                    @Override
+                    protected java.security.Principal determineUser(org.springframework.http.server.ServerHttpRequest request, org.springframework.web.socket.WebSocketHandler wsHandler, java.util.Map<String, Object> attributes) {
+                        return org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+                    }
+                })
+                .withSockJS();
     }
 }

@@ -8,22 +8,22 @@
 <body>
 <div layout:fragment="content">
     <div class="project-page">
-        <!-- antet cu numele proiectului -->
+        <!-- Project name header -->
         <div th:replace="~{fragments/HeaderFragment :: project-header(project=${project}, isOwner=${isOwner})}"></div>
 
-        <!-- sectiunea de membri -->
+        <!-- Members section -->
         <div th:replace="~{fragments/MembersFragment :: project-members(project=${project}, isOwner=${isOwner}, isCollaborator=${isCollaborator})}"></div>
 
-        <!-- sectiunea de mesaje recente -->
+        <!-- Recent messages section -->
         <div th:replace="~{fragments/MessagesFragment :: project-messages(recentMessages=${recentMessages})}"></div>
 
-        <!-- sectiunea cu detalii generale -->
+        <!-- General details section -->
         <div th:replace="~{fragments/DetailsFragment :: project-details(project=${project})}"></div>
 
-        <!-- sectiunea cu sarcini recente -->
+        <!-- Recent tasks section -->
         <div th:replace="~{fragments/TasksFragment :: project-tasks(recentTasks=${recentTasks}, projectId=${project.id})}"></div>
 
-        <!-- sectiunea cu module personalizate -->
+        <!-- Custom modules section -->
         <div th:replace="~{fragments/ModulesFragment :: project-modules(project=${project}, isOwner=${isOwner})}"></div>
     </div>
 </div>

@@ -3,17 +3,58 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="base">
 <head>
-    <title th:text="${headerTitle}">Settings - Formicarium</title>
-    <link rel="icon" href="/images/settings.png" type="image/png" />
+    <title>Settings - Formicarium</title>
+    <link rel="icon" href="/images/logo.png" type="image/png" />
 </head>
-
 <body>
 <div layout:fragment="content">
-    <div class="card">
-        <h3>Settings</h3>
-        <p>Manage application and user-specific configurations here.</p>
+
+    <!-- Success / Error Messages -->
+    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+    <!-- Change Password -->
+    <div class="card mb-4">
+        <h3 class="card-header-title">Change Password</h3>
+        <div class="card-body">
+            <form th:action="@{/settings/change-password}" method="post">
+                <div class="mb-3">
+                    <label for="currentPassword" class="form-label">Current Password</label>
+                    <input type="password" id="currentPassword" name="currentPassword"
+                           class="form-control" placeholder="Enter current password" required>
+                </div>
+                <div class="mb-3">
+                    <label for="newPassword" class="form-label">New Password</label>
+                    <input type="password" id="newPassword" name="newPassword"
+                           class="form-control" placeholder="Enter new password (min 6 characters)" required>
+                </div>
+                <div class="mb-3">
+                    <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword"
+                           class="form-control" placeholder="Confirm new password" required>
+                </div>
+                <button type="submit" class="btn btn-custom">Update Password</button>
+            </form>
+        </div>
     </div>
+
+    <!-- Account Info (read-only) -->
+    <div class="card">
+        <h5 class="card-header-title">Account Information</h5>
+        <div class="card-body">
+            <table class="table table-borderless mb-0" style="color: var(--text-color); --bs-table-bg: transparent; background-color: transparent;">
+                <tr>
+                    <td><strong>Username</strong></td>
+                    <td th:text="${user.username}">Username</td>
+                </tr>
+                <tr>
+                    <td><strong>Email</strong></td>
+                    <td th:text="${user.email}">user@example.com</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
 </div>
 </body>
-
 </html>

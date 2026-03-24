@@ -24,25 +24,24 @@ public class ProjectService {
         this.userService = userService;
     }
 
-    // obtinem lista proiectelor active pentru un utilizator
+    // get the list of active projects for a user
     public List<Project> getActiveProjectsForUser(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return projectRepository.findProjectsByUserAndIsActive(user, true); // Active projects
     }
 
-    // obtinem lista proiectelor inactive pentru un utilizator
+    // get the list of inactive projects for a user
     public List<Project> getInactiveProjectsForUser(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return projectRepository.findProjectsByUserAndIsActive(user, false); // Inactive projects
     }
 
-    // reactivarea unui proiect (numai daca utilizatorul are rolul OWNER in acel proiect)
+    // reactivate a project (only if the user has the OWNER role in that project)
     public void activateProject(Long id, Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
         Project project = projectRepository.findByIdWithMembershipsMessagesAndModules(id)
                 .orElseThrow(() -> new IllegalArgumentException("Project not found with ID: " + id));
 
-        // se verifica daca utilizatorul are rolul OWNER
+        // check if the user has the OWNER role
         boolean isOwner = isOwner(project, authentication);
 
         if (!isOwner) {
@@ -53,13 +52,12 @@ public class ProjectService {
         projectRepository.save(project);
     }
 
-    // dezactivarea unui proiect (numai daca utilizatorul are rolul OWNER in acel proiect)
+    // deactivate a project (only if the user has the OWNER role in that project)
     public void deactivateProject(Long id, Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
         Project project = projectRepository.findByIdWithMembershipsMessagesAndModules(id)
                 .orElseThrow(() -> new IllegalArgumentException("Project not found with ID: " + id));
 
-        // se verifica daca utilizatorul are rolul OWNER
+        // check if the user has the OWNER role
         boolean isOwner = isOwner(project, authentication);
 
         if (!isOwner) {
@@ -77,10 +75,10 @@ public class ProjectService {
         project.setCreatedBy(user);
         project.setCreatedAt(LocalDateTime.now());
 
-        // se salveaza proiectul pentru a genera un ID
+        // save the project to generate an ID
         Project savedProject = projectRepository.save(project);
 
-        // se creaza si se atribuie ProjectMembership
+        // create and assign ProjectMembership
         ProjectMembership membership = new ProjectMembership();
         ProjectMembershipId pmId = new ProjectMembershipId(savedProject.getId(), user.getId());
         membership.setId(pmId);
@@ -89,27 +87,27 @@ public class ProjectService {
         membership.setRole("OWNER");
         membership.setDateJoined(LocalDateTime.now());
 
-        // se adauga acel membership la proiect
+        // add that membership to the project
         savedProject.getMemberships().add(membership);
 
-        // se salveaza proiectul pentru persistenta membership-ului
+        // save the project for membership persistence
         projectRepository.save(savedProject);
     }
 
-    // se obtine proiectul pentru editare (numai daca utilizatorul are rolul OWNER)
+    // get the project for editing (only if the user is the creator)
     public Project getProjectForEdit(Long id, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid project ID"));
 
-        // se verifica daca utilizatorul a creat proiectul
+        // check if the user created the project
         if (!project.getCreatedBy().getId().equals(user.getId())) {
             throw new SecurityException("You do not have permission to edit this project.");
         }
         return project;
     }
 
-    // stergerea unui proiect (OWNER)
+    // delete a project (OWNER)
     public void deleteProject(Long id, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         Project project = projectRepository.findByIdWithMembershipsMessagesAndModules(id)
@@ -126,14 +124,14 @@ public class ProjectService {
         projectRepository.delete(project);
     }
 
-    // se obtin detaliile unui proiect
+    // get project details
     @Transactional
     public Project getProjectDetails(Long id, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         Project project = projectRepository.findByIdWithMembershipsMessagesAndModules(id)
                 .orElseThrow(() -> new IllegalArgumentException("Project not found with ID: " + id));
 
-        // se verifica daca utilizatorul este membru in acel proiect
+        // check if the user is a member of that project
         boolean isMember = project.getMemberships().stream()
                 .anyMatch(m -> m.getUser().getId().equals(user.getId()));
         if (!isMember) {
@@ -143,19 +141,19 @@ public class ProjectService {
         return project;
     }
 
-    // se obtin mesajele recente
+    // get recent messages
     @Transactional
     public List<Message> getRecentMessagesForProject(Long projectId) {
         return messageService.getRecentMessagesByProject(projectId);
     }
 
-    // se obtin sarcinile recente
+    // get recent tasks
     @Transactional
     public List<Task> getRecentTasksForProject(Long projectId) {
         return taskService.getRecentTasksByProject(projectId);
     }
 
-    // verificarea daca utilizatorul detinatorul sau creatorul unui proiect
+    // check if the user is the owner or creator of a project
     public boolean isOwner(Project project, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return project.getMemberships().stream()
@@ -164,7 +162,7 @@ public class ProjectService {
                                 "OWNER".equalsIgnoreCase(membership.getRole()));
     }
 
-    // se verifica daca utilizatorul are rolul COLLABORATOR intr-un proiect
+    // check if the user has the COLLABORATOR role in a project
     public boolean isCollaborator(Project project, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return project.getMemberships().stream()
@@ -173,7 +171,7 @@ public class ProjectService {
                                 "COLLABORATOR".equalsIgnoreCase(membership.getRole()));
     }
 
-    // verificare daca un utilizator are rolurile si permisiunile necesare pentru a aduaga un utilizator intr-un proeict (are rolul OWNER sau COLLABORATOR)
+    // check if a user has the necessary roles and permissions to add a user to a project (has OWNER or COLLABORATOR role)
     public void verifyCanAddMembers(Long projectId, Authentication authentication) {
         Project project = projectRepository.findByIdWithMembershipsMessagesAndModules(projectId)
                 .orElseThrow(() -> new IllegalArgumentException("Project not found with ID: " + projectId));
@@ -185,28 +183,28 @@ public class ProjectService {
         }
     }
 
-    // adaugarea unui membru nou in proiect
+    // add a new member to the project
     @Transactional
     public void addMemberToProject(Long projectId, String usernameOrEmail, String role, Authentication authentication) {
-        // obtinerea proiectului
+        // get the project
         Project project = projectRepository.findByIdWithMembershipsMessagesAndModules(projectId)
                 .orElseThrow(() -> new IllegalArgumentException("Project not found with ID: " + projectId));
 
-        // verificare daca utilizatorul curent are permisiunea de a adauga membri noi proiect
+        // check if the current user has permission to add new members to the project
         verifyCanAddMembers(projectId, authentication);
 
-        // gasirea utilizatorului cautat pentru adaugare
+        // find the searched user for addition
         User newUser = userService.findUserByUsernameOrEmail(usernameOrEmail)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with username/email: " + usernameOrEmail));
 
-        // verificare daca utilizatorul respectiv este deja membru in acel proiect
+        // check if the respective user is already a member of that project
         boolean alreadyMember = project.getMemberships().stream()
                 .anyMatch(m -> m.getUser().getId().equals(newUser.getId()));
         if (alreadyMember) {
             throw new IllegalArgumentException("User is already a member of this project.");
         }
 
-        // validarea rolului
+        // validate the role
         String assignedRole = role.toUpperCase();
         if (!assignedRole.equals("MEMBER") && !assignedRole.equals("COLLABORATOR")) {
             throw new IllegalArgumentException("Invalid role: " + role);
@@ -216,7 +214,7 @@ public class ProjectService {
             throw new IllegalArgumentException("Cannot assign OWNER role to another user.");
         }
 
-        // crearea entitatii ProjectMembership pentru membrul nou
+        // create the ProjectMembership entity for the new member
         ProjectMembership membership = new ProjectMembership();
         ProjectMembershipId pmId = new ProjectMembershipId(project.getId(), newUser.getId());
         membership.setId(pmId);
@@ -225,18 +223,18 @@ public class ProjectService {
         membership.setRole(assignedRole);
         membership.setDateJoined(LocalDateTime.now());
 
-        // adaugarea membrului nou si salvarea proiectului
+        // add the new member and save the project
         project.getMemberships().add(membership);
         projectRepository.save(project);
     }
 
-    // eliminarea unui membru dintr-un proiect
+    // remove a member from a project
     @Transactional
     public void removeMemberFromProject(Long projectId, Long userId, Authentication authentication) {
         Project project = projectRepository.findByIdWithMembershipsMessagesAndModules(projectId)
                 .orElseThrow(() -> new IllegalArgumentException("Project not found with ID: " + projectId));
 
-        // se verifica daca utilizatorul curent are rolul OWNER
+        // check if the current user has the OWNER role
         boolean isOwner = isOwner(project, authentication);
         if (!isOwner) {
             throw new SecurityException("You do not have permission to remove members from this project.");
@@ -247,7 +245,7 @@ public class ProjectService {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("User is not a member of this project."));
 
-        // utilizatorul cu rolul OWNER nu se poate elimina
+        // the user with the OWNER role cannot be removed
         if (membershipToRemove.getRole().equalsIgnoreCase("OWNER")) {
             throw new IllegalArgumentException("Cannot remove the Owner from the project.");
         }

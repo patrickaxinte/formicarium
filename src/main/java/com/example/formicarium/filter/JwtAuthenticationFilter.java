@@ -36,12 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
 
-        String path = request.getRequestURI();
-        // 1) sare peste validare daca este handshake-ul SockJS sau ulterioarele /ws/**
-        if (path.startsWith("/ws")) {
-            chain.doFilter(request, response);
-            return;
-        }
+
         // altfel, continua cu validarea normala a JWT
         String jwt = null;
         String username;

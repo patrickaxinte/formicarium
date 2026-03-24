@@ -76,13 +76,16 @@ public class ModuleController {
     @PostMapping("/delete/{moduleId}")
     public String deleteModule(@PathVariable Long moduleId, Authentication authentication, RedirectAttributes redirectAttributes) {
         try {
+            // save project ID before deleting the module
+            Module module = moduleService.getModuleById(moduleId, authentication);
+            Long projectId = module.getProject().getId();
             moduleService.deleteModule(moduleId, authentication);
             redirectAttributes.addFlashAttribute("successMessage", "Module deleted successfully.");
+            return "redirect:/projects/" + projectId;
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Error deleting module: " + e.getMessage());
+            return "redirect:/projects";
         }
-        Module module = moduleService.getModuleById(moduleId, authentication);
-        return "redirect:/projects/" + module.getProject().getId();
     }
 
     // adauga o sarcina noua intr-un modul de tip to-do list

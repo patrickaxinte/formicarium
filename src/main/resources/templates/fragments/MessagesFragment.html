@@ -11,7 +11,7 @@
                     <span th:text="${message.content}">Message Content</span>
                 </div>
                 <div>
-                    <span class="text-muted me-2" th:text="${#dates.format(message.sentAt, 'dd MMM yyyy HH:mm')}">Timestamp</span>
+                    <span class="text-muted me-2" th:text="${#temporals.format(message.sentAt, 'dd MMM yyyy HH:mm')}">Timestamp</span>
                     <form th:if="${message.sender.username == #authentication.name}" th:action="@{/chat/delete/{id}(id=${message.id})}" method="post" class="d-inline">
                         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                     </form>

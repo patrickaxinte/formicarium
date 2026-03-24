@@ -4,7 +4,7 @@
 <div th:fragment="project-tasks(recentTasks)">
     <!-- Recent Tasks Card -->
     <div class="card mt-4">
-        <!-- Antet Card -->
+        <!-- Card Header -->
         <div class="card-header d-flex justify-content-between align-items-center"
              style="background-color: var(--sidebar-bg); border-bottom: 2px solid var(--border-color);">
             <h4 class="card-header-title" style="color: var(--header-title); margin: 0;">Recent Tasks</h4>
@@ -45,7 +45,7 @@
                                       th:text="${task.status}">
                                 </span>
                         </td>
-                        <!-- Membru atribuit -->
+                        <!-- Assigned member -->
                         <td>
                             <img th:src="@{'https://api.dicebear.com/9.x/dylan/svg?seed=' + ${task.assignedTo.avatarSeed}}"
                                  alt="Assignee Avatar" class="user-avatar" style="width:40px; height:40px;"/>

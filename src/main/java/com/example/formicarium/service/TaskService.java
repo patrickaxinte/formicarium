@@ -29,37 +29,37 @@ public class TaskService {
         this.notificationService = notificationService;
     }
 
-    // obtine sarcini atribuite unui utilizator din toate proiectele, cu createdBy initializat
+    // get tasks assigned to a user from all projects, with createdBy initialized
     @Transactional(readOnly = true)
     public List<Task> getTasksAssignedToUser(Long userId) {
         return taskRepository.findByAssignedToIdWithCreatedBy(userId);
     }
 
-    // obtine cele mai recente 5 sarcini atribuite unui utilizator, cu createdBy initializat
+    // get the 5 most recent tasks assigned to a user, with createdBy initialized
     @Transactional(readOnly = true)
     public List<Task> getRecentTasksByUser(Long userId) {
         return taskRepository.findTop5ByAssignedToIdOrderByCreatedAtDescWithCreatedBy(userId);
     }
 
-    // obtine toate sarcinile pentru un utilizator (proiecte din care face parte), cu createdBy initializat
+    // get all tasks for a user (projects they are part of), with createdBy initialized
     @Transactional(readOnly = true)
     public List<Task> getAllTasksForUser(Long userId) {
         return taskRepository.findAllByUserIdWithCreatedBy(userId);
     }
 
-    // obtine cele mai recente 5 sarcini dintr-un proiect specific, cu createdBy initializat
+    // get the 5 most recent tasks from a specific project, with createdBy initialized
     @Transactional(readOnly = true)
     public List<Task> getRecentTasksByProject(Long projectId) {
         return taskRepository.findTop5ByProjectIdOrderByCreatedAtDescWithCreatedBy(projectId);
     }
 
-    // obtine toate sarcinile pentru un proiect, cu createdBy initializat
+    // get all tasks for a project, with createdBy initialized
     @Transactional(readOnly = true)
     public List<Task> getTasksByProject(Long projectId) {
         return taskRepository.findByProjectIdWithCreatedBy(projectId);
     }
 
-    // crearea unui task nou
+    // create a new task
     @Transactional
     public Task createTask(Long projectId, String name, String description, String dueDate,
                            Long assigneeId, Authentication authentication) {
@@ -68,7 +68,7 @@ public class TaskService {
         Project project = projectRepository.findByIdWithMembershipsMessagesAndModules(projectId)
                 .orElseThrow(() -> new IllegalArgumentException("Project not found with ID: " + projectId));
 
-        // sa asigura ca utilizatorul curent este OWNER sau COLLABORATOR...
+        // ensure the current user is OWNER or COLLABORATOR...
         if (!hasRole(project, currentUser, "OWNER", "COLLABORATOR")) {
             throw new SecurityException("You do not have permission to create tasks in this project.");
         }
@@ -92,10 +92,10 @@ public class TaskService {
                 .status(TaskStatus.TO_DO)
                 .build();
 
-        // se salveaza sarcina
+        // save the task
         Task savedTask = taskRepository.save(task);
 
-        // daca exista o persoana atribuita, creeaza o notificare
+        // if there is an assigned person, create a notification
         if (assignee != null) {
             Notification notif = Notification.builder()
                     .recipientId(assigneeId)
@@ -109,12 +109,12 @@ public class TaskService {
         return savedTask;
     }
 
-    // actualizeaza o sarcina
+    // update a task
     @Transactional
     public Task updateTask(Long taskId, String status, String title, String description, String dueDate, Authentication authentication) {
         User currentUser = (User) authentication.getPrincipal();
 
-        // obtine sarcina cu toate asociatiile necesare
+        // get the task with all necessary associations
         Task task = taskRepository.findByIdWithDetails(taskId)
                 .orElseThrow(() -> new IllegalArgumentException("Task not found with ID: " + taskId));
 
@@ -125,12 +125,12 @@ public class TaskService {
             throw new SecurityException("You do not have permission to update this task.");
         }
 
-        // verifica daca sarcina este COMPLETED
+        // check if the task is COMPLETED
         if (task.getStatus() == TaskStatus.COMPLETED) {
             throw new IllegalStateException("Cannot update a completed task.");
         }
 
-        // daca este creator, permite actualizarea tuturor campurilor
+        // if is creator, allow updating all fields
         if (isCreator) {
             if (status != null && !status.isEmpty()) {
                 TaskStatus newStatus = parseStatus(status);
@@ -163,7 +163,7 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    // sterge un task
+    // delete a task
     @Transactional
     public void deleteTask(Long taskId, Authentication authentication) {
         User currentUser = (User) authentication.getPrincipal();
@@ -173,7 +173,7 @@ public class TaskService {
 
         Project project = task.getProject();
 
-        // verifica daca utilizatorul are rol OWNER sau COLLABORATOR in proiect
+        // check if the user has OWNER or COLLABORATOR role in the project
         if (!hasRole(project, currentUser, "OWNER", "COLLABORATOR")) {
             throw new SecurityException("You do not have permission to delete tasks in this project.");
         }
@@ -181,7 +181,7 @@ public class TaskService {
         taskRepository.delete(task);
     }
 
-    // obtine o sarcina dupa ID, cu verificarea accesului si initializarea asociatiilor
+    // get a task by ID, checking access and initializing associations
     @Transactional(readOnly = true)
     public Task getTaskById(Long taskId, Authentication authentication) {
         Task task = taskRepository.findByIdWithDetails(taskId)
@@ -195,7 +195,7 @@ public class TaskService {
         return task;
     }
 
-    // verifica accesul utilizatorului la un proiect si obtine proiectul cu asociatiile relevante
+    // check user access to a project and get the project with relevant associations
     @Transactional(readOnly = true)
     public Optional<Project> verifyUserAccessToProject(Long projectId, User user) {
         Project project = projectRepository.findByIdWithMembershipsMessagesAndModules(projectId)
@@ -206,13 +206,13 @@ public class TaskService {
         return isMember ? Optional.of(project) : Optional.empty();
     }
 
-    // obtine proiecte in functie de utilizator si roluri
+    // get projects based on user and roles
     @Transactional(readOnly = true)
     public List<Project> findProjectsByUserAndRoles(User user, List<String> roles) {
         return projectRepository.findProjectsByUserAndRoles(user, roles);
     }
 
-    // metode ajutatoare
+    // helper methods
     private boolean hasRole(Project project, User user, String... roles) {
         return project.getMemberships().stream()
                 .anyMatch(m -> m.getUser().getId().equals(user.getId()) &&

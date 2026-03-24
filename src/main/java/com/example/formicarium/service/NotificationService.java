@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class NotificationService {
 
-    // logger pentru a inregistra mesaje si erori
+    // logger for recording messages and errors
     private static final Logger log = LoggerFactory.getLogger(NotificationService.class);
 
     private final NotificationRepository notificationRepository;
@@ -26,18 +26,18 @@ public class NotificationService {
         this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
-    // metoda pentru a crea si trimite o notificare
+    // method to create and send a notification
     @Transactional
     public Notification createAndSendNotification(Notification notification) {
-        // salveaza notificarea in baza de date
+        // save the notification in the database
         Notification saved = notificationRepository.save(notification);
 
-        // defineste destinatia pentru trimiterea notificarii
+        // define the destination for sending the notification
         String destination = "/topic/notifications/" + saved.getRecipientId();
         log.info("Trimitere notificare catre: {} cu mesajul: {}", destination, saved.getMessage());
 
         try {
-            // trimite notificarea salvata la destinatia specificata
+            // send the saved notification to the specified destination
             simpMessagingTemplate.convertAndSend(destination, saved);
             log.info("Notificarea a fost trimisa cu succes catre topicul: {}", destination);
         } catch (Exception e) {
@@ -46,50 +46,50 @@ public class NotificationService {
         return saved;
     }
 
-    // metoda pentru a obtine notificari pentru un utilizator, paginat
+    // method to get notifications for a user, paginated
     @Transactional(readOnly = true)
     public Page<Notification> getNotificationsForUser(Long userId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         return notificationRepository.findByRecipientIdOrderByCreatedAtDesc(userId, pageable);
     }
 
-    // metoda pentru a obtine notificari necitite pentru un utilizator, paginat
+    // method to get unread notifications for a user, paginated
     @Transactional(readOnly = true)
     public Page<Notification> getUnreadNotifications(Long userId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         return notificationRepository.findByRecipientIdAndIsReadFalseOrderByCreatedAtDesc(userId, pageable);
     }
 
-    // metoda pentru a marca o notificare ca citita
+    // method to mark a notification as read
     @Transactional
     public void markAsRead(Long notificationId, Long userId) {
-        // gaseste notificarea dupa id sau intra in exceptie
+        // find notification by id or throw exception
         Notification notif = notificationRepository.findById(notificationId)
                 .orElseThrow(() -> new IllegalArgumentException("Notificarea nu a fost gasita"));
-        // verifica daca notificarea apartine utilizatorului
+        // check if the notification belongs to the user
         if (!notif.getRecipientId().equals(userId)) {
             throw new SecurityException("Notificarea nu apartine utilizatorului");
         }
-        // marcheaza notificarea ca citita si salveaza
+        // mark the notification as read and save
         notif.setRead(true);
         notificationRepository.save(notif);
     }
 
-    // metoda pentru a sterge o notificare
+    // method to delete a notification
     @Transactional
     public void deleteNotification(Long notificationId, Long userId) {
-        // gaseste notificarea dupa id sau arunca o exceptie
+        // find notification by id or throw an exception
         Notification notif = notificationRepository.findById(notificationId)
                 .orElseThrow(() -> new IllegalArgumentException("Notificarea nu a fost gasita"));
-        // verifica daca notificarea apartine utilizatorului
+        // check if the notification belongs to the user
         if (!notif.getRecipientId().equals(userId)) {
             throw new SecurityException("Notificarea nu apartine utilizatorului");
         }
-        // sterge notificarea
+        // delete the notification
         notificationRepository.delete(notif);
     }
 
-    // metoda pentru a sterge toate notificarile unui utilizator
+    // method to delete all notifications for a user
     @Transactional
     public void deleteAllForUser(Long userId) {
         notificationRepository.deleteByRecipientId(userId);

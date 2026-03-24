@@ -10,22 +10,16 @@
 <body>
 <div layout:fragment="content">
 
-    <!-- alerta succes -->
+    <!-- Success alert -->
     <div th:if="${param.success}" class="alert alert-dismissible fade show mt-4 alert-success-custom" role="alert">
         <span th:text="${param.success}"></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <!-- mesaj de eroare -->
+    <!-- Error message -->
     <div th:if="${param.error}" class="alert alert-dismissible fade show mt-4 alert-danger-custom" role="alert">
         <span th:text="${param.error}"></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-
-    <!-- introducere in task page -->
-    <div class="card mb-4">
-        <h3 class="card-header-title">Tasks Page</h3>
-        <p>Welcome to the tasks page. Here you can manage everything related to your tasks.</p>
     </div>
 
     <div class="card mb-4">
@@ -37,7 +31,7 @@
             </button>
         </div>
         <div class="card-body" id="createTaskSection" style="display: none;">
-            <!-- formular pentru selectia proiectului -->
+            <!-- Project selection form -->
             <form th:action="@{/tasks/selectProject}" method="post" class="mb-3">
                 <div class="mb-3">
                     <label for="projectId" class="form-label">Select Project</label>
@@ -54,7 +48,7 @@
                 <button type="submit" class="btn btn-custom">Select Project</button>
             </form>
 
-            <!-- formular pentru creare unei sarcini noi -->
+            <!-- Form to create a new task -->
             <div th:if="${selectedProject}" class="mt-4">
                 <form th:action="@{/tasks/create}" method="post">
                     <input type="hidden" name="projectId" th:value="${selectedProject.id}"/>
@@ -77,7 +71,7 @@
                         <label for="assigneeId" class="form-label">Assign To</label>
                         <select id="assigneeId" name="assigneeId" class="form-select" required>
                             <option value="" disabled selected>Select a user</option>
-                            <!-- membrii proiectului selectat -->
+                            <!-- Selected project members -->
                             <option th:each="membership : ${selectedProject.memberships}"
                                     th:value="${membership.user.id}"
                                     th:text="${membership.user.username}">
@@ -90,14 +84,14 @@
         </div>
     </div>
 
-    <!-- Sectiunea "All tasks" -->
+    <!-- "All Tasks" section -->
     <div class="card mb-4">
         <div class="card-header"
              style="background-color: var(--sidebar-bg); border-bottom: 2px solid var(--border-color);">
             <h4 class="card-header-title" style="color: var(--header-title); margin:0;">All Tasks</h4>
         </div>
         <div class="card-body">
-            <!-- se filtreaza pe baza statusului-->
+            <!-- Filter based on status -->
             <div th:if="${!#lists.isEmpty(allTasks)}" class="mb-3">
                 <label for="filterAllStatus" class="form-label">Filter by Status</label>
                 <select id="filterAllStatus" class="form-select" onchange="filterAllTasks()">
@@ -109,14 +103,14 @@
                 </select>
             </div>
 
-            <!-- mesaj de alerta daca nu exista sarcini -->
+            <!-- Alert message if no tasks exist -->
             <div th:if="${#lists.isEmpty(allTasks)}"
                  class="alert alert-info mb-3"
                  style="background-color: rgba(66, 71, 105, 0.8); color: var(--text-color); border: 1px solid var(--border-color);">
                 There are no tasks available.
             </div>
 
-            <!-- Tabel cu sarcini-->
+            <!-- Task table -->
             <div th:unless="${#lists.isEmpty(allTasks)}" id="allTasksContainer" class="table-responsive">
                 <table class="table table-dark table-hover align-middle" style="border-radius:10px; overflow:hidden;">
                     <thead>
@@ -131,7 +125,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="task : ${allTasks}" th:data-status="${task.status}">
-                        <!-- Checkbox pentru sarcini necompletate-->
+                        <!-- Checkbox for uncompleted tasks -->
                         <td>
                             <div th:if="${task.createdBy.id == #authentication.principal.id and task.status != 'COMPLETED'}">
                                 <form th:action="@{/tasks/update/{taskId}(taskId=${task.id})}" method="post">
@@ -180,7 +174,7 @@
             <h4 class="card-header-title" style="color: var(--header-title); margin:0;">My Tasks</h4>
         </div>
         <div class="card-body">
-            <!-- se filtreaza pe baza statusului-->
+            <!-- Filter based on status -->
             <div th:if="${!#lists.isEmpty(myTasks)}" class="mb-3">
                 <label for="filterMyStatus" class="form-label">Filter by Status</label>
                 <select id="filterMyStatus" class="form-select" onchange="filterMyTasks()">
@@ -192,14 +186,14 @@
                 </select>
             </div>
 
-            <!-- mesaj de alerta daca nu exista sarcini -->
+            <!-- Alert message if no tasks exist -->
             <div th:if="${#lists.isEmpty(myTasks)}"
                  class="alert alert-info mb-3"
                  style="background-color: rgba(66, 71, 105, 0.8); color: var(--text-color); border: 1px solid var(--border-color);">
                 You have no tasks assigned.
             </div>
 
-            <!-- Tabel cu sarcini-->
+            <!-- Task table -->
             <div th:unless="${#lists.isEmpty(myTasks)}" id="myTasksContainer" class="table-responsive">
                 <table class="table table-dark table-hover align-middle" style="border-radius:10px; overflow:hidden;">
                     <thead>
@@ -214,7 +208,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="task : ${myTasks}" th:data-status="${task.status}">
-                        <!-- Checkbox pentru sarcini necompletate-->
+                        <!-- Checkbox for uncompleted tasks -->
                         <td>
                             <div th:if="${task.createdBy.id == #authentication.principal.id and task.status != 'COMPLETED'}">
                                 <form th:action="@{/tasks/update/{taskId}(taskId=${task.id})}" method="post">
@@ -256,7 +250,7 @@
         </div>
     </div>
 
-    <!-- JavaScript pentru filtrarea sarcinilor -->
+    <!-- JavaScript for filtering tasks -->
     <script>
         function filterAllTasks() {
             const status = document.getElementById('filterAllStatus').value;
@@ -277,7 +271,7 @@
         }
     </script>
 
-    <!-- JavaScript pentru selectare-->
+    <!-- JavaScript for toggling create section -->
     <script>
         function toggleCreateTaskSection() {
             const createTaskSection = document.getElementById('createTaskSection');
